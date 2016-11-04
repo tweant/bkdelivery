@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace BKDelivery.Domain.Model
 {
-    public class Package
+    public class AddressType
     {
-        public int PackageId { get; set; }
-
-        public double Weight { get; set; }
-        public decimal Cost { get; set; }
-
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public int AddressTypeId { get; set; }
+        public string Name { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
