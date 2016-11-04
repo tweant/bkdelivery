@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BKDelivery.Domain", "BKDelivery.Domain\BKDelivery.Domain.csproj", "{A3950FEC-5B79-4112-9D97-4F4FCADEF7B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BKDelivery.DataAccess", "BKDelivery.DataAccess\BKDelivery.DataAccess.csproj", "{CD0353E1-B819-4871-94F6-5E25C550641E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A3950FEC-5B79-4112-9D97-4F4FCADEF7B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3950FEC-5B79-4112-9D97-4F4FCADEF7B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3950FEC-5B79-4112-9D97-4F4FCADEF7B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD0353E1-B819-4871-94F6-5E25C550641E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD0353E1-B819-4871-94F6-5E25C550641E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD0353E1-B819-4871-94F6-5E25C550641E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD0353E1-B819-4871-94F6-5E25C550641E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
