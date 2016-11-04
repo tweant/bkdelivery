@@ -1,7 +1,7 @@
 ﻿/*
   In App.xaml:
   <Application.Resources>
-      <vm:MvvmViewModelLocator xmlns:vm="clr-namespace:BKDelivery.Domain"
+      <vm:ViewModelLocatorTemplate xmlns:vm="clr-namespace:BKDelivery.CallCenter.ViewModel"
                                    x:Key="Locator" />
   </Application.Resources>
   
@@ -9,29 +9,33 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Ioc;
+using Microsoft.Practices.ServiceLocation;
+using BKDelivery.CallCenter.Model;
 
-namespace BKDelivery.Domain
+namespace BKDelivery.CallCenter.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
     /// application and provides an entry point for the bindings.
     /// <para>
-    /// See http://www.galasoft.ch/mvvm
+    /// See http://www.mvvmlight.net
     /// </para>
     /// </summary>
-    public class MvvmViewModelLocator
+    public class ViewModelLocator
     {
-        static MvvmViewModelLocator()
+        static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                // SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
+                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
             }
             else
             {
-                // SimpleIoc.Default.Register<IDataService, DataService>();
+                SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
@@ -49,6 +53,13 @@ namespace BKDelivery.Domain
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
+        }
+
+        /// <summary>
+        /// Cleans up all the resources.
+        /// </summary>
+        public static void Cleanup()
+        {
         }
     }
 }
