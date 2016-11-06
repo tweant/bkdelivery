@@ -15,15 +15,6 @@ namespace BKDelivery.Domain.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Order>()
-            //    .HasRequired(o => o.From)
-            //    .WithRequiredPrincipal()
-            //    .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<Order>()
-            //    .HasRequired(o => o.To)
-            //    .WithRequiredPrincipal()
-            //    .WillCascadeOnDelete(true);
 
         }
     }

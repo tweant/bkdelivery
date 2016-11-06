@@ -10,17 +10,9 @@
         Title="MVVM Light Application"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/MainSkin.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-
     <DockPanel>
-        <StackPanel Orientation="Vertical">
-            <Button Name="AddressesPageButton" Content="Addresses" DockPanel.Dock="Left" Command="{Binding AddressesButtonCommand}"/>
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
+            <Button Name="AddressesPageButton" Content="Addresses"  Command="{Binding AddressesButtonCommand}"/>
         </StackPanel>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </DockPanel>
