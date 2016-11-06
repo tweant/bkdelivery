@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using BKDelivery.CallCenter.Model;
+using GalaSoft.MvvmLight.Command;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -11,55 +12,29 @@ namespace BKDelivery.CallCenter.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private readonly IDataService _dataService;
+        private INavigationService _navigationService;
+ 
+        public MainViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
+        }
+
+        private RelayCommand _addressesButtonCommand;
 
         /// <summary>
-        /// The <see cref="WelcomeTitle" /> property's name.
+        /// Gets the AddressesButtonCommand.
         /// </summary>
-        public const string WelcomeTitlePropertyName = "WelcomeTitle";
-
-        private string _welcomeTitle = string.Empty;
-
-        /// <summary>
-        /// Gets the WelcomeTitle property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public string WelcomeTitle
+        public RelayCommand AddressesButtonCommand
         {
             get
             {
-                return _welcomeTitle;
-            }
-            set
-            {
-                Set(ref _welcomeTitle, value);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        public MainViewModel(IDataService dataService)
-        {
-            _dataService = dataService;
-            _dataService.GetData(
-                (item, error) =>
-                {
-                    if (error != null)
+                return _addressesButtonCommand
+                    ?? (_addressesButtonCommand = new RelayCommand(
+                    () =>
                     {
-                        // Report error here
-                        return;
-                    }
-
-                    WelcomeTitle = item.Title;
-                });
+                        _navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
+                    }));
+            }
         }
-
-        ////public override void Cleanup()
-        ////{
-        ////    // Clean up if needed
-
-        ////    base.Cleanup();
-        ////}
     }
 }

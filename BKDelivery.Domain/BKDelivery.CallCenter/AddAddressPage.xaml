@@ -1,0 +1,39 @@
+﻿<Page x:Class="BKDelivery.CallCenter.AddAddress"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BKDelivery.CallCenter"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="AddAddress"
+      DataContext="{Binding AddAddressVm, Source={StaticResource Locator}}">
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock>Street</TextBlock>
+        <TextBox Name="StreetTextBox" Text="{Binding Street, Mode=TwoWay}" />
+        <TextBlock>Building number</TextBlock>
+        <TextBox Name="BuildingNumberTextBox" Text="{Binding BuildingNumber, Mode=TwoWay}"/>
+        <TextBlock>Flat number (optional)</TextBlock>
+        <TextBox Name="FlatNumberTextBox" Text="{Binding FlatNumber, Mode=TwoWay}"/>
+        <TextBlock>Postal Code</TextBlock>
+        <TextBox Name="PostalCodeTextBox" Text="{Binding PostalCode, Mode=TwoWay}"/>
+        <TextBlock>City</TextBlock>
+        <TextBox Name="CityTextBox" Text="{Binding City, Mode=TwoWay}"/>
+        <TextBlock>Country</TextBlock>
+        <TextBox Name="CountryTextBox" Text="Poland" IsEnabled="False"/>
+        <TextBlock>Voivodeship</TextBlock>
+        <ComboBox ItemsSource="{Binding VoivodeshipsCollection}" SelectedItem="{Binding SelectedVoivodeship, Mode=TwoWay}"/>
+        <TextBlock Text="Type"/>
+        <ComboBox ItemsSource="{Binding TypesCollection}" SelectedItem="{Binding SelectedType, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}"/>
+
+    </StackPanel>
+</Page>

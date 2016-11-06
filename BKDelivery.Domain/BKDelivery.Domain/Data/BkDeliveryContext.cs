@@ -1,9 +1,9 @@
 ﻿using System.Data.Entity;
 using BKDelivery.Domain.Model;
 
-namespace BKDelivery.Domain
+namespace BKDelivery.Domain.Data
 {
-    public class DeliveryContext : DbContext
+    public class BkDeliveryContext : DbContext, IDbContext
     {
         public DbSet<AddressType> AddressTypes { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -24,8 +24,6 @@ namespace BKDelivery.Domain
             //    .HasRequired(o => o.To)
             //    .WithRequiredPrincipal()
             //    .WillCascadeOnDelete(true);
-
-
 
         }
     }
