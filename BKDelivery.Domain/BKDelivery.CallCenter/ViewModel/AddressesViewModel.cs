@@ -26,16 +26,17 @@ namespace BKDelivery.CallCenter.ViewModel
             _navigationService = navigationService;
             _unitOfWorkService = unitOfWorkService;
 
-            _unitOfWorkService.InitializeTransaction();
-            var addressRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
-            AddressesCollection = new ObservableCollection<Address>(addressRepo.GetOverview());
-            _unitOfWorkService.SaveChanges();
+            
         }
 
         public ObservableCollection<Address> AddressesCollection
         {
             get
             {
+                _unitOfWorkService.InitializeTransaction();
+                var addressRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
+                _addressTypesCollecion = new ObservableCollection<Address>(addressRepo.GetOverview());
+                _unitOfWorkService.SaveChanges();
                 return _addressTypesCollecion;
             }
             set

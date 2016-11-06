@@ -13,6 +13,27 @@
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Name="AddAddressButton" Content="Add" Command="{Binding AddAddressCommand}"/>
         </StackPanel>
-        <TextBlock>Hi</TextBlock>
+        <ListView ItemsSource="{Binding AddressesCollection}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Street}"/>
+                            <TextBlock Text="{Binding BuildingNumber}" Margin="5,0,0,0"/>
+                            <TextBlock Text="/"/>
+                            <TextBlock Text="{Binding FlatNumber}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding ZipCode}"/>
+                            <TextBlock Text="{Binding City}" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Voivodeship}"/>
+                        <TextBlock Text="{Binding Country}"/>
+                        <TextBlock Text="{Binding AddressType.Name}"/>
+                    </StackPanel>
+    
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </DockPanel>
 </Page>

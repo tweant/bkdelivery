@@ -14,11 +14,11 @@ namespace BKDelivery.Domain.Model
         public string Country { get; set; }
         public string Voivodeship { get; set; }
 
-        public int ClientId { get; set; }
-        public Client Client { get; set; }
+        public int? ClientId { get; set; }
+        public virtual Client Client { get; set; }
 
-        public int AddressTypeId { get; set; }
-        public AddressType AddressType { get; set; }
+        public int? AddressTypeId { get; set; }
+        public virtual AddressType AddressType { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
