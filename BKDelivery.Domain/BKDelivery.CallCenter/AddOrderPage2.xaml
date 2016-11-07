@@ -1,0 +1,87 @@
+﻿<Page x:Class="BKDelivery.CallCenter.AddOrderPage2"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BKDelivery.CallCenter"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="AddOrderPage2"
+      DataContext="{Binding AddOrder2Vm, Source={StaticResource Locator}}">
+
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <Button Name="AddAddressButton" Content="Add address" Command="{Binding AddAddressCommand}" Margin="18,0,0,0" Width="76"/>
+            <Button Name="AddPackButton" Content="Add package" Command="{Binding AddPackCommand}" Margin="18,0,0,0" Width="76"/>
+            <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="18,0,0,0" Width="76"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Home address"/>
+            <ComboBox ItemsSource="{Binding AddressesCollection}" SelectedItem="{Binding SelectedHomeAddress, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Street}"/>
+                                <TextBlock Text="{Binding BuildingNumber}" Margin="5,0,0,0"/>
+                                <TextBlock Text="/"/>
+                                <TextBlock Text="{Binding FlatNumber}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ZipCode}"/>
+                                <TextBlock Text="{Binding City}" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding Voivodeship}"/>
+                            <TextBlock Text="{Binding Country}"/>
+                            <TextBlock Text="{Binding AddressType.Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Delivery address"/>
+            <ComboBox ItemsSource="{Binding AddressesCollection}" SelectedItem="{Binding SelectedDeliveryAddress, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Street}"/>
+                                <TextBlock Text="{Binding BuildingNumber}" Margin="5,0,0,0"/>
+                                <TextBlock Text="/"/>
+                                <TextBlock Text="{Binding FlatNumber}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ZipCode}"/>
+                                <TextBlock Text="{Binding City}" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding Voivodeship}"/>
+                            <TextBlock Text="{Binding Country}"/>
+                            <TextBlock Text="{Binding AddressType.Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Invoke address"/>
+            <ComboBox ItemsSource="{Binding AddressesCollection}" SelectedItem="{Binding SelectedInvokeAddress, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Street}"/>
+                                <TextBlock Text="{Binding BuildingNumber}" Margin="5,0,0,0"/>
+                                <TextBlock Text="/"/>
+                                <TextBlock Text="{Binding FlatNumber}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ZipCode}"/>
+                                <TextBlock Text="{Binding City}" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding Voivodeship}"/>
+                            <TextBlock Text="{Binding Country}"/>
+                            <TextBlock Text="{Binding AddressType.Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+    </DockPanel>
+</Page>
