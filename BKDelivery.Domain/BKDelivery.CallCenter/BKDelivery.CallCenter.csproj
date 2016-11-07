@@ -96,6 +96,9 @@
     <Compile Include="AddOrderPage.xaml.cs">
       <DependentUpon>AddOrderPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddOrderPage2.xaml.cs">
+      <DependentUpon>AddOrderPage2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddPackPage.xaml.cs">
       <DependentUpon>AddPackPage.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,7 @@
     <Compile Include="ViewModel\AddAddressViewModel.cs" />
     <Compile Include="ViewModel\AddClientViewModel.cs" />
     <Compile Include="ViewModel\AddCourierViewModel.cs" />
+    <Compile Include="ViewModel\AddOrder2ViewModel.cs" />
     <Compile Include="ViewModel\AddOrderViewModel.cs" />
     <Compile Include="ViewModel\AddPackViewModel.cs" />
     <Compile Include="ViewModel\AddressesViewModel.cs" />
@@ -139,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddOrderPage2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,10 +181,6 @@
     <Page Include="ShowOrdersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Skins\MainSkin.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

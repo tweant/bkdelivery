@@ -31,6 +31,7 @@ namespace BKDelivery.CallCenter.ViewModel
         public static string AddCourierPageKey = "AddCourierPage";
         public static string AddClientPageKey = "AddClientPage";
         public static string AddOrderPageKey = "AddOrderPage";
+        public static string AddOrderPageKey2 = "AddOrderPage2";
         public static string AddPackPageKey = "AddPackPage";
         public static string ShowClientsPageKey = "ShowClientsPage";
         public static string ShowOrdersPageKey = "ShowOrdersPage";
@@ -53,6 +54,7 @@ namespace BKDelivery.CallCenter.ViewModel
             SimpleIoc.Default.Register<ShowClientsViewModel>();
             SimpleIoc.Default.Register<ShowOrdersViewModel>();
             SimpleIoc.Default.Register<ShowOrdersDetailsViewModel>();
+            SimpleIoc.Default.Register<AddOrder2ViewModel>();
 
 
             var navigationService = ServiceLocator.Current.GetInstance<INavigationService>();
@@ -61,6 +63,7 @@ namespace BKDelivery.CallCenter.ViewModel
             navigationService.Configure(AddCourierPageKey, new Uri("AddCourierPage.xaml", UriKind.Relative));
             navigationService.Configure(AddClientPageKey, new Uri("AddClientPage.xaml", UriKind.Relative));
             navigationService.Configure(AddOrderPageKey, new Uri("AddOrderPage.xaml", UriKind.Relative));
+            navigationService.Configure(AddOrderPageKey2, new Uri("AddOrderPage2.xaml", UriKind.Relative));
             navigationService.Configure(AddPackPageKey, new Uri("AddPackPage.xaml", UriKind.Relative));
             navigationService.Configure(ShowClientsPageKey, new Uri("ShowClientsPage.xaml", UriKind.Relative));
             navigationService.Configure(ShowOrdersPageKey, new Uri("ShowOrdersPage.xaml", UriKind.Relative));
@@ -116,6 +119,11 @@ namespace BKDelivery.CallCenter.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public ShowOrdersDetailsViewModel ShowOrdersDetailsVm => ServiceLocator.Current.GetInstance<ShowOrdersDetailsViewModel>();
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public AddOrder2ViewModel AddOrder2Vm => ServiceLocator.Current.GetInstance<AddOrder2ViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.
