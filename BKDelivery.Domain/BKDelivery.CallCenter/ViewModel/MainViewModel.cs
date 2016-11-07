@@ -48,7 +48,7 @@ namespace BKDelivery.CallCenter.ViewModel
                     ?? (ButtonCommand1 = new RelayCommand(
                     () =>
                     {
-                        _navigationService.NavigateTo(ViewModelLocator.AddClientPageKey);
+                        _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey);
                     }));
             }
         }
