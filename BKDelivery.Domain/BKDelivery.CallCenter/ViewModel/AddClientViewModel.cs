@@ -3,6 +3,7 @@ using BKDelivery.CallCenter.Model;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System.ComponentModel;
 
 namespace BKDelivery.CallCenter.ViewModel
 {

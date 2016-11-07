@@ -9,22 +9,21 @@
       Title="AddPackPage"
       DataContext="{Binding AddPackVm, Source={StaticResource Locator}}">
 
-    <StackPanel Orientation="Vertical">
-        <TextBlock>Weight</TextBlock>
-        <TextBox Name="WeightTextBox" Text="{Binding Weight, Mode=TwoWay}" />
-        <TextBlock>Cost</TextBlock>
-        <TextBox Name="CostTextBox" Text="{Binding Cost, Mode=TwoWay}"/>
-        <TextBlock Text="Category"/>
-        <ComboBox ItemsSource="{Binding CategoriesCollection}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-
-
-        <Button Name="AddButton" Content="Add" Command="{Binding AddCommand}"/>
-
-    </StackPanel>
+    <GroupBox Header="Add Package" Margin="5">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Margin="5">Weight</TextBlock>
+            <TextBox Name="WeightTextBox" Text="{Binding Weight, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Cost</TextBlock>
+            <TextBox Name="CostTextBox" Text="{Binding Cost, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Text="Category" Margin="5"/>
+            <ComboBox ItemsSource="{Binding CategoriesCollection}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" Margin="5">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Name="AddButton" Content="Add" Command="{Binding AddCommand}" Margin="5"/>
+        </StackPanel>
+    </GroupBox>
 </Page>

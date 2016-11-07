@@ -4,36 +4,35 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BKDelivery.CallCenter"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
       Title="AddAddress"
       DataContext="{Binding AddAddressVm, Source={StaticResource Locator}}">
 
-    <StackPanel Orientation="Vertical">
-        <TextBlock>Street</TextBlock>
-        <TextBox Name="StreetTextBox" Text="{Binding Street, Mode=TwoWay}" />
-        <TextBlock>Building number</TextBlock>
-        <TextBox Name="BuildingNumberTextBox" Text="{Binding BuildingNumber, Mode=TwoWay}"/>
-        <TextBlock>Flat number (optional)</TextBlock>
-        <TextBox Name="FlatNumberTextBox" Text="{Binding FlatNumber, Mode=TwoWay}"/>
-        <TextBlock>Postal Code</TextBlock>
-        <TextBox Name="PostalCodeTextBox" Text="{Binding PostalCode, Mode=TwoWay}"/>
-        <TextBlock>City</TextBlock>
-        <TextBox Name="CityTextBox" Text="{Binding City, Mode=TwoWay}"/>
-        <TextBlock>Country</TextBlock>
-        <TextBox Name="CountryTextBox" Text="Poland" IsEnabled="False"/>
-        <TextBlock>Voivodeship</TextBlock>
-        <ComboBox ItemsSource="{Binding VoivodeshipsCollection}" SelectedItem="{Binding SelectedVoivodeship, Mode=TwoWay}"/>
-        <TextBlock Text="Type"/>
-        <ComboBox ItemsSource="{Binding TypesCollection}" SelectedItem="{Binding SelectedType, Mode=TwoWay}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+    <GroupBox Header="Add Address" Margin="5">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Margin="5">Street</TextBlock>
+            <TextBox Name="StreetTextBox" Text="{Binding Street, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Building number</TextBlock>
+            <TextBox Name="BuildingNumberTextBox" Text="{Binding BuildingNumber, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Flat number (optional)</TextBlock>
+            <TextBox Name="FlatNumberTextBox" Text="{Binding FlatNumber, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Postal Code</TextBlock>
+            <TextBox Name="PostalCodeTextBox" Text="{Binding PostalCode, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">City</TextBlock>
+            <TextBox Name="CityTextBox" Text="{Binding City, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Country</TextBlock>
+            <TextBox Name="CountryTextBox" Text="Poland" IsEnabled="False" Margin="5"/>
+            <TextBlock Margin="5">Voivodeship</TextBlock>
+            <ComboBox ItemsSource="{Binding VoivodeshipsCollection}" SelectedItem="{Binding SelectedVoivodeship, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Text="Type" Margin="5"/>
+            <ComboBox ItemsSource="{Binding TypesCollection}" SelectedItem="{Binding SelectedType, Mode=TwoWay}" Margin="5">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
-        <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}"/>
-
-    </StackPanel>
+            <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="5"/>
+        </StackPanel>
+    </GroupBox>
 </Page>

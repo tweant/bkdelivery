@@ -9,16 +9,15 @@
       Title="AddCourierPage"
       DataContext="{Binding AddCourierVm, Source={StaticResource Locator}}">
 
-    <StackPanel Orientation="Vertical">
-        <TextBlock>Name</TextBlock>
-        <TextBox Name="NameTextBox" Text="{Binding Name, Mode=TwoWay}" />
-        <TextBlock>Surname</TextBlock>
-        <TextBox Name="SurnameTextBox" Text="{Binding Surname, Mode=TwoWay}"/>
-        <TextBlock>Phone number</TextBlock>
-        <TextBox Name="PhoneNumberTextBox" Text="{Binding PhoneNumber, Mode=TwoWay}"/>
-
-
-        <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}"/>
-
-    </StackPanel>
+    <GroupBox Header="Add Courier" Margin="5">
+        <StackPanel Orientation="Vertical" >
+            <TextBlock Margin="5">Name</TextBlock>
+            <TextBox Name="NameTextBox" Text="{Binding Name, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Surname</TextBlock>
+            <TextBox Name="SurnameTextBox" Text="{Binding Surname, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Phone number</TextBlock>
+            <TextBox Name="PhoneNumberTextBox" Text="{Binding PhoneNumber, Mode=TwoWay }" Margin="5"/>
+            <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="5"/>
+        </StackPanel>
+    </GroupBox>
 </Page>

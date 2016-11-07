@@ -4,23 +4,21 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BKDelivery.CallCenter"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+
       Title="AddClientPage"
       DataContext="{Binding AddClientVm, Source={StaticResource Locator}}">
 
-    <StackPanel Orientation="Vertical">
-        <TextBlock>Name</TextBlock>
-        <TextBox Name="NameTextBox" Text="{Binding Name, Mode=TwoWay}" />
-        <TextBlock>Surname</TextBlock>
-        <TextBox Name="SurnameTextBox" Text="{Binding Surname, Mode=TwoWay}"/>
-        <TextBlock>Phone number</TextBlock>
-        <TextBox Name="PhoneNumberTextBox" Text="{Binding PhoneNumber, Mode=TwoWay}"/>
-        <TextBlock>Email address</TextBlock>
-        <TextBox Name="EmailTextBox" Text="{Binding EmailAddress, Mode=TwoWay}"/>
-
-        
-        <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}"/>
-
-    </StackPanel>
+    <GroupBox Header="Add Client" Margin="5">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Margin="5">Name</TextBlock>
+            <TextBox Name="NameTextBox" Text="{Binding Name, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Surname</TextBlock>
+            <TextBox Name="SurnameTextBox" Text="{Binding Surname, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Phone number</TextBlock>
+            <TextBox Name="PhoneNumberTextBox" Text="{Binding PhoneNumber, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">Email address</TextBlock>
+            <TextBox Name="EmailTextBox" Text="{Binding EmailAddress, Mode=TwoWay}" Margin="5"/>
+            <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="5"/>
+        </StackPanel>
+    </GroupBox>
 </Page>

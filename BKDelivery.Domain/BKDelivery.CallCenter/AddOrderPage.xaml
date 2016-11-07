@@ -9,12 +9,20 @@
       Title="AddOrderPage"
       DataContext="{Binding AddOrderVm, Source={StaticResource Locator}}">
 
-    <GroupBox Header="Choose Client">
+    <GroupBox Header="Choose Client" Margin="5">
         <Grid>
             <StackPanel Orientation="Vertical">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Horizontal">
-                        <DataGrid ItemsSource="{Binding Path=Clients}" SelectedItem="{Binding SelectedClient}"  Margin="5,5,5,5"/>
+                        <ListView ItemsSource="{Binding ClientsCollection}" Margin="5">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+                                    <GridViewColumn Header="Surname" DisplayMemberBinding="{Binding Surname}" />
+                                    <GridViewColumn Header="Phone number" DisplayMemberBinding="{Binding PhoneNumber}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </StackPanel>
                 </ScrollViewer>
                 <StackPanel Orientation="Horizontal">
