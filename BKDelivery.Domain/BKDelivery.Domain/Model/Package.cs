@@ -14,8 +14,8 @@ namespace BKDelivery.Domain.Model
         public double Weight { get; set; }
         public decimal Cost { get; set; }
 
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public int? CategoryId { get; set; }
+        public virtual Category Category { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

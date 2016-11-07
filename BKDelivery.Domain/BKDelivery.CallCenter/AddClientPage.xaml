@@ -6,9 +6,19 @@
       xmlns:local="clr-namespace:BKDelivery.CallCenter"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
-      Title="AddClientPage">
+      Title="AddClientPage"
+      DataContext="{Binding AddClientVm, Source={StaticResource Locator}}">
 
-    <Grid>
-        
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <TextBlock>Name</TextBlock>
+        <TextBox Name="NameTextBox" Text="{Binding Name, Mode=TwoWay}" />
+        <TextBlock>Surname</TextBlock>
+        <TextBox Name="SurnameTextBox" Text="{Binding Surname, Mode=TwoWay}"/>
+        <TextBlock>Phone number</TextBlock>
+        <TextBox Name="PhoneNumberTextBox" Text="{Binding PhoneNumber, Mode=TwoWay}"/>
+
+
+        <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}"/>
+
+    </StackPanel>
 </Page>

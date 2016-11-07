@@ -10,21 +10,23 @@ namespace BKDelivery.Domain.Model
     public class Order
     {
         public int OrderId { get; set; }
-        public int FromAddressId { get; set; }
-        public Address FromAddress { get; set; }
 
-        public int ToAddressId { get; set; }
-        public Address ToAddress { get; set; }
+        public int? FromAddressId { get; set; }
+        public virtual Address FromAddress { get; set; }
+
+        public int? ToAddressId { get; set; }
+        public virtual Address ToAddress { get; set; }
 
 
         public List<Package> Packages { get; set; }
-        public int ClientId { get; set; }
-        public Client Client { get; set; }
-        public int CourierId { get; set; }
-        public Courier Courier { get; set; }
 
-        public int TimeIntervalId { get; set; }
-        public TimeInterval TimeInterval { get; set; }
+        public int? ClientId { get; set; }
+        public virtual Client Client { get; set; }
+        public int? CourierId { get; set; }
+        public virtual Courier Courier { get; set; }
+
+        public int? TimeIntervalId { get; set; }
+        public virtual TimeInterval TimeInterval { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

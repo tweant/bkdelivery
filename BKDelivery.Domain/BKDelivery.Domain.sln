@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BKDelivery.Domain", "BKDelivery.Domain\BKDelivery.Domain.csproj", "{A3950FEC-5B79-4112-9D97-4F4FCADEF7B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BKDelivery.CallCenter", "BKDelivery.CallCenter\BKDelivery.CallCenter.csproj", "{2AC8B313-2EC7-47CC-9012-10D3A8D0C7B4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BKDelivery.Console", "BKDelivery.Console\BKDelivery.Console.csproj", "{62A38E0B-F55D-482B-B1CA-21565BE2047F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{2AC8B313-2EC7-47CC-9012-10D3A8D0C7B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AC8B313-2EC7-47CC-9012-10D3A8D0C7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AC8B313-2EC7-47CC-9012-10D3A8D0C7B4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62A38E0B-F55D-482B-B1CA-21565BE2047F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62A38E0B-F55D-482B-B1CA-21565BE2047F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62A38E0B-F55D-482B-B1CA-21565BE2047F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62A38E0B-F55D-482B-B1CA-21565BE2047F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -133,7 +133,9 @@ namespace BKDelivery.CallCenter.ViewModel
                                    City = City,
                                    Country = "Poland",
                                    Voivodeship = SelectedVoivodeship,
-                                   AddressType = SelectedType
+                                   AddressType =
+                                       _unitOfWorkService.UnitOfWork.Repository<AddressType>()
+                                           .GetDetail(x => x.AddressTypeId == SelectedType.AddressTypeId)
                                };
                                addressesRepo.Add(address);
                                _unitOfWorkService.SaveChanges();

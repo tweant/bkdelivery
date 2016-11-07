@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BKDelivery.Domain.Model;
 
 namespace BKDelivery.Domain.Data
 {
@@ -12,7 +14,12 @@ namespace BKDelivery.Domain.Data
         public GenericUnitOfWork()
         {
             _db = new BkDeliveryContext();
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BkDeliveryContext>());
+
+            Initialize(this);
+            this.SaveChanges();
         }
+
         // Słownik będzie używany do sprawdzania instancji repozytoriów
         public Dictionary<Type, object> Repositories = new Dictionary<Type, object>();
 
@@ -43,6 +50,22 @@ namespace BKDelivery.Domain.Data
         public void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        private static void Initialize(GenericUnitOfWork uow)
+        {
+            var houseAddressType = new AddressType { Name = "HouseAddress" };
+            var invoiceAddressType = new AddressType { Name = "InvoiceAddress" };
+            var deliveryAddressType = new AddressType { Name = "DeliveryAddress" };
+
+            IRepository<AddressType> addressTypeRepo = uow.Repository<AddressType>();
+            if (!addressTypeRepo.GetOverview().Any())
+            {
+                addressTypeRepo.Add(houseAddressType);
+                addressTypeRepo.Add(invoiceAddressType);
+                addressTypeRepo.Add(deliveryAddressType);
+            }
+
         }
     }
 }

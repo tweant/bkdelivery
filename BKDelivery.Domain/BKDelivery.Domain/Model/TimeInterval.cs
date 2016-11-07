@@ -19,10 +19,8 @@ namespace BKDelivery.Domain.Model
         [Required]
         public DateTime End { get; set; }
 
-        [Required]
-        public bool Taken { get; set; }
-
-        public Order Order { get; set; }
+        public int? OrderId { get; set; }
+        public virtual Order Order { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
