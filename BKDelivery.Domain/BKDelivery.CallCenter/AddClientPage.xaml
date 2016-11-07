@@ -16,8 +16,10 @@
         <TextBox Name="SurnameTextBox" Text="{Binding Surname, Mode=TwoWay}"/>
         <TextBlock>Phone number</TextBlock>
         <TextBox Name="PhoneNumberTextBox" Text="{Binding PhoneNumber, Mode=TwoWay}"/>
+        <TextBlock>Email address</TextBlock>
+        <TextBox Name="EmailTextBox" Text="{Binding EmailAddress, Mode=TwoWay}"/>
 
-
+        
         <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}"/>
 
     </StackPanel>

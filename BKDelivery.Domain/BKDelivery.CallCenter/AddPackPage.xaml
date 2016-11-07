@@ -6,9 +6,25 @@
       xmlns:local="clr-namespace:BKDelivery.CallCenter"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
-      Title="AddPackPage">
+      Title="AddPackPage"
+      DataContext="{Binding AddPackVm, Source={StaticResource Locator}}">
 
-    <Grid>
-        
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <TextBlock>Weight</TextBlock>
+        <TextBox Name="WeightTextBox" Text="{Binding Weight, Mode=TwoWay}" />
+        <TextBlock>Cost</TextBlock>
+        <TextBox Name="CostTextBox" Text="{Binding Cost, Mode=TwoWay}"/>
+        <TextBlock Text="Category"/>
+        <ComboBox ItemsSource="{Binding CategoriesCollection}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+
+        <Button Name="AddButton" Content="Add" Command="{Binding AddCommand}"/>
+
+    </StackPanel>
 </Page>

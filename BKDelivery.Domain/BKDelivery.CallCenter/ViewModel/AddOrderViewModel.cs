@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using BKDelivery.CallCenter.Model;
+﻿using BKDelivery.CallCenter.Model;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -11,44 +10,45 @@ namespace BKDelivery.CallCenter.ViewModel
         private readonly INavigationService _navigationService;
         private readonly IUnitOfWorkService _unitOfWorkService;
 
-        private ObservableCollection<Address> _addressTypesCollecion;
-
-        private RelayCommand _addAddressCommand;
+        private RelayCommand _chooseclient;
 
         public AddOrderViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
         {
             _navigationService = navigationService;
             _unitOfWorkService = unitOfWorkService;
-
-            _unitOfWorkService.InitializeTransaction();
-            var addressRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
-            AddressesCollection = new ObservableCollection<Address>(addressRepo.GetOverview());
-            _unitOfWorkService.SaveChanges();
         }
 
-        public ObservableCollection<Address> AddressesCollection
+        
+        private Client _SelectedClient;
+        public Client SelectedClient
         {
             get
             {
-                return _addressTypesCollecion;
+                return _SelectedClient;
             }
             set
             {
-                Set(() => AddressesCollection, ref _addressTypesCollecion, value);
+                if (_SelectedClient != value)
+                {
+                    _SelectedClient = value;
+           
+                }
             }
         }
 
-        public RelayCommand OrderButtonCommand
+
+        public RelayCommand ChooseClient
         {
             get
             {
-                return _addAddressCommand
-                    ?? (_addAddressCommand = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey);
-                    }));
-            }
+                    return _chooseclient
+                       ?? (_chooseclient = new RelayCommand(
+                           () =>
+                           {
+                               _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
+                           }));
+             }
         }
+
     }
 }
