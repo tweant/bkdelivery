@@ -20,7 +20,11 @@
 
     <DockPanel>
         <StackPanel Orientation="Vertical">
-            <Button Name="AddressesPageButton" Content="Addresses" DockPanel.Dock="Left" Command="{Binding AddressesButtonCommand}"/>
+            <Button Name="PageButton1" Content="Add courier" DockPanel.Dock="Left" Command="{Binding CourierButtonCommand}" Margin="2,5"/>
+            <Button Name="PageButton2" Content="Add client" DockPanel.Dock="Left" Command="{Binding ClientButtonCommand}" Margin="2,5"/>
+            <Button Name="PageButton3" Content="Add order" DockPanel.Dock="Left" Command="{Binding OrderButtonCommand}" Margin="2,5"/>
+            <Button Name="PageButton4" Content="Show clients" DockPanel.Dock="Left" Command="{Binding ClientsButtonCommand}" Margin="2,5"/>
+            <Button Name="PageButton5" Content="Show orders" DockPanel.Dock="Left" Command="{Binding OrdersButtonCommand}" Margin="2,5"/>
         </StackPanel>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </DockPanel>

@@ -87,6 +87,18 @@
     <Compile Include="AddAddressPage.xaml.cs">
       <DependentUpon>AddAddressPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddClientPage.xaml.cs">
+      <DependentUpon>AddClientPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddCourierPage.xaml.cs">
+      <DependentUpon>AddCourierPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddOrderPage.xaml.cs">
+      <DependentUpon>AddOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddPackPage.xaml.cs">
+      <DependentUpon>AddPackPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddressesPage.xaml.cs">
       <DependentUpon>AddressesPage.xaml</DependentUpon>
     </Compile>
@@ -94,11 +106,43 @@
     <Compile Include="Model\IUnitOfWorkService.cs" />
     <Compile Include="Model\NavigationService.cs" />
     <Compile Include="Model\UnitOfWorkService.cs" />
+    <Compile Include="ShowClientsPage.xaml.cs">
+      <DependentUpon>ShowClientsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShowOrdersDetailsPage.xaml.cs">
+      <DependentUpon>ShowOrdersDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShowOrdersPage.xaml.cs">
+      <DependentUpon>ShowOrdersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AddAddressViewModel.cs" />
+    <Compile Include="ViewModel\AddClientViewModel.cs" />
+    <Compile Include="ViewModel\AddCourierViewModel.cs" />
+    <Compile Include="ViewModel\AddOrderViewModel.cs" />
+    <Compile Include="ViewModel\AddPackViewModel.cs" />
     <Compile Include="ViewModel\AddressesViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ShowClientsViewModel.cs" />
+    <Compile Include="ViewModel\ShowOrdersDetailsViewModel.cs" />
+    <Compile Include="ViewModel\ShowOrdersViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="AddAddressPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddClientPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddCourierPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddPackPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,6 +162,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ShowClientsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowOrdersDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowOrdersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
