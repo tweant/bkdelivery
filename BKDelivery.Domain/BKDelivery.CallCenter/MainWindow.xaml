@@ -10,6 +10,7 @@
         Title="MVVM Light Application"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
 
+
     <DockPanel>
         <StackPanel Orientation="Vertical">
             <Button Name="PageButton1" Content="Add courier" DockPanel.Dock="Left" Command="{Binding CourierButtonCommand}" Margin="2,5"/>
@@ -18,6 +19,8 @@
             <Button Name="PageButton4" Content="Show clients" DockPanel.Dock="Left" Command="{Binding ClientsButtonCommand}" Margin="2,5"/>
             <Button Name="PageButton5" Content="Show orders" DockPanel.Dock="Left" Command="{Binding OrdersButtonCommand}" Margin="2,5"/>
         </StackPanel>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+        <ScrollViewer>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>
+        </ScrollViewer>
     </DockPanel>
 </Window>
