@@ -7,7 +7,7 @@
         mc:Ignorable="d ignore"
         Height="400"
         Width="600"
-        Title="MVVM Light Application"
+        Title="BKDelivery"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
 
 

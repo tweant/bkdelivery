@@ -68,7 +68,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                };
                                clientRepo.Add(client);
                                _unitOfWorkService.SaveChanges();
-                               _navigationService.NavigateTo(ViewModelLocator.AddClientPageKey);
+                               _navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
                            }));
             }
         }

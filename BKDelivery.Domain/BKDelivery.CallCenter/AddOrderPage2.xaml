@@ -77,7 +77,20 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Horizontal">
+                    <ListView ItemsSource="{Binding PacksCollection}" Margin="5">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" />
+                                <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}" />
+                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </ScrollViewer>
+            <StackPanel Orientation="Horizontal">
                     <Button Name="AddAddressButton" Content="Add address" Command="{Binding AddAddressCommand}" Margin="5"/>
                     <Button Name="AddPackButton" Content="Add package" Command="{Binding AddPackCommand}" Margin="5"/>
                     <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="5"/>

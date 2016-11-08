@@ -60,7 +60,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                };
                                courierRepo.Add(courier);
                                _unitOfWorkService.SaveChanges();
-                               _navigationService.NavigateTo(ViewModelLocator.AddCourierPageKey);
+                               _navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
                            }));
             }
         }

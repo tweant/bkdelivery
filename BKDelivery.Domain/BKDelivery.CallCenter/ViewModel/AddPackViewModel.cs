@@ -68,13 +68,13 @@ namespace BKDelivery.CallCenter.ViewModel
                                {
                                    Weight = Weight,
                                    Cost = Cost,
-                                   Category =
-                                       _unitOfWorkService.UnitOfWork.Repository<Category>()
-                                           .GetDetail(x => x.CategoryId == SelectedCategory.CategoryId)
+                                   //Category =
+                                   //    _unitOfWorkService.UnitOfWork.Repository<Category>()
+                                   //        .GetDetail(x => x.CategoryId == SelectedCategory.CategoryId)
                                };
                                addpackRepo.Add(pack);
                                _unitOfWorkService.SaveChanges();
-                               _navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
+                               _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
                            }));
             }
         }

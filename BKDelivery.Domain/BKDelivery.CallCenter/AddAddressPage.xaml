@@ -31,7 +31,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-
+            <Button Name="BackButton" Content="Back" Command="{Binding BackCommand}" Margin="5"/>
             <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="5"/>
         </StackPanel>
     </GroupBox>

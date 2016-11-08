@@ -14,12 +14,12 @@
             <StackPanel Orientation="Vertical">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Horizontal">
-                        <ListView ItemsSource="{Binding ClientsCollection}" Margin="5">
+                        <ListView ItemsSource="{Binding ClientsCollection}" Margin="5" SelectedItem="{Binding SelectedClient}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
                                     <GridViewColumn Header="Surname" DisplayMemberBinding="{Binding Surname}" />
-                                    <GridViewColumn Header="Phone number" DisplayMemberBinding="{Binding PhoneNumber}" />
+                                    <GridViewColumn Header="Phone number" DisplayMemberBinding="{Binding PhoneNumber}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

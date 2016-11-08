@@ -9,10 +9,10 @@
       Title="AddressesPage"
       DataContext="{Binding AddressesVm, Source={StaticResource Locator}}">
 
-    <DockPanel>
+    <!--DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button x:Name="AddAddressButton" Content="Add" Command="{Binding AddAddressCommand}" Height="30" Width="30" VerticalAlignment="Top"
         HorizontalAlignment="Left"/>
         </StackPanel>
-    </DockPanel>
+    </-->
 </Page>

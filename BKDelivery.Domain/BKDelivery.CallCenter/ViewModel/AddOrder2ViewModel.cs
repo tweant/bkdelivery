@@ -15,29 +15,35 @@ namespace BKDelivery.CallCenter.ViewModel
         private RelayCommand _saveCommand;
         private RelayCommand _addAddressCommand;
         private RelayCommand _addPackCommand;
+        private ObservableCollection<Address> _addressesTypesCollecion;
 
         public AddOrder2ViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
         {
             _navigationService = navigationService;
             _unitOfWorkService = unitOfWorkService;
-
-            _unitOfWorkService.InitializeTransaction();
-            var typesRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
-            AddressesCollection = new List<Address>(typesRepo.GetOverview());
-            _unitOfWorkService.SaveChanges();
         }
 
-        private List<Address> _addressesCollection;
+        public ObservableCollection<Address> AddressesCollection
+        {
+            get
+            {
+                _unitOfWorkService.InitializeTransaction();
+                var typesRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
+                _addressesTypesCollecion = new ObservableCollection<Address>(typesRepo.GetOverview());
+                _unitOfWorkService.SaveChanges();
+                return _addressesTypesCollecion;
+            }
+            set
+            {
+                Set(() => AddressesCollection, ref _addressesTypesCollecion, value);
+            }
+        }
+
         private Address _SelectedHomeAddress;
         private Address _SelectedDeliveryAddress;
         private Address _SelectedInvokeAddress;
-        private Client _selectedClient;
-
-        public List<Address> AddressesCollection
-        {
-            get { return _addressesCollection; }
-            set { Set(() => AddressesCollection, ref _addressesCollection, value); }
-        }
+        //private Client _selectedClient;
+        private ObservableCollection<Package> _packsTypesCollecion;
 
         public Address SelectedHomeAddress
         {
@@ -83,6 +89,23 @@ namespace BKDelivery.CallCenter.ViewModel
             }
         }
 
+        public ObservableCollection<Package> PacksCollection
+        {
+            get
+            {
+                _unitOfWorkService.InitializeTransaction();
+                var packsRepo = _unitOfWorkService.UnitOfWork.Repository<Package>();
+                _packsTypesCollecion = new ObservableCollection<Package>(packsRepo.GetOverview());
+                _unitOfWorkService.SaveChanges();
+                return _packsTypesCollecion;
+            }
+            set
+            {
+                Set(() => PacksCollection, ref _packsTypesCollecion, value);
+            }
+        }
+
+
         public RelayCommand SaveCommand
         {
             get
@@ -98,12 +121,12 @@ namespace BKDelivery.CallCenter.ViewModel
                                                    FromAddress = SelectedHomeAddress,
                                                    ToAddress = SelectedDeliveryAddress,
                                                    //InvokeAddress = SelectedInvokeAddress,
-                                                   Client = _selectedClient,
+                                                   //Client = _selectedClient,
                                                    //Packages = ,
                                                };
                                                orderRepo.Add(order);
                                                _unitOfWorkService.SaveChanges();
-                                               _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey);
+                                               _navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
                                            }));
             }
         }

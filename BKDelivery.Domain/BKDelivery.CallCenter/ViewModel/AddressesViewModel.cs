@@ -17,9 +17,9 @@ namespace BKDelivery.CallCenter.ViewModel
         private readonly INavigationService _navigationService;
         private readonly IUnitOfWorkService _unitOfWorkService;
 
-        private ObservableCollection<Address> _addressTypesCollecion;
+        //private ObservableCollection<Address> _addressTypesCollecion;
 
-        private RelayCommand _addAddressCommand;
+        //private RelayCommand _addAddressCommand;
 
         public AddressesViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
         {
@@ -29,33 +29,33 @@ namespace BKDelivery.CallCenter.ViewModel
             
         }
 
-        public ObservableCollection<Address> AddressesCollection
-        {
-            get
-            {
-                _unitOfWorkService.InitializeTransaction();
-                var addressRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
-                _addressTypesCollecion = new ObservableCollection<Address>(addressRepo.GetOverview());
-                _unitOfWorkService.SaveChanges();
-                return _addressTypesCollecion;
-            }
-            set
-            {
-                Set(() => AddressesCollection, ref _addressTypesCollecion, value);
-            }
-        }
+        //public ObservableCollection<Address> AddressesCollection
+        //{
+        //    get
+        //    {
+        //        _unitOfWorkService.InitializeTransaction();
+        //        var addressRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
+        //        _addressTypesCollecion = new ObservableCollection<Address>(addressRepo.GetOverview());
+        //        _unitOfWorkService.SaveChanges();
+        //        return _addressTypesCollecion;
+        //    }
+        //    set
+        //    {
+        //        Set(() => AddressesCollection, ref _addressTypesCollecion, value);
+        //    }
+        //}
 
-        public RelayCommand AddAddressCommand
-        {
-            get
-            {
-                return _addAddressCommand
-                    ?? (_addAddressCommand = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey);
-                    }));
-            }
-        }
+        //public RelayCommand AddAddressCommand
+        //{
+        //    get
+        //    {
+        //        return _addAddressCommand
+        //            ?? (_addAddressCommand = new RelayCommand(
+        //            () =>
+        //            {
+        //                _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey);
+        //            }));
+        //    }
+        //}
     }
 }

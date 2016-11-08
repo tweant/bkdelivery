@@ -19,6 +19,7 @@ namespace BKDelivery.CallCenter.ViewModel
         private readonly IUnitOfWorkService _unitOfWorkService;
 
         private RelayCommand _saveCommand;
+        private RelayCommand _backCommand;
 
         public AddAddressViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
         {
@@ -139,7 +140,20 @@ namespace BKDelivery.CallCenter.ViewModel
                                };
                                addressesRepo.Add(address);
                                _unitOfWorkService.SaveChanges();
-                               _navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
+                               _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
+                           }));
+            }
+        }
+
+        public RelayCommand BackCommand
+        {
+            get
+            {
+                return _backCommand
+                       ?? (_backCommand = new RelayCommand(
+                           () =>
+                           {
+                               _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
                            }));
             }
         }
