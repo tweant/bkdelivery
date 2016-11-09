@@ -26,6 +26,7 @@ namespace BKDelivery.CallCenter.Model
         void PackageAdd(Package package);
         IEnumerable<Package> PackagesByOrder(int orderId);
 
+        void OrderAdd(Order order);
         IEnumerable<Order> OrdersAll();
     }
 }

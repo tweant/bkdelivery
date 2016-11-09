@@ -4,6 +4,8 @@ using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -15,7 +17,13 @@ namespace BKDelivery.CallCenter.ViewModel
         private RelayCommand _saveCommand;
         private RelayCommand _addAddressCommand;
         private RelayCommand _addPackCommand;
+        private Address _selectedHomeAddress;
+        private Address _selectedDeliveryAddress;
+        private Address _selectedInvokeAddress;
+        private ObservableCollection<Package> _packsTypesCollecion;
         private ObservableCollection<Address> _addressesTypesCollecion;
+        private ObservableCollection<Address> _invoiceAddressesCollection;
+        private ObservableCollection<Address> _deliveryAddressesCollection;
 
         public AddOrder2ViewModel(INavigationService navigationService, IDataService dataService)
         {
@@ -23,35 +31,57 @@ namespace BKDelivery.CallCenter.ViewModel
             _dataService = dataService;
         }
 
+        private Client SelectedClient => SelectedOrder.Client;
+        private Order SelectedOrder => _navigationService.Parameter as Order;
+
         public ObservableCollection<Address> AddressesCollection
         {
-            //TODO Powinny być trzy typy AddressesCollection dla kazdego typu
-            get { return new ObservableCollection<Address>(_dataService.AddressessByClient(0)); }
+            get
+            {
+                return new ObservableCollection<Address>(_dataService.AddressessByClient(
+                    SelectedClient.ClientId, 1));
+            }
             set { Set(() => AddressesCollection, ref _addressesTypesCollecion, value); }
         }
 
-        private Address _SelectedHomeAddress;
-        private Address _SelectedDeliveryAddress;
-        private Address _SelectedInvokeAddress;
-        //private Client _selectedClient;
-        private ObservableCollection<Package> _packsTypesCollecion;
+        public ObservableCollection<Address> DeliveryAddressesCollection
+        {
+            get
+            {
+                return
+                    new ObservableCollection<Address>(_dataService.AddressessByClient(
+                        SelectedClient.ClientId, 3));
+            }
+            set { Set(() => DeliveryAddressesCollection, ref _deliveryAddressesCollection, value); }
+        }
+
+        public ObservableCollection<Address> InvoiceAddressesCollection
+        {
+            get
+            {
+                    return
+                        new ObservableCollection<Address>(_dataService.AddressessByClient(
+                            SelectedClient.ClientId, 2));
+            }
+            set { Set(() => InvoiceAddressesCollection, ref _invoiceAddressesCollection, value); }
+        }
 
         public Address SelectedHomeAddress
         {
-            get { return _SelectedHomeAddress; }
-            set { Set(() => SelectedHomeAddress, ref _SelectedHomeAddress, value); }
+            get { return _selectedHomeAddress; }
+            set { Set(() => SelectedHomeAddress, ref _selectedHomeAddress, value); }
         }
 
         public Address SelectedDeliveryAddress
         {
-            get { return _SelectedDeliveryAddress; }
-            set { Set(() => SelectedDeliveryAddress, ref _SelectedDeliveryAddress, value); }
+            get { return _selectedDeliveryAddress; }
+            set { Set(() => SelectedDeliveryAddress, ref _selectedDeliveryAddress, value); }
         }
 
         public Address SelectedInvokeAddress
         {
-            get { return _SelectedInvokeAddress; }
-            set { Set(() => SelectedInvokeAddress, ref _SelectedInvokeAddress, value); }
+            get { return _selectedInvokeAddress; }
+            set { Set(() => SelectedInvokeAddress, ref _selectedInvokeAddress, value); }
         }
 
         public RelayCommand AddAddressCommand
@@ -60,7 +90,10 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return _addAddressCommand
                        ?? (_addAddressCommand = new RelayCommand(
-                           () => { _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey); }));
+                           () =>
+                           {
+                               _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey, SelectedOrder);
+                           }));
             }
         }
 

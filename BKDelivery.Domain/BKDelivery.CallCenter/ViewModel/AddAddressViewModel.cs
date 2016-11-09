@@ -59,6 +59,8 @@ namespace BKDelivery.CallCenter.ViewModel
         private List<AddressType> _typesCollection;
         private List<string> _voivodeshipsCollection;
 
+        private Order SelectedOrder => _navigationService.Parameter as Order;
+
         public List<string> VoivodeshipsCollection
         {
             get { return _voivodeshipsCollection; }
@@ -130,7 +132,9 @@ namespace BKDelivery.CallCenter.ViewModel
                                    City = City,
                                    Country = "Poland",
                                    Voivodeship = SelectedVoivodeship,
-                                   AddressTypeId = SelectedType.AddressTypeId
+                                   AddressTypeId = SelectedType.AddressTypeId,
+                                   ClientId=SelectedOrder.ClientId,
+                                  
                                };
                                _dataService.AddressAdd(address);
                                _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);

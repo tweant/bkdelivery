@@ -102,7 +102,7 @@ namespace BKDelivery.Domain.Data
             IAddressTypesRepository addressTypeRepo = uow.AddressTypesRepository;
             if (!addressTypeRepo.GetAll().Any())
             {
-                addressTypeRepo.Add(houseAddressType);
+                addressTypeRepo.Add(houseAddressType); //id=1
                 addressTypeRepo.Add(invoiceAddressType);
                 addressTypeRepo.Add(deliveryAddressType);
             }

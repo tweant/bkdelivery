@@ -30,6 +30,7 @@ namespace BKDelivery.Domain.Data.Repositories
         public void Add(Address entity)
         {
             entity.AddressType = _db.AddressTypes.Find(entity.AddressTypeId);
+            entity.Client = _db.Clients.Find(entity.ClientId);
             //TODO CLIENT
             _set.Add(entity);
 

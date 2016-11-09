@@ -22,7 +22,7 @@ namespace BKDelivery.CallCenter.ViewModel
 
         public ObservableCollection<Order> OrdersCollection
         {
-            get { return _ordersCollection; }
+            get { return new ObservableCollection<Order>(_dataService.OrdersAll()); }
             set { Set(() => OrdersCollection, ref _ordersCollection, value); }
         }
 

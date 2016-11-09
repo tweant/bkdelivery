@@ -86,6 +86,13 @@ namespace BKDelivery.CallCenter.Model
             return collection;
         }
 
+        public void OrderAdd(Order order)
+        {
+            UnitOfWork db = new UnitOfWork();
+            db.OrdersRepository.Add(order);
+            db.SaveChanges();
+        }
+
         public IEnumerable<Order> OrdersAll()
         {
             UnitOfWork db = new UnitOfWork();

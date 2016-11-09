@@ -68,6 +68,7 @@ namespace BKDelivery.CallCenter.Model
             {
                 if (EnsureMainFrame())
                 {
+                    Parameter = context;
                     _mainFrame.Navigate(page, context);
                 }
             }
@@ -101,5 +102,7 @@ namespace BKDelivery.CallCenter.Model
                 return key;
             }
         }
+
+        public object Parameter { get; private set; }
     }
 }

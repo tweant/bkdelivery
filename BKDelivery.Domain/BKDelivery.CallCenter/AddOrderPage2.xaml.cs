@@ -24,5 +24,6 @@ namespace BKDelivery.CallCenter
         {
             InitializeComponent();
         }
+
     }
 }

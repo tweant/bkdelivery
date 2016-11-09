@@ -26,6 +26,7 @@ namespace BKDelivery.Domain.Data.Repositories
         }
         public void Add(Order entity)
         {
+            entity.Client = _db.Clients.Find(entity.ClientId);
             _set.Add(entity);
 
         }

@@ -28,29 +28,30 @@ namespace BKDelivery.CallCenter.ViewModel
         }
 
 
-        private Client _SelectedClient;
+        private Client _selectedClient;
 
         public Client SelectedClient
         {
-            get { return _SelectedClient; }
-            set { Set(() => SelectedClient, ref _SelectedClient, value); }
+            get { return _selectedClient; }
+            set { Set(() => SelectedClient, ref _selectedClient, value); }
         }
 
         public RelayCommand ChooseClient
         {
             get
             {
-                if (SelectedClient != null)
                 {
                     return _chooseclient
                            ?? (_chooseclient = new RelayCommand(
-                               () => { _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2); }));
-                }
-                else
-                {
-                    return _chooseclient
-                           ?? (_chooseclient = new RelayCommand(
-                               () => { _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2); }));
+                               () =>
+                               {
+                                   var order = new Order
+                                   {
+                                       ClientId = _selectedClient.ClientId,
+                                   };
+                                   _dataService.OrderAdd(order);
+                                   _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2, order);
+                               }));
                 }
             }
         }

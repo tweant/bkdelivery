@@ -15,7 +15,7 @@ namespace BKDelivery.Domain.Model
         public int PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
 
-        public List<Address> DeliveryAddresses { get; set; }
+        public List<Address> Addresses { get; set; }
         public List<Order> Orders { get; set; }
 
         [Timestamp]
@@ -23,7 +23,7 @@ namespace BKDelivery.Domain.Model
 
         public Client()
         {
-            DeliveryAddresses = new List<Address>();
+            Addresses = new List<Address>();
             Orders = new List<Order>();
         }
     }

@@ -9,6 +9,7 @@ namespace BKDelivery.CallCenter.Model
         void NavigateTo(string pageKey);
         void NavigateTo(string pageKey, object context);
         string CurrentPageKey { get; }
+        object Parameter { get; }
 
     }
 }
