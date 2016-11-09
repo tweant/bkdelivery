@@ -20,6 +20,8 @@ namespace BKDelivery.CallCenter.ViewModel
             _dataService = dataService;
         }
 
+        private Order SelectedOrder => _navigationService.Parameter as Order;
+
         private double _weight;
         private decimal _cost;
         private Category _selectedcategory;
@@ -43,12 +45,14 @@ namespace BKDelivery.CallCenter.ViewModel
             set { Set(() => Weight, ref _weight, value); }
         }
 
+        //TODO Koszt musi uwzględniać mnożnik z kategorii i wagę, żeby ceny się jakoś różniły
         public decimal Cost
         {
             get { return _cost; }
             set { Set(() => Cost, ref _cost, value); }
         }
 
+        //TODO Nie może być aktywny jeśli nie ma zaznaczonej kategorii
         public RelayCommand AddCommand
         {
             get
@@ -61,11 +65,9 @@ namespace BKDelivery.CallCenter.ViewModel
                                {
                                    Weight = Weight,
                                    Cost = Cost,
-                                   //Category =
-                                   //    _unitOfWorkService.UnitOfWork.Repository<Category>()
-                                   //        .GetDetail(x => x.CategoryId == SelectedCategory.CategoryId)
+                                   CategoryId=SelectedCategory.CategoryId,
                                };
-                               _dataService.PackageAdd(pack);
+                               _dataService.PackageAdd(pack,SelectedOrder);
                                _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
                            }));
             }

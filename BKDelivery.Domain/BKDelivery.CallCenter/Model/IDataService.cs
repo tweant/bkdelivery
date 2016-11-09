@@ -23,7 +23,7 @@ namespace BKDelivery.CallCenter.Model
 
         IEnumerable<Category> CategoriesAll();
 
-        void PackageAdd(Package package);
+        void PackageAdd(Package package, Order order);
         IEnumerable<Package> PackagesByOrder(int orderId);
 
         void OrderAdd(Order order);

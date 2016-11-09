@@ -12,6 +12,7 @@ namespace BKDelivery.Domain.Data.Repositories
     public interface ICategoriesRepository
     {
         IEnumerable<Category> GetAll();
+        void Add(Category category);
     }
 
     public class CategoriesRepository : ICategoriesRepository
@@ -28,6 +29,11 @@ namespace BKDelivery.Domain.Data.Repositories
         public IEnumerable<Category> GetAll()
         {
             return _set.AsEnumerable();
+        }
+
+        public void Add(Category category)
+        {
+            _set.Add(category);
         }
     }
 }

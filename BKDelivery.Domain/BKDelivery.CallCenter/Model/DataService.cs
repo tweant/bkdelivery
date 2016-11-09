@@ -71,10 +71,10 @@ namespace BKDelivery.CallCenter.Model
             return collection;
         }
 
-        public void PackageAdd(Package package)
+        public void PackageAdd(Package package, Order order)
         {
             UnitOfWork db = new UnitOfWork();
-            db.PackagesRepository.Add(package);
+            db.PackagesRepository.Add(package,order);
             db.SaveChanges();
         }
 

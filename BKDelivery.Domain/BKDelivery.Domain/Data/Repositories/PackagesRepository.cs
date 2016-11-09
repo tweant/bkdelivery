@@ -11,7 +11,7 @@ namespace BKDelivery.Domain.Data.Repositories
 
     public interface IPackagesRepository
     {
-        void Add(Package client);
+        void Add(Package client,Order order);
         IEnumerable<Package> GetOrderPackages(int orderId);
     }
 
@@ -25,10 +25,11 @@ namespace BKDelivery.Domain.Data.Repositories
             _db = db;
             _set = _db.Packages;
         }
-        public void Add(Package entity)
+        public void Add(Package entity, Order order)
         {
             entity.Category = _db.Categories.Find(entity.CategoryId);
             _set.Add(entity);
+            _db.Orders.Find(order.OrderId).Packages.Add(entity);
 
         }
 

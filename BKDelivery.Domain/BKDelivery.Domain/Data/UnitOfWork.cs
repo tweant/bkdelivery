@@ -106,6 +106,13 @@ namespace BKDelivery.Domain.Data
                 addressTypeRepo.Add(invoiceAddressType);
                 addressTypeRepo.Add(deliveryAddressType);
             }
+
+            ICategoriesRepository categoriesRepo = uow.CategoriesRepository;
+            if (!categoriesRepo.GetAll().Any())
+            {
+                categoriesRepo.Add(new Category {Name = "Stone", Multiplier = 12});
+                categoriesRepo.Add(new Category {Name = "Brick", Multiplier = 8});
+            }
         }
     }
 }

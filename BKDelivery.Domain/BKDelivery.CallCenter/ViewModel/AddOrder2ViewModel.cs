@@ -103,7 +103,7 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return _addPackCommand
                        ?? (_addPackCommand = new RelayCommand(
-                           () => { _navigationService.NavigateTo(ViewModelLocator.AddPackPageKey); }));
+                           () => { _navigationService.NavigateTo(ViewModelLocator.AddPackPageKey,SelectedOrder); }));
             }
         }
 
@@ -111,9 +111,7 @@ namespace BKDelivery.CallCenter.ViewModel
         {
             get
             {
-                return new ObservableCollection<Package>();
-                //TODO Tutaj nie łączymy się z bazą, nie mamy jeszcze stworzonego Order - nie moge odwołać się do order ktore nie istnieje jeszcze
-                //  return new ObservableCollection<Package>(_dataService.PackagesByOrder(#currentorderid));
+                return new ObservableCollection<Package>(_dataService.PackagesByOrder(SelectedOrder.OrderId));
             }
             set { Set(() => PacksCollection, ref _packsTypesCollecion, value); }
         }
