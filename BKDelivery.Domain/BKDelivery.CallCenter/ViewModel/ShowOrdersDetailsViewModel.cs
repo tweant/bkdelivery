@@ -9,34 +9,16 @@ namespace BKDelivery.CallCenter.ViewModel
     public class ShowOrdersDetailsViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly IUnitOfWorkService _unitOfWorkService;
-
-        private ObservableCollection<Address> _addressTypesCollecion;
+        private readonly IDataService _dataService;
 
         private RelayCommand _addAddressCommand;
 
-        public ShowOrdersDetailsViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
+        public ShowOrdersDetailsViewModel(INavigationService navigationService, IDataService dataService)
         {
             _navigationService = navigationService;
-            _unitOfWorkService = unitOfWorkService;
-
-            _unitOfWorkService.InitializeTransaction();
-            var addressRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
-            AddressesCollection = new ObservableCollection<Address>(addressRepo.GetOverview());
-            _unitOfWorkService.SaveChanges();
+            _dataService = dataService;
         }
 
-        public ObservableCollection<Address> AddressesCollection
-        {
-            get
-            {
-                return _addressTypesCollecion;
-            }
-            set
-            {
-                Set(() => AddressesCollection, ref _addressTypesCollecion, value);
-            }
-        }
 
         public RelayCommand AddAddressCommand
         {

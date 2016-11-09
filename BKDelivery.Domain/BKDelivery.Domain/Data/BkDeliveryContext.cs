@@ -12,6 +12,7 @@ namespace BKDelivery.Domain.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<TimeInterval> TimeIntervals { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

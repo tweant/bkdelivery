@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace BKDelivery.CallCenter
 {
     /// <summary>
-    /// Interaction logic for AddressesPage.xaml
+    /// Interaction logic for HomePage.xaml
     /// </summary>
-    public partial class AddressesPage : Page
+    public partial class HomePage : Page
     {
-        public AddressesPage()
+        public HomePage()
         {
             InitializeComponent();
         }

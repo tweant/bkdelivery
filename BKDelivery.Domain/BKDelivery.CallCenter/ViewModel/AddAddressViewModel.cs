@@ -16,15 +16,15 @@ namespace BKDelivery.CallCenter.ViewModel
     public class AddAddressViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly IUnitOfWorkService _unitOfWorkService;
+        private readonly IDataService _dataService;
 
         private RelayCommand _saveCommand;
         private RelayCommand _backCommand;
 
-        public AddAddressViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
+        public AddAddressViewModel(INavigationService navigationService, IDataService dataService)
         {
             _navigationService = navigationService;
-            _unitOfWorkService = unitOfWorkService;
+            _dataService = dataService;
             VoivodeshipsCollection = new List<string>
             {
                 "dolnośląskie",
@@ -45,10 +45,8 @@ namespace BKDelivery.CallCenter.ViewModel
                 "zachodniopomorskie"
             };
 
-            _unitOfWorkService.InitializeTransaction();
-            var typesRepo = _unitOfWorkService.UnitOfWork.Repository<AddressType>();
-            TypesCollection = new List<AddressType>(typesRepo.GetOverview());
-            _unitOfWorkService.SaveChanges();
+            TypesCollection = new List<AddressType>(_dataService.AddressTypesAll());
+
         }
 
         private string _street;
@@ -123,8 +121,6 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_saveCommand = new RelayCommand(
                            () =>
                            {
-                               _unitOfWorkService.InitializeTransaction();
-                               var addressesRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
                                var address = new Address
                                {
                                    Street = Street,
@@ -134,12 +130,9 @@ namespace BKDelivery.CallCenter.ViewModel
                                    City = City,
                                    Country = "Poland",
                                    Voivodeship = SelectedVoivodeship,
-                                   AddressType =
-                                       _unitOfWorkService.UnitOfWork.Repository<AddressType>()
-                                           .GetDetail(x => x.AddressTypeId == SelectedType.AddressTypeId)
+                                   AddressTypeId = SelectedType.AddressTypeId
                                };
-                               addressesRepo.Add(address);
-                               _unitOfWorkService.SaveChanges();
+                               _dataService.AddressAdd(address);
                                _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
                            }));
             }

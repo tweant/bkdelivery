@@ -10,14 +10,14 @@ namespace BKDelivery.CallCenter.ViewModel
     public class AddClientViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly IUnitOfWorkService _unitOfWorkService;
+        private readonly IDataService _dataService;
 
         private RelayCommand _saveCommand;
 
-        public AddClientViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
+        public AddClientViewModel(INavigationService navigationService, IDataService dataService)
         {
             _navigationService = navigationService;
-            _unitOfWorkService = unitOfWorkService;
+            _dataService = dataService;
 
         }
 
@@ -57,8 +57,6 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_saveCommand = new RelayCommand(
                            () =>
                            {
-                               _unitOfWorkService.InitializeTransaction();
-                               var clientRepo = _unitOfWorkService.UnitOfWork.Repository<Client>();
                                var client = new Client
                                {
                                    Name = Name,
@@ -66,9 +64,8 @@ namespace BKDelivery.CallCenter.ViewModel
                                    PhoneNumber = PhoneNumber,
                                    EmailAddress = EmailAddress,
                                };
-                               clientRepo.Add(client);
-                               _unitOfWorkService.SaveChanges();
-                               _navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
+                               _dataService.ClientAdd(client);
+                               _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
                            }));
             }
         }

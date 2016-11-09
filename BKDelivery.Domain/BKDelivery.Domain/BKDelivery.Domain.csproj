@@ -68,10 +68,18 @@
   <ItemGroup>
     <Compile Include="Data\BkDeliveryContext.cs" />
     <Compile Include="Data\GenericRepository.cs" />
-    <Compile Include="Data\GenericUnitOfWork.cs" />
+    <Compile Include="Data\Repositories\AddressTypesRepository.cs" />
+    <Compile Include="Data\Repositories\CategoriesRepository.cs" />
+    <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Data\IDbContext.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\IUnitOfWork.cs" />
+    <Compile Include="Data\Repositories\AddressesRepository.cs" />
+    <Compile Include="Data\Repositories\ClientsRepository.cs" />
+    <Compile Include="Data\Repositories\CouriersRepository.cs" />
+    <Compile Include="Data\Repositories\OrdersRepository.cs" />
+    <Compile Include="Data\Repositories\PackagesRepository.cs" />
+    <Compile Include="Data\Repositories\TimeIntervalsRepository.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressType.cs" />
     <Compile Include="Model\Category.cs" />

@@ -11,6 +11,7 @@ namespace BKDelivery.Domain.Model
     {
         public int CategoryId { get; set; }
         public string Name { get; set; }
+        public double Multiplier { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

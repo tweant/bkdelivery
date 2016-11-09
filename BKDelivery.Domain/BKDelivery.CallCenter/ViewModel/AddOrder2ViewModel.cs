@@ -10,33 +10,24 @@ namespace BKDelivery.CallCenter.ViewModel
     public class AddOrder2ViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly IUnitOfWorkService _unitOfWorkService;
+        private readonly IDataService _dataService;
 
         private RelayCommand _saveCommand;
         private RelayCommand _addAddressCommand;
         private RelayCommand _addPackCommand;
         private ObservableCollection<Address> _addressesTypesCollecion;
 
-        public AddOrder2ViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
+        public AddOrder2ViewModel(INavigationService navigationService, IDataService dataService)
         {
             _navigationService = navigationService;
-            _unitOfWorkService = unitOfWorkService;
+            _dataService = dataService;
         }
 
         public ObservableCollection<Address> AddressesCollection
         {
-            get
-            {
-                _unitOfWorkService.InitializeTransaction();
-                var typesRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
-                _addressesTypesCollecion = new ObservableCollection<Address>(typesRepo.GetOverview());
-                _unitOfWorkService.SaveChanges();
-                return _addressesTypesCollecion;
-            }
-            set
-            {
-                Set(() => AddressesCollection, ref _addressesTypesCollecion, value);
-            }
+            //TODO Powinny być trzy typy AddressesCollection dla kazdego typu
+            get { return new ObservableCollection<Address>(_dataService.AddressessByClient(0)); }
+            set { Set(() => AddressesCollection, ref _addressesTypesCollecion, value); }
         }
 
         private Address _SelectedHomeAddress;
@@ -68,11 +59,8 @@ namespace BKDelivery.CallCenter.ViewModel
             get
             {
                 return _addAddressCommand
-                    ?? (_addAddressCommand = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey);
-                    }));
+                       ?? (_addAddressCommand = new RelayCommand(
+                           () => { _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey); }));
             }
         }
 
@@ -81,11 +69,8 @@ namespace BKDelivery.CallCenter.ViewModel
             get
             {
                 return _addPackCommand
-                    ?? (_addPackCommand = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.AddPackPageKey);
-                    }));
+                       ?? (_addPackCommand = new RelayCommand(
+                           () => { _navigationService.NavigateTo(ViewModelLocator.AddPackPageKey); }));
             }
         }
 
@@ -93,16 +78,11 @@ namespace BKDelivery.CallCenter.ViewModel
         {
             get
             {
-                _unitOfWorkService.InitializeTransaction();
-                var packsRepo = _unitOfWorkService.UnitOfWork.Repository<Package>();
-                _packsTypesCollecion = new ObservableCollection<Package>(packsRepo.GetOverview());
-                _unitOfWorkService.SaveChanges();
-                return _packsTypesCollecion;
+                return new ObservableCollection<Package>();
+                //TODO Tutaj nie łączymy się z bazą, nie mamy jeszcze stworzonego Order - nie moge odwołać się do order ktore nie istnieje jeszcze
+                //  return new ObservableCollection<Package>(_dataService.PackagesByOrder(#currentorderid));
             }
-            set
-            {
-                Set(() => PacksCollection, ref _packsTypesCollecion, value);
-            }
+            set { Set(() => PacksCollection, ref _packsTypesCollecion, value); }
         }
 
 
@@ -111,23 +91,23 @@ namespace BKDelivery.CallCenter.ViewModel
             get
             {
                 return _saveCommand
-                                       ?? (_saveCommand = new RelayCommand(
-                                           () =>
-                                           {
-                                               _unitOfWorkService.InitializeTransaction();
-                                               var orderRepo = _unitOfWorkService.UnitOfWork.Repository<Order>();
-                                               var order = new Order
-                                               {
-                                                   FromAddress = SelectedHomeAddress,
-                                                   ToAddress = SelectedDeliveryAddress,
-                                                   //InvokeAddress = SelectedInvokeAddress,
-                                                   //Client = _selectedClient,
-                                                   //Packages = ,
-                                               };
-                                               orderRepo.Add(order);
-                                               _unitOfWorkService.SaveChanges();
-                                               _navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
-                                           }));
+                       ?? (_saveCommand = new RelayCommand(
+                           () =>
+                           {
+                               //_dataService.InitializeTransaction();
+                               //var orderRepo = _dataService.UnitOfWork.Repository<Order>();
+                               //var order = new Order
+                               //{
+                               //    FromAddress = SelectedHomeAddress,
+                               //    ToAddress = SelectedDeliveryAddress,
+                               //    //InvokeAddress = SelectedInvokeAddress,
+                               //    //Client = _selectedClient,
+                               //    //Packages = ,
+                               //};
+                               //orderRepo.Add(order);
+                               //_dataService.SaveChanges();
+                               //_navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
+                           }));
             }
         }
     }

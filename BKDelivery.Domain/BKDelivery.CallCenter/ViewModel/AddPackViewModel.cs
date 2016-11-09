@@ -10,19 +10,14 @@ namespace BKDelivery.CallCenter.ViewModel
     public class AddPackViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly IUnitOfWorkService _unitOfWorkService;
+        private readonly IDataService _dataService;
 
         private RelayCommand _addCommand;
 
-        public AddPackViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
+        public AddPackViewModel(INavigationService navigationService, IDataService dataService)
         {
             _navigationService = navigationService;
-            _unitOfWorkService = unitOfWorkService;
-
-            _unitOfWorkService.InitializeTransaction();
-            var typesRepo = _unitOfWorkService.UnitOfWork.Repository<Category>();
-            CategoriesCollection = new List<Category>(typesRepo.GetOverview());
-            _unitOfWorkService.SaveChanges();
+            _dataService = dataService;
         }
 
         private double _weight;
@@ -32,7 +27,7 @@ namespace BKDelivery.CallCenter.ViewModel
 
         public List<Category> CategoriesCollection
         {
-            get { return _categoriesCollection; }
+            get { return new List<Category>(_dataService.CategoriesAll()); }
             set { Set(() => CategoriesCollection, ref _categoriesCollection, value); }
         }
 
@@ -62,8 +57,6 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_addCommand = new RelayCommand(
                            () =>
                            {
-                               _unitOfWorkService.InitializeTransaction();
-                               var addpackRepo = _unitOfWorkService.UnitOfWork.Repository<Package>();
                                var pack = new Package
                                {
                                    Weight = Weight,
@@ -72,8 +65,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                    //    _unitOfWorkService.UnitOfWork.Repository<Category>()
                                    //        .GetDetail(x => x.CategoryId == SelectedCategory.CategoryId)
                                };
-                               addpackRepo.Add(pack);
-                               _unitOfWorkService.SaveChanges();
+                               _dataService.PackageAdd(pack);
                                _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
                            }));
             }

@@ -9,14 +9,14 @@ namespace BKDelivery.CallCenter.ViewModel
     public class AddCourierViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly IUnitOfWorkService _unitOfWorkService;
+        private readonly IDataService _dataService;
 
         private RelayCommand _saveCommand;
 
-        public AddCourierViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
+        public AddCourierViewModel(INavigationService navigationService, IDataService dataService)
         {
             _navigationService = navigationService;
-            _unitOfWorkService = unitOfWorkService;
+            _dataService = dataService;
 
         }
 
@@ -50,17 +50,14 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_saveCommand = new RelayCommand(
                            () =>
                            {
-                               _unitOfWorkService.InitializeTransaction();
-                               var courierRepo = _unitOfWorkService.UnitOfWork.Repository<Courier>();
                                var courier = new Courier
                                {
                                    Name = Name,
                                    Surname = Surname,
-                                   PhoneNumber = PhoneNumber,
+                                   PhoneNumber = PhoneNumber
                                };
-                               courierRepo.Add(courier);
-                               _unitOfWorkService.SaveChanges();
-                               _navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
+                               _dataService.CourierAdd(courier);
+                               _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
                            }));
             }
         }

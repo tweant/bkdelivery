@@ -114,13 +114,13 @@
     <Compile Include="AddPackPage.xaml.cs">
       <DependentUpon>AddPackPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddressesPage.xaml.cs">
-      <DependentUpon>AddressesPage.xaml</DependentUpon>
+    <Compile Include="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\DataService.cs" />
+    <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\INavigationService.cs" />
-    <Compile Include="Model\IUnitOfWorkService.cs" />
     <Compile Include="Model\NavigationService.cs" />
-    <Compile Include="Model\UnitOfWorkService.cs" />
     <Compile Include="ShowClientsPage.xaml.cs">
       <DependentUpon>ShowClientsPage.xaml</DependentUpon>
     </Compile>
@@ -136,7 +136,7 @@
     <Compile Include="ViewModel\AddOrder2ViewModel.cs" />
     <Compile Include="ViewModel\AddOrderViewModel.cs" />
     <Compile Include="ViewModel\AddPackViewModel.cs" />
-    <Compile Include="ViewModel\AddressesViewModel.cs" />
+    <Compile Include="ViewModel\HomePageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ShowClientsViewModel.cs" />
     <Compile Include="ViewModel\ShowOrdersDetailsViewModel.cs" />
@@ -166,7 +166,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddressesPage.xaml">
+    <Page Include="HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -249,9 +249,7 @@
       <Name>BKDelivery.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Design\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Themes\Metro\HowToApplyTheme.txt" />
   </ItemGroup>

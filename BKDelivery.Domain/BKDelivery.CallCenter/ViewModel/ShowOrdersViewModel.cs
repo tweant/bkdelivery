@@ -9,33 +9,21 @@ namespace BKDelivery.CallCenter.ViewModel
     public class ShowOrdersViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly IUnitOfWorkService _unitOfWorkService;
-
-        private ObservableCollection<Address> _addressTypesCollecion;
+        private readonly IDataService _dataService;
 
         private RelayCommand _addAddressCommand;
+        private ObservableCollection<Order> _ordersCollection;
 
-        public ShowOrdersViewModel(INavigationService navigationService, IUnitOfWorkService unitOfWorkService)
+        public ShowOrdersViewModel(INavigationService navigationService, IDataService dataService)
         {
             _navigationService = navigationService;
-            _unitOfWorkService = unitOfWorkService;
-
-            _unitOfWorkService.InitializeTransaction();
-            var addressRepo = _unitOfWorkService.UnitOfWork.Repository<Address>();
-            AddressesCollection = new ObservableCollection<Address>(addressRepo.GetOverview());
-            _unitOfWorkService.SaveChanges();
+            _dataService = dataService;
         }
 
-        public ObservableCollection<Address> AddressesCollection
+        public ObservableCollection<Order> OrdersCollection
         {
-            get
-            {
-                return _addressTypesCollecion;
-            }
-            set
-            {
-                Set(() => AddressesCollection, ref _addressTypesCollecion, value);
-            }
+            get { return _ordersCollection; }
+            set { Set(() => OrdersCollection, ref _ordersCollection, value); }
         }
 
         public RelayCommand OrdersButtonCommand
@@ -43,11 +31,8 @@ namespace BKDelivery.CallCenter.ViewModel
             get
             {
                 return _addAddressCommand
-                    ?? (_addAddressCommand = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey);
-                    }));
+                       ?? (_addAddressCommand = new RelayCommand(
+                           () => { _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey); }));
             }
         }
     }
