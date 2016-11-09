@@ -14,7 +14,12 @@ namespace BKDelivery.Domain.Data
         public DbSet<TimeInterval> TimeIntervals { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        public BkDeliveryContext() : base("name=BKDeliveryDatabase")
+        {
+            
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) 
         {
 
         }
