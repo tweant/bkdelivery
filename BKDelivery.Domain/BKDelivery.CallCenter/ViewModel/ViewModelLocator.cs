@@ -44,6 +44,7 @@ namespace BKDelivery.CallCenter.ViewModel
 
             SimpleIoc.Default.Register<INavigationService, NavigationService>();
             SimpleIoc.Default.Register<IDataService, DataService>();
+            SimpleIoc.Default.Register<IDialogService, DialogService>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<AddAddressViewModel>();

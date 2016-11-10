@@ -49,6 +49,23 @@ namespace BKDelivery.CallCenter.ViewModel
             set { Set(() => EmailAddress, ref _email, value); }
         }
 
+        private RelayCommand _cleanupCommand;
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           () =>
+                           {
+                               Name = string.Empty;
+                               Surname = string.Empty;
+                               PhoneNumber = 0;
+                               EmailAddress = string.Empty;
+                           }));
+            }
+        }
+
         public RelayCommand SaveCommand
         {
             get

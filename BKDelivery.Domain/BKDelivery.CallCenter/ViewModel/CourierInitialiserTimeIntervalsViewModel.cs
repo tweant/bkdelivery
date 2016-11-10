@@ -11,6 +11,7 @@ namespace BKDelivery.CallCenter.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
+        private readonly IDialogService _dialogService;
 
         private ObservableCollection<TimeInterval> _timeIntervalsCollection;
         private DateTime? _dateFrom;
@@ -20,14 +21,15 @@ namespace BKDelivery.CallCenter.ViewModel
         private int _itemsCount;
         private RelayCommand _cleanupCommand;
 
-        public CourierInitialiserTimeIntervalsViewModel(INavigationService navigationService, IDataService dataService)
+        public CourierInitialiserTimeIntervalsViewModel(INavigationService navigationService, IDataService dataService,
+            IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
+            _dialogService = dialogService;
 
             _timeIntervalsCollection = new ObservableCollection<TimeInterval>();
         }
-
         public RelayCommand CleanupCommand
         {
             get
@@ -101,6 +103,9 @@ namespace BKDelivery.CallCenter.ViewModel
                            {
                                _dataService.TimeIntervalAdd(TimeIntervalsCollection, SelectedCourier.CourierId);
                                _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                               _dialogService.Show(Helpers.DialogType.Success,
+                                   "Succesfully created courier " + SelectedCourier.Name + " " + SelectedCourier.Surname +
+                                   " with " + ItemsCount + " time intervals.");
                            }));
             }
         }

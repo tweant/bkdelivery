@@ -13,7 +13,7 @@ namespace BKDelivery.CallCenter.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private INavigationService _navigationService;
- 
+
         public MainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
@@ -33,61 +33,49 @@ namespace BKDelivery.CallCenter.ViewModel
             get
             {
                 return ButtonCommand
-                    ?? (ButtonCommand = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.AddCourierPageKey);
-                    }));
+                       ?? (ButtonCommand = new RelayCommand(
+                           () => { _navigationService.NavigateTo(ViewModelLocator.AddCourierPageKey); }));
             }
         }
+
         public RelayCommand ClientButtonCommand
         {
             get
             {
                 return ButtonCommand1
-                    ?? (ButtonCommand1 = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.AddClientPageKey);
-                    }));
+                       ?? (ButtonCommand1 = new RelayCommand(
+                           () => { _navigationService.NavigateTo(ViewModelLocator.AddClientPageKey); }));
             }
         }
+
         public RelayCommand OrderButtonCommand
         {
             get
             {
                 return ButtonCommand2
-                    ?? (ButtonCommand2 = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey);
-                    }));
+                       ?? (ButtonCommand2 = new RelayCommand(
+                           () => { _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey); }));
             }
         }
+
         public RelayCommand ClientsButtonCommand
         {
             get
             {
                 return ButtonCommand3
-                    ?? (ButtonCommand3 = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.ShowClientsPageKey);
-                    }));
+                       ?? (ButtonCommand3 = new RelayCommand(
+                           () => { _navigationService.NavigateTo(ViewModelLocator.ShowClientsPageKey); }));
             }
         }
+
         public RelayCommand OrdersButtonCommand
         {
             get
             {
                 return ButtonCommand4
-                    ?? (ButtonCommand4 = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.ShowOrdersPageKey);
-                    }));
+                       ?? (ButtonCommand4 = new RelayCommand(
+                           () => { _navigationService.NavigateTo(ViewModelLocator.ShowOrdersPageKey); }));
             }
         }
-
     }
 }

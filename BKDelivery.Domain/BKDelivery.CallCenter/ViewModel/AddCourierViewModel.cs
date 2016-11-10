@@ -12,6 +12,7 @@ namespace BKDelivery.CallCenter.ViewModel
         private readonly IDataService _dataService;
 
         private RelayCommand _saveCommand;
+        private RelayCommand _cleanupCommand;
 
         public AddCourierViewModel(INavigationService navigationService, IDataService dataService)
         {
@@ -40,6 +41,21 @@ namespace BKDelivery.CallCenter.ViewModel
         {
             get { return _phonenumber; }
             set { Set(() => PhoneNumber, ref _phonenumber, value); }
+        }
+
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           () =>
+                           {
+                               Name = string.Empty;
+                               Surname = string.Empty;
+                               PhoneNumber = 0;
+                           }));
+            }
         }
 
         public RelayCommand SaveCommand

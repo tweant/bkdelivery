@@ -9,6 +9,9 @@
       Title="HomePage">
 
     <Grid>
-        <TextBlock Text="This is default home page"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="Welcome!" FontFamily="Segoe UI" FontSize="18" />
+            <TextBlock Text="Select item from menu in order to start work." FontFamily="Segoe UI" FontSize="13" />
+        </StackPanel>
     </Grid>
 </Page>

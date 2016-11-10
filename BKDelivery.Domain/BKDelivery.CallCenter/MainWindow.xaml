@@ -8,19 +8,44 @@
         Height="400"
         Width="600"
         Title="BKDelivery"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        DataContext="{Binding Main, Source={StaticResource Locator}}" MinWidth="600" MinHeight="400" Icon="Images/icon.png">
 
 
-    <DockPanel>
-        <StackPanel Orientation="Vertical">
-            <Button Name="PageButton1" Content="Add courier" DockPanel.Dock="Left" Command="{Binding CourierButtonCommand}" Margin="5"/>
-            <Button Name="PageButton2" Content="Add client" DockPanel.Dock="Left" Command="{Binding ClientButtonCommand}" Margin="5"/>
-            <Button Name="PageButton3" Content="Add order" DockPanel.Dock="Left" Command="{Binding OrderButtonCommand}" Margin="5"/>
-            <Button Name="PageButton4" Content="Show clients" DockPanel.Dock="Left" Command="{Binding ClientsButtonCommand}" Margin="5"/>
-            <Button Name="PageButton5" Content="Show orders" DockPanel.Dock="Left" Command="{Binding OrdersButtonCommand}" Margin="5"/>
-        </StackPanel>
-        <ScrollViewer>
-            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>
-        </ScrollViewer>
-    </DockPanel>
+    <Grid>
+        <DockPanel>
+            <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
+                <Image Source="Images/logo.png" Stretch="None" />
+                <TextBlock Text="Couriers" Margin="5,5,5,0" FontFamily="Segoe UI" FontSize="15"/>
+                <Button Name="PageButton1" Content="Add"  Command="{Binding CourierButtonCommand}" Margin="5"/>
+
+                <TextBlock Text="Clients" Margin="5,5,5,0" FontFamily="Segoe UI" FontSize="15"/>
+                <Button Name="PageButton2" Content="Add" Command="{Binding ClientButtonCommand}" Margin="5,5,5,0"/>
+                <Button Name="PageButton4" Content="Browse" Command="{Binding ClientsButtonCommand}" Margin="5,-1,5,5"/>
+
+                <TextBlock Text="Orders" Margin="5,5,5,0" FontFamily="Segoe UI" FontSize="15"/>
+                <Button Name="PageButton3" Content="Add"  Command="{Binding OrderButtonCommand}" Margin="5,5,5,0"/>
+
+                <Button Name="PageButton5" Content="Browse"  Command="{Binding OrdersButtonCommand}" Margin="5,-1,5,5"/>
+            </StackPanel>
+            <ScrollViewer>
+                <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Source="HomePage.xaml"/>
+            </ScrollViewer>
+        </DockPanel>
+        
+            <Border x:Name="DialogBox" HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                    Margin="0,0,0,20"
+                Background="White"
+                BorderBrush="Orange"
+                BorderThickness="4" Visibility="Collapsed">
+            <StackPanel Orientation="Vertical">
+                
+                <TextBlock x:Name="DialogBoxMessage" Text="Message" TextWrapping="Wrap" FontFamily="Segoe UI" FontSize="13" Margin="10"/>
+                <ProgressBar x:Name="DialogProgressBar" Minimum="0" Maximum="10" Height="4"/>
+            </StackPanel>
+                
+            </Border>
+
+    </Grid>
+
 </Window>
