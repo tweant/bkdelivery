@@ -30,7 +30,7 @@
                 <TextBlock Text="You are adding time intervals for courier:" TextWrapping="Wrap" Margin="0,0,0,2" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding SelectedCourier.Name}" FontWeight="Bold" />
-                    <TextBlock Text="{Binding SelectedCourier.Surname}" FontWeight="Bold" />
+                    <TextBlock Text="{Binding SelectedCourier.Surname}" FontWeight="Bold" Margin="2,0,0,0"/>
                 </StackPanel>
                 <TextBlock Text="{Binding SelectedCourier.PhoneNumber}" FontWeight="Bold" />
             </StackPanel>

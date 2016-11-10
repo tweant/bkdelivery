@@ -13,6 +13,7 @@ namespace BKDelivery.CallCenter.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
+        private readonly IDialogService _dialogService;
 
         private RelayCommand _saveCommand;
         private RelayCommand _addAddressCommand;
@@ -26,10 +27,11 @@ namespace BKDelivery.CallCenter.ViewModel
         private ObservableCollection<Address> _deliveryAddressesCollection;
         private int _packagesCount;
 
-        public AddOrder2ViewModel(INavigationService navigationService, IDataService dataService)
+        public AddOrder2ViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
+            _dialogService = dialogService;
         }
 
         private Client SelectedClient => SelectedOrder.Client;
@@ -126,15 +128,24 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_saveCommand = new RelayCommand(
                            () =>
                            {
-                               SelectedOrder.FromAddressId = SelectedHomeAddress.AddressId;
-                               SelectedOrder.ToAddressId = SelectedDeliveryAddress.AddressId;
-                               SelectedOrder.TimeIntervalId = AvailableTimeInterval.Key.TimeIntervalId;
-                               SelectedOrder.CourierId = AvailableTimeInterval.Value.CourierId;
-                               SelectedOrder.InvoiceAddressId = SelectedInvokeAddress.AddressId;
-                               _dataService.OrderEdit(SelectedOrder);
-                               AvailableTimeInterval.Key.IsTaken = true;
-                               _dataService.TimeIntervalEdit(AvailableTimeInterval.Key);
-                               _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                               if (SelectedHomeAddress == null || SelectedDeliveryAddress == null ||
+                                   SelectedInvokeAddress == null)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Choose one address from list for each type of addresses Home, Delivery and Invoice.");
+                               }
+                               else
+                               {
+                                   SelectedOrder.FromAddressId = SelectedHomeAddress.AddressId;
+                                   SelectedOrder.ToAddressId = SelectedDeliveryAddress.AddressId;
+                                   SelectedOrder.TimeIntervalId = AvailableTimeInterval.Key.TimeIntervalId;
+                                   SelectedOrder.CourierId = AvailableTimeInterval.Value.CourierId;
+                                   SelectedOrder.InvoiceAddressId = SelectedInvokeAddress.AddressId;
+                                   _dataService.OrderEdit(SelectedOrder);
+                                   AvailableTimeInterval.Key.IsTaken = true;
+                                   _dataService.TimeIntervalEdit(AvailableTimeInterval.Key);
+                                   _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                               }
                            }));
             }
         }

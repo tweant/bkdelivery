@@ -11,13 +11,15 @@ namespace BKDelivery.CallCenter.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
+        private readonly IDialogService _dialogService;
 
         private RelayCommand _addCommand;
 
-        public AddPackViewModel(INavigationService navigationService, IDataService dataService)
+        public AddPackViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
+            _dialogService = dialogService;
         }
 
         private Order SelectedOrder => _navigationService.Parameter as Order;
@@ -52,7 +54,6 @@ namespace BKDelivery.CallCenter.ViewModel
             set { Set(() => Cost, ref _cost, value); }
         }
 
-        //TODO Nie może być aktywny jeśli nie ma zaznaczonej kategorii
         public RelayCommand AddCommand
         {
             get
@@ -61,14 +62,22 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_addCommand = new RelayCommand(
                            () =>
                            {
-                               var pack = new Package
+                               //TODO Koszt musi być wyliczany na podstawie wagi i kategorii nie wpisuje się go
+                               if (SelectedCategory == null)
                                {
-                                   Weight = Weight,
-                                   Cost = Cost,
-                                   CategoryId=SelectedCategory.CategoryId,
-                               };
-                               _dataService.PackageAdd(pack,SelectedOrder);
-                               _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
+                                   _dialogService.Show(Helpers.DialogType.Error, "Please select category.");
+                               }
+                               else
+                               {
+                                   var pack = new Package
+                                   {
+                                       Weight = Weight,
+                                       Cost = Cost,
+                                       CategoryId = SelectedCategory.CategoryId,
+                                   };
+                                   _dataService.PackageAdd(pack, SelectedOrder);
+                                   _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
+                               }
                            }));
             }
         }
