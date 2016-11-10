@@ -10,7 +10,8 @@ namespace BKDelivery.Domain.Data.Repositories
 {
     public interface IOrdersRepository
     {
-        void Add(Order client);
+        void Add(Order order);
+        void Edit(Order order);
         IEnumerable<Order> GetAll();
     }
 
@@ -29,6 +30,11 @@ namespace BKDelivery.Domain.Data.Repositories
             entity.Client = _db.Clients.Find(entity.ClientId);
             _set.Add(entity);
 
+        }
+
+        public void Edit(Order order)
+        {
+            _db.Entry(order).State = EntityState.Modified;
         }
 
         public IEnumerable<Order> GetAll()

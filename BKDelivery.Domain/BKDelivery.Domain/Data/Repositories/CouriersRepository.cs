@@ -12,6 +12,7 @@ namespace BKDelivery.Domain.Data.Repositories
     public interface ICouriersRepository
     {
         void Add(Courier entity);
+        Courier SearchByTimeInterval(int intervalId);
 
     }
 
@@ -29,6 +30,10 @@ namespace BKDelivery.Domain.Data.Repositories
         {
             _set.Add(entity);
         }
-        
+
+        public Courier SearchByTimeInterval(int intervalId)
+        {
+            return _set.First(c => c.TimeIntervals.Any(t=>t.TimeIntervalId.Equals(intervalId)));
+        }
     }
 }

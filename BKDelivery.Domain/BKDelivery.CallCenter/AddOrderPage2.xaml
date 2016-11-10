@@ -7,11 +7,16 @@
 
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mvvmlight="http://www.galasoft.ch/mvvmlight"
+    xmlns:helpers="clr-namespace:BKDelivery.CallCenter.Helpers"
     x:Class="BKDelivery.CallCenter.AddOrderPage2"
 
     Title="AddOrderPage2"
     DataContext="{Binding AddOrder2Vm, Source={StaticResource Locator}}">
-
+    <Page.Resources>
+        <helpers:NullVisibilityConverter x:Key="NullVis" />
+        <helpers:ReverseNullVisibilityConverter x:Key="ReverseNullVis" />
+        <helpers:NullEnabledConverter x:Key="NullEnabled" />
+    </Page.Resources>
     <GroupBox Header="Add Order" Margin="5">
 
         <StackPanel Orientation="Vertical">
@@ -61,7 +66,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBlock Text="Invoke address" Margin="5" />
+            <TextBlock Text="Invoice address" Margin="5" />
             <ComboBox ItemsSource="{Binding InvoiceAddressesCollection}"
                       SelectedItem="{Binding SelectedInvokeAddress, Mode=TwoWay}" Margin="5">
                 <ComboBox.ItemTemplate>
@@ -84,6 +89,10 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <StackPanel Orientation="Horizontal">
+            <Button x:Name="AddAddressButton" Content="Add address" Command="{Binding AddAddressCommand}"
+                        Margin="5"/>
+            </StackPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Horizontal">
                     <ListView ItemsSource="{Binding PacksCollection}" Margin="5">
@@ -97,11 +106,35 @@
                     </ListView>
                 </StackPanel>
             </ScrollViewer>
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding PackagesCount, Converter={StaticResource ReverseNullVis}}" Margin="5,0,5,5">
+                <TextBlock Text="Please add some packages." HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding PackagesCount, Converter={StaticResource NullVis}}" Margin="5,0,5,5">
+                <TextBlock Text="Entries count: " />
+                <TextBlock Text="{Binding PackagesCount}" FontWeight="Bold" />
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="AddAddressButton" Content="Add address" Command="{Binding AddAddressCommand}"
-                        Margin="5" />
+                
                 <Button x:Name="AddPackButton" Content="Add package" Command="{Binding AddPackCommand}" Margin="5" />
-                <Button x:Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="5" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <Border Margin="5,5,5,-1" Background="Honeydew" Padding="5"
+                        BorderBrush="{StaticResource ButtonBorderBrush}" BorderThickness="1"  Visibility="{Binding PackagesCount, Converter={StaticResource NullVis}}">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Estimated delivery period:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding AvailableTimeInterval.Key.Start}" />
+                        <TextBlock Text="{Binding AvailableTimeInterval.Key.End}" />
+                        <TextBlock Text="Courier:" FontWeight="Bold"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding AvailableTimeInterval.Value.Name}" />
+                            <TextBlock Text="{Binding AvailableTimeInterval.Value.Surname}" Margin="3,0,0,0"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding AvailableTimeInterval.Value.PhoneNumber}" />
+                    </StackPanel>
+                </Border>
+                <Button x:Name="SaveButton" Content="Finalize" Command="{Binding SaveCommand}" Margin="5,0,5,5" IsEnabled="{Binding PackagesCount, Converter={StaticResource  NullEnabled}}" />
             </StackPanel>
         </StackPanel>
 

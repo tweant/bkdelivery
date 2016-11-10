@@ -36,6 +36,7 @@ namespace BKDelivery.CallCenter.ViewModel
         public static string ShowOrdersPageKey = "ShowOrdersPage";
         public static string ShowOrdersDetailsPageKey = "ShowOrdersDetailsPage";
         public static string HomePageKey = "HomePage";
+        public static string CourierInitialiserTimeIntervalsPageKey = "CourierInitialiserTimeIntervals";
 
         static ViewModelLocator()
         {
@@ -55,6 +56,7 @@ namespace BKDelivery.CallCenter.ViewModel
             SimpleIoc.Default.Register<ShowOrdersDetailsViewModel>();
             SimpleIoc.Default.Register<AddOrder2ViewModel>();
             SimpleIoc.Default.Register<HomePageViewModel>();
+            SimpleIoc.Default.Register<CourierInitialiserTimeIntervalsViewModel>();
 
 
             var navigationService = ServiceLocator.Current.GetInstance<INavigationService>();
@@ -69,6 +71,8 @@ namespace BKDelivery.CallCenter.ViewModel
             navigationService.Configure(ShowOrdersDetailsPageKey,
                 new Uri("ShowOrdersDetailsPage.xaml", UriKind.Relative));
             navigationService.Configure(HomePageKey, new Uri("HomePage.xaml", UriKind.Relative));
+            navigationService.Configure(CourierInitialiserTimeIntervalsPageKey,
+                new Uri("CourierInitialiserTimeIntervalsPage.xaml", UriKind.Relative));
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
@@ -126,6 +130,12 @@ namespace BKDelivery.CallCenter.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public HomePageViewModel HomepageVm => ServiceLocator.Current.GetInstance<HomePageViewModel>();
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public CourierInitialiserTimeIntervalsViewModel CourierInitialiserTimeIntervalsVm
+            => ServiceLocator.Current.GetInstance<CourierInitialiserTimeIntervalsViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.

@@ -24,6 +24,7 @@ namespace BKDelivery.CallCenter.ViewModel
         private ObservableCollection<Address> _addressesTypesCollecion;
         private ObservableCollection<Address> _invoiceAddressesCollection;
         private ObservableCollection<Address> _deliveryAddressesCollection;
+        private int _packagesCount;
 
         public AddOrder2ViewModel(INavigationService navigationService, IDataService dataService)
         {
@@ -33,6 +34,7 @@ namespace BKDelivery.CallCenter.ViewModel
 
         private Client SelectedClient => SelectedOrder.Client;
         private Order SelectedOrder => _navigationService.Parameter as Order;
+        public KeyValuePair<TimeInterval, Courier> AvailableTimeInterval => _dataService.TimeIntervalFirstAvailable();
 
         public ObservableCollection<Address> AddressesCollection
         {
@@ -59,9 +61,9 @@ namespace BKDelivery.CallCenter.ViewModel
         {
             get
             {
-                    return
-                        new ObservableCollection<Address>(_dataService.AddressessByClient(
-                            SelectedClient.ClientId, 2));
+                return
+                    new ObservableCollection<Address>(_dataService.AddressessByClient(
+                        SelectedClient.ClientId, 2));
             }
             set { Set(() => InvoiceAddressesCollection, ref _invoiceAddressesCollection, value); }
         }
@@ -90,10 +92,7 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return _addAddressCommand
                        ?? (_addAddressCommand = new RelayCommand(
-                           () =>
-                           {
-                               _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey, SelectedOrder);
-                           }));
+                           () => { _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey, SelectedOrder); }));
             }
         }
 
@@ -103,19 +102,21 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return _addPackCommand
                        ?? (_addPackCommand = new RelayCommand(
-                           () => { _navigationService.NavigateTo(ViewModelLocator.AddPackPageKey,SelectedOrder); }));
+                           () => { _navigationService.NavigateTo(ViewModelLocator.AddPackPageKey, SelectedOrder); }));
             }
         }
 
         public ObservableCollection<Package> PacksCollection
         {
-            get
-            {
-                return new ObservableCollection<Package>(_dataService.PackagesByOrder(SelectedOrder.OrderId));
-            }
+            get { return new ObservableCollection<Package>(_dataService.PackagesByOrder(SelectedOrder.OrderId)); }
             set { Set(() => PacksCollection, ref _packsTypesCollecion, value); }
         }
 
+        public int PackagesCount
+        {
+            get { return PacksCollection.Count; }
+            set { Set(() => PackagesCount, ref _packagesCount, value); }
+        }
 
         public RelayCommand SaveCommand
         {
@@ -125,19 +126,15 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_saveCommand = new RelayCommand(
                            () =>
                            {
-                               //_dataService.InitializeTransaction();
-                               //var orderRepo = _dataService.UnitOfWork.Repository<Order>();
-                               //var order = new Order
-                               //{
-                               //    FromAddress = SelectedHomeAddress,
-                               //    ToAddress = SelectedDeliveryAddress,
-                               //    //InvokeAddress = SelectedInvokeAddress,
-                               //    //Client = _selectedClient,
-                               //    //Packages = ,
-                               //};
-                               //orderRepo.Add(order);
-                               //_dataService.SaveChanges();
-                               //_navigationService.NavigateTo(ViewModelLocator.AddressesPageKey);
+                               SelectedOrder.FromAddressId = SelectedHomeAddress.AddressId;
+                               SelectedOrder.ToAddressId = SelectedDeliveryAddress.AddressId;
+                               SelectedOrder.TimeIntervalId = AvailableTimeInterval.Key.TimeIntervalId;
+                               SelectedOrder.CourierId = AvailableTimeInterval.Value.CourierId;
+                               SelectedOrder.InvoiceAddressId = SelectedInvokeAddress.AddressId;
+                               _dataService.OrderEdit(SelectedOrder);
+                               AvailableTimeInterval.Key.IsTaken = true;
+                               _dataService.TimeIntervalEdit(AvailableTimeInterval.Key);
+                               _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
                            }));
             }
         }

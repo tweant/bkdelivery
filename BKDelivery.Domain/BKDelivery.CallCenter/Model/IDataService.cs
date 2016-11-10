@@ -27,6 +27,13 @@ namespace BKDelivery.CallCenter.Model
         IEnumerable<Package> PackagesByOrder(int orderId);
 
         void OrderAdd(Order order);
+        void OrderEdit(Order order);
         IEnumerable<Order> OrdersAll();
+
+        void TimeIntervalAdd(TimeInterval interval, int courierId);
+        void TimeIntervalAdd(IEnumerable<TimeInterval> intervals, int courierId);
+        void TimeIntervalEdit(TimeInterval interval);
+        KeyValuePair<TimeInterval,Courier> TimeIntervalFirstAvailable();
+        IEnumerable<TimeInterval> TimeIntervalsByCourier(int courierId);
     }
 }

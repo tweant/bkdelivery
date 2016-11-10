@@ -17,7 +17,7 @@
             <TextBox Name="SurnameTextBox" Text="{Binding Surname, Mode=TwoWay}" Margin="5"/>
             <TextBlock Margin="5">Phone number</TextBlock>
             <TextBox Name="PhoneNumberTextBox" Text="{Binding PhoneNumber, Mode=TwoWay }" Margin="5"/>
-            <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="5"/>
+            <Button Name="SaveButton" Content="Next" Command="{Binding SaveCommand}" Margin="5"/>
         </StackPanel>
     </GroupBox>
 </Page>

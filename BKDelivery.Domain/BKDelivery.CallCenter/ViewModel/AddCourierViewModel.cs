@@ -57,7 +57,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                    PhoneNumber = PhoneNumber
                                };
                                _dataService.CourierAdd(courier);
-                               _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                               _navigationService.NavigateTo(ViewModelLocator.CourierInitialiserTimeIntervalsPageKey,courier);
                            }));
             }
         }

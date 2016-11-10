@@ -17,6 +17,8 @@ namespace BKDelivery.Domain.Model
         public int? ToAddressId { get; set; }
         public virtual Address ToAddress { get; set; }
 
+        public int? InvoiceAddressId { get; set; }
+        public virtual Address InvoiceAddress { get; set; }
 
         public List<Package> Packages { get; set; }
 

@@ -1,0 +1,76 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BKDelivery.CallCenter"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:helpers="clr-namespace:BKDelivery.CallCenter.Helpers"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:custom="http://www.galasoft.ch/mvvmlight" x:Class="BKDelivery.CallCenter.CourierInitialiserTimeIntervalsPage"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="300"
+    Title="CourierInitialiserTimeIntervalsPage">
+    <Page.Resources>
+        <helpers:NullVisibilityConverter x:Key="NullVis" />
+        <helpers:ReverseNullVisibilityConverter x:Key="ReverseNullVis" />
+        <helpers:NullEnabledConverter x:Key="NullEnabled" />
+    </Page.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <custom:EventToCommand Command="{Binding CleanupCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Page.DataContext>
+        <Binding Path="CourierInitialiserTimeIntervalsVm" Source="{StaticResource Locator}" />
+    </Page.DataContext>
+    <GroupBox Header="Time intervals" Margin="5">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBlock Text="You are adding time intervals for courier:" TextWrapping="Wrap" Margin="0,0,0,2" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding SelectedCourier.Name}" FontWeight="Bold" />
+                    <TextBlock Text="{Binding SelectedCourier.Surname}" FontWeight="Bold" />
+                </StackPanel>
+                <TextBlock Text="{Binding SelectedCourier.PhoneNumber}" FontWeight="Bold" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBlock Text="Currently assigned time intervals:" TextWrapping="Wrap" Margin="0,0,0,2" />
+                <WrapPanel Orientation="Horizontal">
+
+                    <DatePicker
+                        SelectedDate="{Binding DateFrom, Mode=TwoWay, TargetNullValue={x:Static system:DateTime.Now}}" />
+                    <DatePicker
+                        SelectedDate="{Binding DateTo, Mode=TwoWay, TargetNullValue={x:Static system:DateTime.Now}}"
+                        Margin="2,0,2,0" />
+                    <!-- TODO Możliwość wyboru godziny -->
+                    <Button Content="Add" Command="{Binding AddTimeIntervalCommand}" />
+                </WrapPanel>
+                <ListView ItemsSource="{Binding TimeIntervalsCollection}"
+                          Visibility="{Binding ItemsCount, Converter={StaticResource NullVis}}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Start}" />
+                                <TextBlock Text=" - "/>
+                                <TextBlock Text="{Binding End}" />
+                                <!--TODO Lepsze formatowanie-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <TextBlock Text="No entries found. Please add at least one time interval." TextWrapping="Wrap"
+                           HorizontalAlignment="Center" TextAlignment="Center"
+                           Visibility="{Binding ItemsCount, Converter={StaticResource ReverseNullVis}}" />
+                <StackPanel Orientation="Horizontal"
+                            Visibility="{Binding ItemsCount, Converter={StaticResource NullVis}}">
+                    <TextBlock Text="Entries count: "/>
+                    <TextBlock Text="{Binding ItemsCount}" FontWeight="Bold"/>
+                </StackPanel>
+
+            </StackPanel>
+            <Button x:Name="SaveButton" Content="Save" Command="{Binding SaveCourierCommand}" Margin="5"
+                    IsEnabled="{Binding ItemsCount, Converter={StaticResource NullEnabled}}" />
+        </StackPanel>
+    </GroupBox>
+</Page>

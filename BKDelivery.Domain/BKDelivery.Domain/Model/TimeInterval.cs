@@ -10,7 +10,7 @@ namespace BKDelivery.Domain.Model
 {
     public class TimeInterval
     {
-        [Key, ForeignKey("Order")]
+        [Key]
         public int TimeIntervalId { get; set; }
 
         [Required]
@@ -19,8 +19,8 @@ namespace BKDelivery.Domain.Model
         [Required]
         public DateTime End { get; set; }
 
-        public int? OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        [Required]
+        public bool IsTaken { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

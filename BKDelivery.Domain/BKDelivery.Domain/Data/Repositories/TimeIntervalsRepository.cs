@@ -10,7 +10,10 @@ namespace BKDelivery.Domain.Data.Repositories
 {
     public interface ITimeIntervalsRepository
     {
-        void Add(TimeInterval client);
+        void Add(TimeInterval entity, int courierId);
+        void Edit(TimeInterval entity);
+        IEnumerable<TimeInterval> GetCourierTimeIntervals(int courierId);
+        TimeInterval FirstAvailable();
     }
 
     public class TimeIntervalsRepository : ITimeIntervalsRepository
@@ -23,10 +26,25 @@ namespace BKDelivery.Domain.Data.Repositories
             _db = db;
             _set = _db.TimeIntervals;
         }
-        public void Add(TimeInterval entity)
+        public void Add(TimeInterval entity, int courierId)
         {
             _set.Add(entity);
+            _db.Couriers.Find(courierId).TimeIntervals.Add(entity);
+        }
 
+        public void Edit(TimeInterval entity)
+        {
+            _db.Entry(entity).State = EntityState.Modified;
+        }
+
+        public IEnumerable<TimeInterval> GetCourierTimeIntervals(int courierId)
+        {
+            return _db.Couriers.Find(courierId).TimeIntervals.AsEnumerable();
+        }
+
+        public TimeInterval FirstAvailable()
+        {
+            return _set.First(x => x.IsTaken == false);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace BKDelivery.Domain.Model
         public int PhoneNumber { get; set; }
 
         public List<Order> Orders { get; set; }
+        public List<TimeInterval> TimeIntervals { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
@@ -23,6 +24,7 @@ namespace BKDelivery.Domain.Model
         public Courier()
         {
             Orders = new List<Order>();
+            TimeIntervals = new List<TimeInterval>();
         }
     }
 }
