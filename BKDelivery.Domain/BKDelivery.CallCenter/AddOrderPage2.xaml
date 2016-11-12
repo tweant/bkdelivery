@@ -95,7 +95,7 @@
             </StackPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Horizontal">
-                    <ListView ItemsSource="{Binding PacksCollection}" Margin="5">
+                    <ListView ItemsSource="{Binding PacksCollection}" Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="0">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" />

@@ -11,14 +11,16 @@ namespace BKDelivery.CallCenter.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
+        private readonly IDialogService _dialogService;
 
         private RelayCommand _chooseclient;
         private ObservableCollection<Client> _clientsTypesCollecion;
 
-        public AddOrderViewModel(INavigationService navigationService, IDataService dataService)
+        public AddOrderViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
+            _dialogService = dialogService;
         }
 
         public ObservableCollection<Client> ClientsCollection
@@ -45,12 +47,20 @@ namespace BKDelivery.CallCenter.ViewModel
                            ?? (_chooseclient = new RelayCommand(
                                () =>
                                {
-                                   var order = new Order
+                                   if(SelectedClient == null)
                                    {
-                                       ClientId = _selectedClient.ClientId,
-                                   };
-                                   _dataService.OrderAdd(order);
-                                   _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2, order);
+                                       _dialogService.Show(Helpers.DialogType.Error,
+                                       "Select client.");
+                                   }
+                                   else
+                                   {
+                                       var order = new Order
+                                       {
+                                           ClientId = _selectedClient.ClientId,
+                                       };
+                                       _dataService.OrderAdd(order);
+                                       _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2, order);
+                                   }
                                }));
                 }
             }

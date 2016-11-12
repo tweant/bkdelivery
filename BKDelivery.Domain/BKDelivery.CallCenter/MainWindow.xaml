@@ -6,9 +6,9 @@
         xmlns:ignore="http://www.galasoft.ch/ignore"
         mc:Ignorable="d ignore"
         Height="400"
-        Width="600"
+        Width="700"
         Title="BKDelivery"
-        DataContext="{Binding Main, Source={StaticResource Locator}}" MinWidth="600" MinHeight="400" Icon="Images/icon.png">
+        DataContext="{Binding Main, Source={StaticResource Locator}}" MinWidth="700" MinHeight="400" Icon="Images/icon.png">
 
 
     <Grid>

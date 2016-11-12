@@ -11,7 +11,7 @@ namespace BKDelivery.Domain.Model
     {
         public int ClientId { get; set; }
         public string Name { get; set; }
-        public string Surname { get; set; }
+        public long NIP { get; set; }
         public int PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
 

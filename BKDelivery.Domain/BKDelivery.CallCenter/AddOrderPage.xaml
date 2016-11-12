@@ -8,23 +8,26 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="AddOrderPage"
       DataContext="{Binding AddOrderVm, Source={StaticResource Locator}}">
-
+    <Page.Resources>
+        <DataTemplate x:Key="listBoxTemplate">
+            <StackPanel Margin="3">
+                <DockPanel >
+                    <TextBlock FontWeight="Bold" Text="Name:" Foreground ="DarkOrange" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="NIP:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding NIP}" FontWeight="Bold"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    
     <GroupBox Header="Choose Client" Margin="5">
         <Grid>
             <StackPanel Orientation="Vertical">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Orientation="Horizontal">
-                        <ListView ItemsSource="{Binding ClientsCollection}" Margin="5" SelectedItem="{Binding SelectedClient}">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
-                                    <GridViewColumn Header="Surname" DisplayMemberBinding="{Binding Surname}" />
-                                    <GridViewColumn Header="Phone number" DisplayMemberBinding="{Binding PhoneNumber}"/>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </StackPanel>
-                </ScrollViewer>
+                <StackPanel Orientation="Horizontal">
+                    <ListBox Margin="17,8,15,26" Name="listBox1" SelectedItem="{Binding SelectedClient}" ItemsSource="{Binding ClientsCollection}" ItemTemplate="{StaticResource listBoxTemplate}" />
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button Name="Choose" Grid.Row="1" Content="Choose" Command="{Binding Path=ChooseClient}" Margin="5"/>
                 </StackPanel>
