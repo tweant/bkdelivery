@@ -10,15 +10,16 @@ namespace BKDelivery.CallCenter.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
+        private readonly IDialogService _dialogService;
 
         private RelayCommand _saveCommand;
         private RelayCommand _cleanupCommand;
 
-        public AddCourierViewModel(INavigationService navigationService, IDataService dataService)
+        public AddCourierViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
-
+            _dialogService = dialogService;
         }
 
         private string _name;
@@ -66,14 +67,32 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_saveCommand = new RelayCommand(
                            () =>
                            {
-                               var courier = new Courier
+                               if (PhoneNumber < 100000000 || PhoneNumber > 999999999)
                                {
-                                   Name = Name,
-                                   Surname = Surname,
-                                   PhoneNumber = PhoneNumber
-                               };
-                               _dataService.CourierAdd(courier);
-                               _navigationService.NavigateTo(ViewModelLocator.CourierInitialiserTimeIntervalsPageKey,courier);
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Put correct phone number.");
+                               }
+                               else if(Name.Length == 0)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Empty name.");
+                               }
+                               else if(Surname.Length == 0)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Empty surname.");
+                               }
+                               else
+                               {
+                                   var courier = new Courier
+                                   {
+                                       Name = Name,
+                                       Surname = Surname,
+                                       PhoneNumber = PhoneNumber
+                                   };
+                                   _dataService.CourierAdd(courier);
+                                   _navigationService.NavigateTo(ViewModelLocator.CourierInitialiserTimeIntervalsPageKey, courier);
+                               }
                            }));
             }
         }

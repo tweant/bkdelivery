@@ -16,10 +16,10 @@
     </i:Interaction.Triggers>
     <GroupBox Header="Add Client" Margin="5">
         <StackPanel Orientation="Vertical">
-            <TextBlock Margin="5">Name</TextBlock>
+            <TextBlock Margin="5">Company name</TextBlock>
             <TextBox Name="NameTextBox" Text="{Binding Name, Mode=TwoWay}" Margin="5"/>
-            <TextBlock Margin="5">Surname</TextBlock>
-            <TextBox Name="SurnameTextBox" Text="{Binding Surname, Mode=TwoWay}" Margin="5"/>
+            <TextBlock Margin="5">NIP</TextBlock>
+            <TextBox Name="SurnameTextBox" Text="{Binding NIP, Mode=TwoWay}" Margin="5"/>
             <TextBlock Margin="5">Phone number</TextBlock>
             <TextBox Name="PhoneNumberTextBox" Text="{Binding PhoneNumber, Mode=TwoWay}" Margin="5"/>
             <TextBlock Margin="5">Email address</TextBlock>

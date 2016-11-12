@@ -11,18 +11,19 @@ namespace BKDelivery.CallCenter.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
+        private readonly IDialogService _dialogService;
 
         private RelayCommand _saveCommand;
 
-        public AddClientViewModel(INavigationService navigationService, IDataService dataService)
+        public AddClientViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
-
+            _dialogService = dialogService;
         }
 
         private string _name;
-        private string _surname;
+        private long _NIP;
         private int _phonenumber;
         private string _email;
 
@@ -32,10 +33,10 @@ namespace BKDelivery.CallCenter.ViewModel
             set { Set(() => Name, ref _name, value); }
         }
 
-        public string Surname
+        public long NIP
         {
-            get { return _surname; }
-            set { Set(() => Surname, ref _surname, value); }
+            get { return _NIP; }
+            set { Set(() => NIP, ref _NIP, value); }
         }
 
         public int PhoneNumber
@@ -59,7 +60,7 @@ namespace BKDelivery.CallCenter.ViewModel
                            () =>
                            {
                                Name = string.Empty;
-                               Surname = string.Empty;
+                               NIP = 0;
                                PhoneNumber = 0;
                                EmailAddress = string.Empty;
                            }));
@@ -74,15 +75,38 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_saveCommand = new RelayCommand(
                            () =>
                            {
-                               var client = new Client
+                               if (PhoneNumber < 100000000 || PhoneNumber > 999999999)
                                {
-                                   Name = Name,
-                                   Surname = Surname,
-                                   PhoneNumber = PhoneNumber,
-                                   EmailAddress = EmailAddress,
-                               };
-                               _dataService.ClientAdd(client);
-                               _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Put correct phone number.");
+                               }
+                               else if (Name.Length == 0)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Empty name.");
+                               }
+                               else if (NIP < 1000000000 || NIP > 9999999999)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Put correct NIP.");
+                               }
+                               else if (EmailAddress.Length == 0)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Empty email address.");
+                               }
+                               else
+                               {
+                                   var client = new Client
+                                   {
+                                       Name = Name,
+                                       NIP = NIP,
+                                       PhoneNumber = PhoneNumber,
+                                       EmailAddress = EmailAddress,
+                                   };
+                                   _dataService.ClientAdd(client);
+                                   _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                               }
                            }));
             }
         }
