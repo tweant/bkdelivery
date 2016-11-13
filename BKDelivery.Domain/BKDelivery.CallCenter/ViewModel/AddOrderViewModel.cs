@@ -4,6 +4,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using BKDelivery.Domain.Interfaces;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -14,18 +16,36 @@ namespace BKDelivery.CallCenter.ViewModel
         private readonly IDialogService _dialogService;
 
         private RelayCommand _chooseclient;
+        private RelayCommand _cleanupCommand;
         private ObservableCollection<Client> _clientsTypesCollecion;
 
-        public AddOrderViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
+        public AddOrderViewModel(INavigationService navigationService, IDataService dataService,
+            IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
             _dialogService = dialogService;
         }
 
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           async () =>
+                           {
+                               _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading clients.");
+                               var result = await Task.Run(() => _dataService.GetAll<Client>());
+                               ClientsCollection = new ObservableCollection<Client>(result);
+                               _dialogService.Hide();
+                           }));
+            }
+        }
+
         public ObservableCollection<Client> ClientsCollection
         {
-            get { return new ObservableCollection<Client>(_dataService.ClientsAll()); }
+            get { return _clientsTypesCollecion; }
             set { Set(() => ClientsCollection, ref _clientsTypesCollecion, value); }
         }
 
@@ -47,10 +67,10 @@ namespace BKDelivery.CallCenter.ViewModel
                            ?? (_chooseclient = new RelayCommand(
                                () =>
                                {
-                                   if(SelectedClient == null)
+                                   if (SelectedClient == null)
                                    {
                                        _dialogService.Show(Helpers.DialogType.Error,
-                                       "Select client.");
+                                           "Select client.");
                                    }
                                    else
                                    {
@@ -58,10 +78,13 @@ namespace BKDelivery.CallCenter.ViewModel
                                        {
                                            ClientId = _selectedClient.ClientId,
                                        };
-                                       _dataService.OrderAdd(order);
-                                       _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2, order);
+
+                                       _dataService.Add(order);
+                                       _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2,
+                                           order);
                                    }
-                               }));
+                               }))
+                        ;
                 }
             }
         }

@@ -4,8 +4,10 @@ using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using BKDelivery.Domain.Interfaces;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -18,6 +20,7 @@ namespace BKDelivery.CallCenter.ViewModel
         private RelayCommand _saveCommand;
         private RelayCommand _addAddressCommand;
         private RelayCommand _addPackCommand;
+        private RelayCommand _cleanupCommand;
         private Address _selectedHomeAddress;
         private Address _selectedDeliveryAddress;
         private Address _selectedInvokeAddress;
@@ -27,15 +30,40 @@ namespace BKDelivery.CallCenter.ViewModel
         private ObservableCollection<Address> _deliveryAddressesCollection;
         private int _packagesCount;
 
-        public AddOrder2ViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
+        public AddOrder2ViewModel(INavigationService navigationService, IDataService dataService,
+            IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
             _dialogService = dialogService;
         }
 
-        private Client SelectedClient => SelectedOrder.Client;
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           async () =>
+                           {
+                               PacksCollection = new ObservableCollection<Package>();
+                               var result = await Task.Run(() => _dataService.PackagesByOrder(SelectedOrder.OrderId));
+                               foreach (Package package in result)
+                               {
+                                   package.Category =
+                                       await
+                                           Task.Run(
+                                               () => _dataService.Get<Category>(x => x.CategoryId == package.CategoryId));
+                                   PacksCollection.Add(package);
+                               }
+                               PackagesCount = PacksCollection.Count;
+                           }));
+            }
+        }
+
+
         private Order SelectedOrder => _navigationService.Parameter as Order;
+        private Client SelectedClient => _dataService.Get<Client>(x => x.ClientId == SelectedOrder.ClientId);
         public KeyValuePair<TimeInterval, Courier> AvailableTimeInterval => _dataService.TimeIntervalFirstAvailable();
 
         public ObservableCollection<Address> AddressesCollection
@@ -110,13 +138,13 @@ namespace BKDelivery.CallCenter.ViewModel
 
         public ObservableCollection<Package> PacksCollection
         {
-            get { return new ObservableCollection<Package>(_dataService.PackagesByOrder(SelectedOrder.OrderId)); }
+            get { return _packsTypesCollecion; }
             set { Set(() => PacksCollection, ref _packsTypesCollecion, value); }
         }
 
         public int PackagesCount
         {
-            get { return PacksCollection.Count; }
+            get { return PacksCollection?.Count ?? 0; }
             set { Set(() => PackagesCount, ref _packagesCount, value); }
         }
 
@@ -136,14 +164,19 @@ namespace BKDelivery.CallCenter.ViewModel
                                }
                                else
                                {
-                                   SelectedOrder.FromAddressId = SelectedHomeAddress.AddressId;
-                                   SelectedOrder.ToAddressId = SelectedDeliveryAddress.AddressId;
-                                   SelectedOrder.TimeIntervalId = AvailableTimeInterval.Key.TimeIntervalId;
-                                   SelectedOrder.CourierId = AvailableTimeInterval.Value.CourierId;
-                                   SelectedOrder.InvoiceAddressId = SelectedInvokeAddress.AddressId;
-                                   _dataService.OrderEdit(SelectedOrder);
-                                   AvailableTimeInterval.Key.IsTaken = true;
-                                   _dataService.TimeIntervalEdit(AvailableTimeInterval.Key);
+                                   var order = _dataService.Get<Order>(x => x.OrderId == SelectedOrder.OrderId);
+                                   order.FromAddressId = SelectedHomeAddress.AddressId;
+                                   order.ToAddressId = SelectedDeliveryAddress.AddressId;
+                                   order.TimeIntervalId = AvailableTimeInterval.Key.TimeIntervalId;
+                                   order.CourierId = AvailableTimeInterval.Value.CourierId;
+                                   order.InvoiceAddressId = SelectedInvokeAddress.AddressId;
+
+                                   MessageBox.Show(PacksCollection[0].Category.Name);
+
+                                   var interval = AvailableTimeInterval.Key;
+                                   interval.IsTaken = true;
+                                   _dataService.Update(interval);
+                                   _dataService.Update(order);
                                    _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
                                }
                            }));

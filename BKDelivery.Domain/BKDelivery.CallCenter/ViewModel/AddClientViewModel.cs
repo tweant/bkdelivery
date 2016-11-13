@@ -4,6 +4,7 @@ using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.ComponentModel;
+using BKDelivery.Domain.Interfaces;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -104,7 +105,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                        PhoneNumber = PhoneNumber,
                                        EmailAddress = EmailAddress,
                                    };
-                                   _dataService.ClientAdd(client);
+                                   _dataService.Insert(client);
                                    _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
                                }
                            }));

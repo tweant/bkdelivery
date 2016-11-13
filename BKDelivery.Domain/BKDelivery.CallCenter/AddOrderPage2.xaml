@@ -12,6 +12,11 @@
 
     Title="AddOrderPage2"
     DataContext="{Binding AddOrder2Vm, Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <mvvmlight:EventToCommand Command="{Binding CleanupCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Page.Resources>
         <helpers:NullVisibilityConverter x:Key="NullVis" />
         <helpers:ReverseNullVisibilityConverter x:Key="ReverseNullVis" />
@@ -100,7 +105,7 @@
                             <GridView>
                                 <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" />
                                 <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}" />
-                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" />
+                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category.Name}" />
                             </GridView>
                         </ListView.View>
                     </ListView>

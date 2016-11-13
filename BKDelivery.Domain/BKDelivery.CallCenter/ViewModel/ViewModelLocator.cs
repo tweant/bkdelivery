@@ -14,6 +14,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using BKDelivery.CallCenter.Model;
+using BKDelivery.Domain.Data;
+using BKDelivery.Domain.Interfaces;
 
 namespace BKDelivery.CallCenter.ViewModel
 {

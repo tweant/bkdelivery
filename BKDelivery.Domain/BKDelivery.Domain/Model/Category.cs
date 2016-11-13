@@ -10,8 +10,8 @@ namespace BKDelivery.Domain.Model
     public class Category
     {
         public int CategoryId { get; set; }
-        public string Name { get; set; }
-        public double Multiplier { get; set; }
+        public virtual string Name { get; set; }
+        public virtual double Multiplier { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

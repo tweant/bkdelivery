@@ -10,6 +10,7 @@ namespace BKDelivery.CallCenter.Helpers
     {
         Error,
         Warning,
-        Success
+        Success,
+        BusyWaiting
     }
 }

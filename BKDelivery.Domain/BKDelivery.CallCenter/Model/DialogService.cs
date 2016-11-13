@@ -15,9 +15,11 @@ namespace BKDelivery.CallCenter.Model
         private int _curValue;
         private int _interval; //miliseconds
         private int _time; //miliseconds
+        private DialogType _type;
 
         public void Show(DialogType type, string message)
         {
+            _type = type;
             if(message!=null)
                 if (EnsureDialog())
                 {
@@ -32,19 +34,36 @@ namespace BKDelivery.CallCenter.Model
                         case DialogType.Warning:
                             _dialogbox.BorderBrush = new SolidColorBrush(Color.FromRgb(245,184,0));
                             break;
+                        case DialogType.BusyWaiting:
+                            _dialogbox.BorderBrush = new SolidColorBrush(Color.FromRgb(245, 184, 0));
+                            break;
                     }
                     
                     _message.Text = message;
                     _dialogbox.Visibility = Visibility.Visible;
-                    _dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-                    _dispatcherTimer.Tick += dispatcherTimer_Tick;
-                    _interval = 100;
-                    _dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0,_interval);
-                    _time = 5000;
-                    _progress.Value = 0;
-                    _progress.Maximum = _time;
-                    _dispatcherTimer.Start();
+
+                    if (type == DialogType.BusyWaiting)
+                    {
+                        _progress.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        _progress.Visibility = Visibility.Visible;
+                        _dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                        _dispatcherTimer.Tick += dispatcherTimer_Tick;
+                        _interval = 100;
+                        _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, _interval);
+                        _time = 5000;
+                        _progress.Value = 0;
+                        _progress.Maximum = _time;
+                        _dispatcherTimer.Start();
+                    }
                 }
+        }
+
+        public void Hide()
+        {
+            _dialogbox.Visibility = Visibility.Collapsed;
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)

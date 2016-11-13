@@ -10,5 +10,6 @@ namespace BKDelivery.CallCenter.Model
     public interface IDialogService
     {
         void Show(DialogType type, string message);
+        void Hide();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using BKDelivery.CallCenter.Model;
+using BKDelivery.Domain.Interfaces;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -23,7 +24,7 @@ namespace BKDelivery.CallCenter.ViewModel
 
         public ObservableCollection<Client> ClientsCollection
         {
-            get { return new ObservableCollection<Client>(_dataService.ClientsAll()); }
+            get { return new ObservableCollection<Client>(_dataService.GetAll<Client>()); }
             set { Set(() => ClientsCollection, ref _clientsCollection, value); }
         }
 

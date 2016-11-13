@@ -4,6 +4,7 @@ using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.Generic;
+using BKDelivery.Domain.Interfaces;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -31,7 +32,7 @@ namespace BKDelivery.CallCenter.ViewModel
 
         public List<Category> CategoriesCollection
         {
-            get { return new List<Category>(_dataService.CategoriesAll()); }
+            get { return new List<Category>(_dataService.GetAll<Category>()); }
             set { Set(() => CategoriesCollection, ref _categoriesCollection, value); }
         }
 
@@ -75,7 +76,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                        Cost = Cost,
                                        CategoryId = SelectedCategory.CategoryId,
                                    };
-                                   _dataService.PackageAdd(pack, SelectedOrder);
+                                   _dataService.Add(pack, SelectedOrder);
                                    _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
                                }
                            }));

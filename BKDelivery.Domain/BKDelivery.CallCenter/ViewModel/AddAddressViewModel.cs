@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BKDelivery.CallCenter.Model;
+using BKDelivery.Domain.Interfaces;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -45,7 +46,7 @@ namespace BKDelivery.CallCenter.ViewModel
                 "zachodniopomorskie"
             };
 
-            TypesCollection = new List<AddressType>(_dataService.AddressTypesAll());
+            TypesCollection = new List<AddressType>(_dataService.GetAll<AddressType>());
 
         }
 
@@ -136,7 +137,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                    ClientId=SelectedOrder.ClientId,
                                   
                                };
-                               _dataService.AddressAdd(address);
+                               _dataService.Add(address);
                                _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
                            }));
             }

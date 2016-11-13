@@ -4,10 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BKDelivery.CallCenter"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:command="http://www.galasoft.ch/mvvmlight"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="AddOrderPage"
       DataContext="{Binding AddOrderVm, Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <command:EventToCommand Command="{Binding CleanupCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Page.Resources>
         <DataTemplate x:Key="listBoxTemplate">
             <StackPanel Margin="3">

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using BKDelivery.CallCenter.Model;
+using BKDelivery.Domain.Interfaces;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -90,7 +91,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                        Surname = Surname,
                                        PhoneNumber = PhoneNumber
                                    };
-                                   _dataService.CourierAdd(courier);
+                                   _dataService.Insert(courier);
                                    _navigationService.NavigateTo(ViewModelLocator.CourierInitialiserTimeIntervalsPageKey, courier);
                                }
                            }));

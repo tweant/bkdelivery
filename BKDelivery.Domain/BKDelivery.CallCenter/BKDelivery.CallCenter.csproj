@@ -122,9 +122,7 @@
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\DialogService.cs" />
-    <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\IDialogService.cs" />
     <Compile Include="Model\INavigationService.cs" />
     <Compile Include="Model\NavigationService.cs" />
