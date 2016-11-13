@@ -32,8 +32,10 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Button Name="BackButton" Content="Back" Command="{Binding BackCommand}" Margin="5"/>
-            <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="5"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="BackButton" Content="Back" Command="{Binding BackCommand}" Margin="5" Width="100" HorizontalAlignment="Left"/>
+                <Button Name="SaveButton" Content="Save" Command="{Binding SaveCommand}" Margin="5" Width="100" HorizontalAlignment="Left"/>
+            </StackPanel>
         </StackPanel>
     </GroupBox>
 </Page>

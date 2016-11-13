@@ -8,14 +8,47 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="ShowClientsPage"
       DataContext="{Binding ShowClientsVm, Source={StaticResource Locator}}">
+    <Page.Resources>
+        <DataTemplate x:Key="listBoxTemplate">
+            <StackPanel Margin="3">
+                <DockPanel >
+                    <TextBlock FontWeight="Bold" Text="ID:" Foreground ="DarkOrange" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding ClientId}" FontWeight="Bold" />
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Name:" Foreground ="DarkOrange" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="NIP:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding NIP}" FontWeight="Bold"/>
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Phone number:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding PhoneNumber}" FontWeight="Bold"/>
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Email address:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding EmailAddress}" FontWeight="Bold"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
 
-    <Grid>
-        <ListBox ItemsSource="{Binding ClientsCollection}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding ClientId}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+    <GroupBox Header="Clients" Margin="5">
+        <Grid>
+
+                <StackPanel Orientation="Vertical">
+                    <ListBox Margin="17,8,15,26" Name="listBox1" SelectedItem="{Binding SelectedClient}" ItemsSource="{Binding ClientsCollection}" ItemTemplate="{StaticResource listBoxTemplate}" MaxHeight="300"/>
+                
+                <StackPanel Orientation ="Vertical">
+                    <TextBlock Margin="5">Company name</TextBlock>
+                    <TextBox Name="NameTextBox" Text="{Binding Name, Mode=TwoWay}" Margin="5"/>
+                    <TextBlock Margin="5">NIP</TextBlock>
+                    <TextBox Name="SurnameTextBox" Text="{Binding NIP, Mode=TwoWay}" Margin="5"/>
+                    <TextBlock Margin="5">Phone number</TextBlock>
+                    <TextBox Name="PhoneNumberTextBox" Text="{Binding PhoneNumber, Mode=TwoWay}" Margin="5"/>
+                    <TextBlock Margin="5">Email address</TextBlock>
+                    <TextBox Name="EmailTextBox" Text="{Binding EmailAddress, Mode=TwoWay}" Margin="5"/>
+                    <Button Name="Search" Grid.Row="1" Content="Search" Command="{Binding Path=SearchClient}" Margin="5" Width="100" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </GroupBox>
 </Page>

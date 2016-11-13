@@ -8,14 +8,41 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="ShowOrdersPage"
       DataContext="{Binding ShowOrdersVm, Source={StaticResource Locator}}">
+    <Page.Resources>
+        <DataTemplate x:Key="listBoxTemplate">
+            <StackPanel Margin="3">
+                <DockPanel >
+                    <TextBlock FontWeight="Bold" Text="Order ID:" Foreground ="DarkOrange" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding OrderId}" FontWeight="Bold" />
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Client ID:" Foreground ="DarkOrange" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding ClientId}" FontWeight="Bold" />
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Courier ID:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding CourierId}" FontWeight="Bold"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
 
-    <Grid>
-        <ListBox ItemsSource="{Binding OrdersCollection}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding OrderId}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+    <GroupBox Header="Orders" Margin="5">
+        <Grid>
+
+            <StackPanel Orientation="Vertical">
+                <ListBox Margin="17,8,15,26" Name="listBox1" SelectedItem="{Binding SelectedOrder}" ItemsSource="{Binding OrdersCollection}" ItemTemplate="{StaticResource listBoxTemplate}" MaxHeight="300"/>
+                <StackPanel Orientation ="Vertical">
+                    <TextBlock Margin="5">Order ID</TextBlock>
+                    <TextBox Name="NameTextBox" Text="{Binding OrderId, Mode=TwoWay}" Margin="5"/>
+                    <TextBlock Margin="5">Client ID</TextBlock>
+                    <TextBox Name="SurnameTextBox" Text="{Binding ClientId, Mode=TwoWay}" Margin="5"/>
+                    <TextBlock Margin="5">Courier ID</TextBlock>
+                    <TextBox Name="PhoneNumberTextBox" Text="{Binding CourierId, Mode=TwoWay}" Margin="5"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Name="Search" Grid.Row="1" Content="Search" Command="{Binding Path=SearchClient}" Margin="5" Width="100" HorizontalAlignment="Left"/>
+                        <Button Name="Choose" Grid.Row="1" Content="Choose" Command="{Binding Path=ChooseClient}" Margin="5" Width="100" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </GroupBox>
 </Page>

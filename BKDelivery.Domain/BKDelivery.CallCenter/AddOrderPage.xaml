@@ -25,12 +25,8 @@
     <GroupBox Header="Choose Client" Margin="5">
         <Grid>
             <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
-                    <ListBox Margin="17,8,15,26" Name="listBox1" SelectedItem="{Binding SelectedClient}" ItemsSource="{Binding ClientsCollection}" ItemTemplate="{StaticResource listBoxTemplate}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Button Name="Choose" Grid.Row="1" Content="Choose" Command="{Binding Path=ChooseClient}" Margin="5"/>
-                </StackPanel>
+                <ListBox Margin="17,8,15,26" Name="listBox1" SelectedItem="{Binding SelectedClient}" ItemsSource="{Binding ClientsCollection}" ItemTemplate="{StaticResource listBoxTemplate}" MaxHeight="300"/>
+                <Button Name="Choose" Grid.Row="1" Content="Choose" Command="{Binding Path=ChooseClient}" Margin="5" Width="100" HorizontalAlignment="Left"/>
             </StackPanel>
         </Grid>
     </GroupBox>
