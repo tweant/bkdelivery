@@ -121,8 +121,7 @@ namespace BKDelivery.CallCenter.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public ShowOrdersDetailsViewModel ShowOrdersDetailsVm
-            => ServiceLocator.Current.GetInstance<ShowOrdersDetailsViewModel>();
+        public ShowOrdersDetailsViewModel ShowOrdersDetailsVm => ServiceLocator.Current.GetInstance<ShowOrdersDetailsViewModel>();
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",

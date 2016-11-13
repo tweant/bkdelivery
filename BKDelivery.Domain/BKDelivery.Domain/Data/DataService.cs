@@ -120,6 +120,26 @@ namespace BKDelivery.Domain.Data
             return res;
         }
 
+        public IEnumerable<Client> SearchClient(string name, long nip, int phonenumber, string email)
+        {
+            List<Client> res;
+            using (var repo = _container.Resolve<IClientsRepository>())
+            {
+                res = repo.GetClients(name, nip, phonenumber, email).ToList();
+            }
+            return res;
+        }
+
+        public IEnumerable<Order> SearchOrder(int orderId, int clientId, int courierId)
+        {
+            List<Order> res;
+            using (var repo = _container.Resolve<IOrderRepository>())
+            {
+                res = repo.GetOrders(orderId, clientId, courierId).ToList();
+            }
+            return res;
+        }
+
         public void TimeIntervalAdd(TimeInterval interval, int courierId)
         {
             using (var uof = _container.Resolve<IUnitOfWork>())
