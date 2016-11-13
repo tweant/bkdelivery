@@ -6,9 +6,36 @@
       xmlns:local="clr-namespace:BKDelivery.CallCenter"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
-      Title="ShowOrdersDetailsPage">
+      Title="ShowOrdersDetailsPage"
+      DataContext="{Binding ShowOrdersDetailsVm, Source={StaticResource Locator}}">
+    <Page.Resources>
+        <DataTemplate x:Key="listBoxTemplate">
+            <StackPanel Margin="3" Orientation="Vertical">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Street}" />
+                        <TextBlock Text="{Binding BuildingNumber}" Margin="5,0,0,0" />
+                        <TextBlock Text="/" />
+                        <TextBlock Text="{Binding FlatNumber}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ZipCode}" />
+                        <TextBlock Text="{Binding City}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <TextBlock Text="{Binding Voivodeship}" />
+                    <TextBlock Text="{Binding Country}" />
+                    <TextBlock Text="{Binding AddressType.Name}" />
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
 
-    <Grid>
-        
-    </Grid>
+    <GroupBox Header="Order details" Margin="5">
+        <StackPanel Orientation="Vertical">
+            <ListBox Margin="17,8,15,26" Name="listBox1" ItemsSource="{Binding AddressesCollection}" ItemTemplate="{StaticResource listBoxTemplate}" MaxHeight="300"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="BackButton" Content="Back" Command="{Binding BackCommand}" Margin="5" Width="100" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </StackPanel>
+    </GroupBox>
 </Page>

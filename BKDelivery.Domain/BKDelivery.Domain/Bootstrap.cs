@@ -23,6 +23,7 @@ namespace BKDelivery.Domain
             builder.RegisterType<PackagesRepository>().As<IPackagesRepository>();
             builder.RegisterType<TimeIntervalsRepository>().As<ITimeIntervalsRepository>();
             builder.RegisterType<OrderRepository>().As<IOrderRepository>();
+            builder.RegisterType<ClientsRepository>().As<IClientsRepository>();
 
             return builder.Build();
         }

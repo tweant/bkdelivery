@@ -4,10 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:BKDelivery.CallCenter"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:mvvmlight="http://www.galasoft.ch/mvvmlight"
       mc:Ignorable="d"
       d:DesignHeight="300" d:DesignWidth="300"
       Title="ShowOrdersPage"
       DataContext="{Binding ShowOrdersVm, Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <mvvmlight:EventToCommand Command="{Binding CleanupCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Page.Resources>
         <DataTemplate x:Key="listBoxTemplate">
             <StackPanel Margin="3">
@@ -27,7 +34,6 @@
 
     <GroupBox Header="Orders" Margin="5">
         <Grid>
-
             <StackPanel Orientation="Vertical">
                 <ListBox Margin="17,8,15,26" Name="listBox1" SelectedItem="{Binding SelectedOrder}" ItemsSource="{Binding OrdersCollection}" ItemTemplate="{StaticResource listBoxTemplate}" MaxHeight="300"/>
                 <StackPanel Orientation ="Vertical">
@@ -38,8 +44,8 @@
                     <TextBlock Margin="5">Courier ID</TextBlock>
                     <TextBox Name="PhoneNumberTextBox" Text="{Binding CourierId, Mode=TwoWay}" Margin="5"/>
                     <StackPanel Orientation="Horizontal">
-                        <Button Name="Search" Grid.Row="1" Content="Search" Command="{Binding Path=SearchClient}" Margin="5" Width="100" HorizontalAlignment="Left"/>
-                        <Button Name="Choose" Grid.Row="1" Content="Choose" Command="{Binding Path=ChooseClient}" Margin="5" Width="100" />
+                        <Button Name="Search" Grid.Row="1" Content="Search" Command="{Binding CleanupCommand}" Margin="5" Width="100" HorizontalAlignment="Left"/>
+                        <Button Name="Choose" Grid.Row="1" Content="Choose" Command="{Binding OrdersButtonCommand}" Margin="5" Width="100" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

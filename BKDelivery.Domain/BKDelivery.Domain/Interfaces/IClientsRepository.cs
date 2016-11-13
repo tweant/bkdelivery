@@ -7,9 +7,8 @@ using BKDelivery.Domain.Model;
 
 namespace BKDelivery.Domain.Interfaces
 {
-    public interface IOrderRepository : IRepository
+    public interface IClientsRepository : IRepository
     {
-        IEnumerable<Order> GetOrders(int orderId, int clientId, int courierId);
-        void Add(Order order);
+        IEnumerable<Client> GetClients(string name, long nip, int phonenumber, string email);   
     }
 }

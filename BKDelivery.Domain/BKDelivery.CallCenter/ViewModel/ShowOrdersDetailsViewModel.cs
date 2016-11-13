@@ -12,25 +12,33 @@ namespace BKDelivery.CallCenter.ViewModel
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
 
-        private RelayCommand _addAddressCommand;
+        private RelayCommand _backCommand;
+        private Order SelectedOrder => _navigationService.Parameter as Order;
+        private ObservableCollection<Address> _addressesTypesCollecion;
+
+        public ObservableCollection<Address> AddressesCollection;
+
 
         public ShowOrdersDetailsViewModel(INavigationService navigationService, IDataService dataService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
+            AddressesCollection.Add(SelectedOrder.FromAddress);
+            AddressesCollection.Add(SelectedOrder.ToAddress);
+            AddressesCollection.Add(SelectedOrder.InvoiceAddress);
         }
 
-
-        public RelayCommand AddAddressCommand
+        public RelayCommand BackCommand
         {
             get
             {
-                return _addAddressCommand
-                    ?? (_addAddressCommand = new RelayCommand(
-                    () =>
-                    {
-                        _navigationService.NavigateTo(ViewModelLocator.AddAddressPageKey);
-                    }));
+                return _backCommand
+                       ?? (_backCommand = new RelayCommand(
+                           () =>
+                           {
+
+                               _navigationService.NavigateTo(ViewModelLocator.ShowOrdersPageKey);
+                           }));
             }
         }
     }

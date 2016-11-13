@@ -82,12 +82,14 @@
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Data\BkDeliveryContext.cs" />
+    <Compile Include="Data\ClientsRepository.cs" />
     <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\DbInitializer.cs" />
     <Compile Include="Data\OrderRepository.cs" />
     <Compile Include="Data\SqlRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Interfaces\IAddressesRepository.cs" />
+    <Compile Include="Interfaces\IClientsRepository.cs" />
     <Compile Include="Interfaces\ICouriersRepository.cs" />
     <Compile Include="Interfaces\IDataService.cs" />
     <Compile Include="Interfaces\IDbContext.cs" />
