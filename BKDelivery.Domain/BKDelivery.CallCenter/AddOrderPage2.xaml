@@ -21,6 +21,20 @@
         <helpers:NullVisibilityConverter x:Key="NullVis" />
         <helpers:ReverseNullVisibilityConverter x:Key="ReverseNullVis" />
         <helpers:NullEnabledConverter x:Key="NullEnabled" />
+        <DataTemplate x:Key="listBoxTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock FontWeight="Bold" Text="Weight:" Foreground ="DarkOrange" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Weight}" FontWeight="Bold" />
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Category:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding Category.Name}" FontWeight="Bold"/>
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Cost:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding Cost}" FontWeight="Bold"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
     </Page.Resources>
     <GroupBox Header="Add Order" Margin="5">
 
@@ -95,22 +109,9 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <StackPanel Orientation="Horizontal">
-            <Button x:Name="AddAddressButton" Content="Add address" Command="{Binding AddAddressCommand}"
-                        Margin="5"/>
+                <Button x:Name="AddAddressButton" Content="Add address" Command="{Binding AddAddressCommand}" Margin="5" Width="110" HorizontalAlignment="Left" />
             </StackPanel>
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel Orientation="Horizontal">
-                    <ListView ItemsSource="{Binding PacksCollection}" Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="0">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" />
-                                <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}" />
-                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category.Name}" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </StackPanel>
-            </ScrollViewer>
+            <ListBox Margin="17,8,15,26" Name="listBox1"  ItemsSource="{Binding PacksCollection}" ItemTemplate="{StaticResource listBoxTemplate}" />
             <StackPanel Orientation="Horizontal"
                         Visibility="{Binding PackagesCount, Converter={StaticResource ReverseNullVis}}" Margin="5,0,5,5">
                 <TextBlock Text="Please add some packages." HorizontalAlignment="Center"/>
@@ -121,8 +122,7 @@
                 <TextBlock Text="{Binding PackagesCount}" FontWeight="Bold" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                
-                <Button x:Name="AddPackButton" Content="Add package" Command="{Binding AddPackCommand}" Margin="5" />
+                <Button x:Name="AddPackButton" Content="Add package" Command="{Binding AddPackCommand}" Margin="5" Width="110" HorizontalAlignment="Left"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">
                 <Border Margin="5,5,5,-1" Background="Honeydew" Padding="5"
@@ -139,7 +139,7 @@
                         <TextBlock Text="{Binding AvailableTimeInterval.Value.PhoneNumber}" />
                     </StackPanel>
                 </Border>
-                <Button x:Name="SaveButton" Content="Finalize" Command="{Binding SaveCommand}" Margin="5,0,5,5" IsEnabled="{Binding PackagesCount, Converter={StaticResource  NullEnabled}}" />
+                <Button x:Name="SaveButton" Content="Finalize" Command="{Binding SaveCommand}" Margin="5" IsEnabled="{Binding PackagesCount, Converter={StaticResource  NullEnabled}}" Width="110" HorizontalAlignment="Left"/>
             </StackPanel>
         </StackPanel>
 

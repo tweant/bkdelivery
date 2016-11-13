@@ -65,6 +65,25 @@ namespace BKDelivery.CallCenter.ViewModel
         private Order SelectedOrder => _navigationService.Parameter as Order;
         private Client SelectedClient => _dataService.Get<Client>(x => x.ClientId == SelectedOrder.ClientId);
         public KeyValuePair<TimeInterval, Courier> AvailableTimeInterval => _dataService.TimeIntervalFirstAvailable();
+        //public KeyValuePair<TimeInterval, Courier> AvailableTimeInterval
+        //{
+        //    get
+        //    {
+        //        _dialogService.Show(Helpers.DialogType.Error, "couriers3.");
+        //        return _dataService.TimeIntervalFirstAvailable();
+        //    }
+        //    set
+        //    {
+        //        try
+        //        {
+        //            Set(() => AvailableTimeInterval, ref _availableTimeInterval, value);
+        //        }
+        //        catch
+        //        {
+        //            _dialogService.Show(Helpers.DialogType.Error, "No couriers.");
+        //        }
+        //    }
+        //}
 
         public ObservableCollection<Address> AddressesCollection
         {
@@ -147,6 +166,8 @@ namespace BKDelivery.CallCenter.ViewModel
             get { return PacksCollection?.Count ?? 0; }
             set { Set(() => PackagesCount, ref _packagesCount, value); }
         }
+
+
 
         public RelayCommand SaveCommand
         {

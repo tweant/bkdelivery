@@ -70,7 +70,7 @@
 
             </StackPanel>
             <Button x:Name="SaveButton" Content="Save" Command="{Binding SaveCourierCommand}" Margin="5"
-                    IsEnabled="{Binding ItemsCount, Converter={StaticResource NullEnabled}}" />
+                    IsEnabled="{Binding ItemsCount, Converter={StaticResource NullEnabled}}" Width="100" HorizontalAlignment="Left"/>
         </StackPanel>
     </GroupBox>
 </Page>
