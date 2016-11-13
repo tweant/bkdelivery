@@ -4,6 +4,7 @@ using BKDelivery.Domain.Interfaces;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System.Threading.Tasks;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -11,21 +12,40 @@ namespace BKDelivery.CallCenter.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
+        private readonly IDialogService _dialogService;
 
         private RelayCommand _backCommand;
         private Order SelectedOrder => _navigationService.Parameter as Order;
-        private ObservableCollection<Address> _addressesTypesCollecion;
 
         public ObservableCollection<Address> AddressesCollection;
 
-
-        public ShowOrdersDetailsViewModel(INavigationService navigationService, IDataService dataService)
+        public ShowOrdersDetailsViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
-            AddressesCollection.Add(SelectedOrder.FromAddress);
-            AddressesCollection.Add(SelectedOrder.ToAddress);
-            AddressesCollection.Add(SelectedOrder.InvoiceAddress);
+            _dialogService = dialogService;
+        }
+
+        private RelayCommand _cleanupCommand;
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           async () =>
+                           {
+                               _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading order details.");
+                               AddressesCollection = new ObservableCollection<Address>();
+                               Address result = await Task.Run(() => _dataService.Get<Address>(x => x.AddressId == SelectedOrder.FromAddressId));
+                               AddressesCollection.Add(result);
+                               Address result1 = await Task.Run(() => _dataService.Get<Address>(x => x.AddressId == SelectedOrder.ToAddressId));
+                               AddressesCollection.Add(result1);
+                               Address result2 = await Task.Run(() => _dataService.Get<Address>(x => x.AddressId == SelectedOrder.InvoiceAddressId));
+                               AddressesCollection.Add(result2);
+                               _dialogService.Hide();
+                           }));
+            }
         }
 
         public RelayCommand BackCommand
@@ -36,7 +56,6 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_backCommand = new RelayCommand(
                            () =>
                            {
-
                                _navigationService.NavigateTo(ViewModelLocator.ShowOrdersPageKey);
                            }));
             }

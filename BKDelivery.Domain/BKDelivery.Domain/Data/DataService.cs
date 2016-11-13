@@ -120,6 +120,16 @@ namespace BKDelivery.Domain.Data
             return res;
         }
 
+        //public List<Address> AddressesByOrder(int orderId)
+        //{
+        //    List<Address> res;
+        //    using (var repo = _container.Resolve<IOrderRepository>())
+        //    {
+        //        res = repo.GetOrderAddresses(orderId).ToList();
+        //    }
+        //    return res;
+        //}
+
         public IEnumerable<Client> SearchClient(string name, long nip, int phonenumber, string email)
         {
             List<Client> res;

@@ -11,7 +11,7 @@ namespace BKDelivery.Domain.Interfaces
     {
 
         IEnumerable<Address> GetUserAddresses(int userId, int addressTypeId);
-        IEnumerable<Address> GetAllUserAddresses(int userId);
+        IEnumerable<Address> GetAllUserAddresses(int userId);      
         void Add(Address address);
     }
 }

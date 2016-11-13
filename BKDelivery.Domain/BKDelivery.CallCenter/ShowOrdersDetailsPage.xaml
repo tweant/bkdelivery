@@ -4,27 +4,22 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BKDelivery.CallCenter"
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:mvvmlight="http://www.galasoft.ch/mvvmlight"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="ShowOrdersDetailsPage"
       DataContext="{Binding ShowOrdersDetailsVm, Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <mvvmlight:EventToCommand Command="{Binding CleanupCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Page.Resources>
         <DataTemplate x:Key="listBoxTemplate">
             <StackPanel Margin="3" Orientation="Vertical">
                 <DockPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Street}" />
-                        <TextBlock Text="{Binding BuildingNumber}" Margin="5,0,0,0" />
-                        <TextBlock Text="/" />
-                        <TextBlock Text="{Binding FlatNumber}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding ZipCode}" />
-                        <TextBlock Text="{Binding City}" Margin="5,0,0,0" />
-                    </StackPanel>
-                    <TextBlock Text="{Binding Voivodeship}" />
-                    <TextBlock Text="{Binding Country}" />
-                    <TextBlock Text="{Binding AddressType.Name}" />
+                    <TextBlock Text="{Binding AddressId}" />
                 </DockPanel>
             </StackPanel>
         </DataTemplate>

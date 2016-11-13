@@ -19,6 +19,7 @@ namespace BKDelivery.Domain.Interfaces
         IEnumerable<Address> AddressessByClient(int clientId, int addressTypeId);
 
         List<Package> PackagesByOrder(int orderId);
+        //List<Address> AddressesByOrder(int orderId);
         IEnumerable<Client> SearchClient(string name, long nip, int phonenumber, string email);
         IEnumerable<Order> SearchOrder(int orderId, int clientId, int courierId);
 

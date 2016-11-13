@@ -9,6 +9,7 @@ namespace BKDelivery.Domain.Interfaces
 {
     public interface IOrderRepository : IRepository
     {
+        //IEnumerable<Address> GetOrderAddresses(int orderId);
         IEnumerable<Order> GetOrders(int orderId, int clientId, int courierId);
         void Add(Order order);
     }
