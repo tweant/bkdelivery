@@ -44,8 +44,9 @@
                     <TextBlock Margin="5">Courier ID</TextBlock>
                     <TextBox Name="PhoneNumberTextBox" Text="{Binding CourierId, Mode=TwoWay}" Margin="5"/>
                     <TextBlock Margin="5">Status of order</TextBlock>
-                    <ComboBox SelectedItem="{Binding SelectedStatus}">
-                        <ComboBoxItem IsSelected="True">Active</ComboBoxItem>
+                    <ComboBox Margin="5" SelectedItem="{Binding SelectedStatus}">
+                        <ComboBoxItem IsSelected="True">All</ComboBoxItem>
+                        <ComboBoxItem>Active</ComboBoxItem>
                         <ComboBoxItem>Ended</ComboBoxItem>
                     </ComboBox>
                     <StackPanel Orientation="Horizontal">

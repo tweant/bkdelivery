@@ -101,6 +101,15 @@
             <ListBox Margin="15,8,15,8" Name="listBox2"  ItemsSource="{Binding PacksCollection}" ItemTemplate="{StaticResource listBoxTemplate1}" MaxHeight="300"/>
             <TextBlock FontWeight="Bold" Text="Courier:" DockPanel.Dock="Left" Margin="5,0,10,0"/>
             <ListBox Margin="15,8,15,8" Name="listBox3"  ItemsSource="{Binding CouriersCollection}" ItemTemplate="{StaticResource listBoxTemplate3}" MaxHeight="300"/>
+            <StackPanel Orientation="Vertical">
+                <Border Margin="5" Background="Honeydew" Padding="5" BorderThickness="1">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Estimated delivery period:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Time.Start}" />
+                        <TextBlock Text="{Binding Time.End}" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Name="BackButton" Content="Back" Command="{Binding BackCommand}" Margin="5" Width="100" HorizontalAlignment="Left"/>
                 <Button Name="Edit" Content="Edit" Command="{Binding EditCommand}" Margin="5" Width="100" />

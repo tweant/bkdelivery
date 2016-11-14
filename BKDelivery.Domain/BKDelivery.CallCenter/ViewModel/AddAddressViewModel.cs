@@ -47,10 +47,7 @@ namespace BKDelivery.CallCenter.ViewModel
                 "warmińsko-mazurskie",
                 "wielkopolskie",
                 "zachodniopomorskie"
-            };
-
-            TypesCollection = new List<AddressType>(_dataService.GetAll<AddressType>());
-
+            };       
         }
 
         private string _street;
@@ -175,6 +172,30 @@ namespace BKDelivery.CallCenter.ViewModel
                                    await Task.Run(() => _dataService.Add(address));
                                    _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
                                }
+                           }));
+            }
+        }
+
+        private RelayCommand _cleanupCommand;
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           async () =>
+                           {
+                               TypesCollection = new List<AddressType>();
+                               var result = await Task.Run(() => _dataService.GetAll<AddressType>());
+                               foreach(AddressType at in result)
+                               {
+                                   TypesCollection.Add(at);
+                               }
+                               Street = string.Empty;
+                               BuildingNumber = string.Empty;
+                               FlatNumber = string.Empty;
+                               PostalCode = string.Empty;
+                               City = string.Empty;
                            }));
             }
         }

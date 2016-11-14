@@ -103,7 +103,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                {
                                    if (SelectedOrder == null)
                                    {
-                                       _dialogService.Show(Helpers.DialogType.Error, "Select order.");
+                                       _dialogService.Show(Helpers.DialogType.Error, "Select order.");                                      
                                    }
                                    else
                                    {

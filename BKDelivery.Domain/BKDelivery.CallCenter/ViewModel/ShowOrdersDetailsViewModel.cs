@@ -42,6 +42,12 @@ namespace BKDelivery.CallCenter.ViewModel
             set { Set(() => CouriersCollection, ref _couriersCollection, value); }
         }
 
+        public TimeInterval Time
+        {
+            get { return _time; }
+            set { Set(() => Time, ref _time, value); }
+        }
+
         public ShowOrdersDetailsViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
         {
             _navigationService = navigationService;
@@ -53,6 +59,7 @@ namespace BKDelivery.CallCenter.ViewModel
         private ObservableCollection<Package> _packsTypesCollecion;
         private ObservableCollection<Client> _clientsCollection;
         private ObservableCollection<Courier> _couriersCollection;
+        private TimeInterval _time;
 
         public RelayCommand CleanupCommand
         {
@@ -63,6 +70,8 @@ namespace BKDelivery.CallCenter.ViewModel
                            async () =>
                            {
                                _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading order details.");
+                               Time = new TimeInterval();
+                               Time = await Task.Run(() => _dataService.Get<TimeInterval>(x => x.TimeIntervalId == SelectedOrder.TimeIntervalId));
                                ClientsCollection = new ObservableCollection<Client>();
                                var result4 = await Task.Run(() => _dataService.SearchClientId(SelectedOrder.ClientId));
                                foreach (Client client in result4)

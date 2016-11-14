@@ -59,8 +59,17 @@ namespace BKDelivery.CallCenter.ViewModel
                                Client client = await Task.Run(() => _dataService.Get<Client>(x => x.ClientId == SelectedOrder.ClientId));
                                SelectedClient = client;
                                AvailableTimeInterval = new KeyValuePair<TimeInterval, Courier>();
-                               KeyValuePair<TimeInterval, Courier> pair = await Task.Run(() => _dataService.TimeIntervalFirstAvailable());
-                               AvailableTimeInterval = pair;
+                               try
+                               {
+                                   KeyValuePair<TimeInterval, Courier> pair = await Task.Run(() => _dataService.TimeIntervalFirstAvailable());
+                                   AvailableTimeInterval = pair;
+                               }
+                               catch
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error, "No avaliable couriers.");
+                                   _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                               }
+                               
                                                             
 
                                AddressesCollection = new ObservableCollection<Address>();
@@ -200,14 +209,12 @@ namespace BKDelivery.CallCenter.ViewModel
                                    order.TimeIntervalId = AvailableTimeInterval.Key.TimeIntervalId;
                                    order.CourierId = AvailableTimeInterval.Value.CourierId;
                                    order.InvoiceAddressId = SelectedInvokeAddress.AddressId;
-
-                                   //MessageBox.Show(PacksCollection[0].Category.Name);
-
                                    var interval = AvailableTimeInterval.Key;
                                    interval.IsTaken = true;
                                    await Task.Run(() => _dataService.Update(interval));
                                    await Task.Run(() => _dataService.Update(order));
                                    _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                                   _dialogService.Show(Helpers.DialogType.Success, "Succesfully created or edited order.");
                                }
                            }));
             }
