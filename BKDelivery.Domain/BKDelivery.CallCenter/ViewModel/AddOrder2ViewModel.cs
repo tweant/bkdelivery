@@ -201,7 +201,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                    order.CourierId = AvailableTimeInterval.Value.CourierId;
                                    order.InvoiceAddressId = SelectedInvokeAddress.AddressId;
 
-                                   MessageBox.Show(PacksCollection[0].Category.Name);
+                                   //MessageBox.Show(PacksCollection[0].Category.Name);
 
                                    var interval = AvailableTimeInterval.Key;
                                    interval.IsTaken = true;

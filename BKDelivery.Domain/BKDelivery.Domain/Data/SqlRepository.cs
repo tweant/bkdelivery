@@ -42,6 +42,7 @@ namespace BKDelivery.Domain.Data
 
         public void Delete<TEntity>(TEntity entity) where TEntity : class
         {
+            GetEntities<TEntity>().Attach(entity);
             GetEntities<TEntity>().Remove(entity);
         }
 
