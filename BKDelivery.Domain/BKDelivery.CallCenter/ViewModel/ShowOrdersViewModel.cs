@@ -100,8 +100,17 @@ namespace BKDelivery.CallCenter.ViewModel
                                    }
                                    else
                                    {
+                                       _dialogService.Show(Helpers.DialogType.BusyWaiting,
+                                           "Please wait. Deleteing the order.");
+                                       var result3 = await Task.Run(() => _dataService.PackagesByOrder(SelectedOrder.OrderId));
+                                       foreach (Package package in result3)
+                                       {
+                                           await Task.Run(() => _dataService.Delete(package));
+                                       }
                                        await Task.Run(() => _dataService.Delete(_dataService.Get<Order>(x => x.OrderId == SelectedOrder.OrderId)));
-                                       _navigationService.NavigateTo(ViewModelLocator.ShowOrdersPageKey);
+                                       CleanupCommand.Execute(null);
+                                       _dialogService.Hide();
+                                       _dialogService.Show(Helpers.DialogType.Success, "Succesfully deleted the order.");
                                    }
                                }
                            }));
