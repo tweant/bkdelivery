@@ -63,6 +63,7 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Moq, Version=4.5.28.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.5.28\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
@@ -80,6 +81,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BKDelivery.Tests\Properties\AssemblyInfo.cs" />
+    <Compile Include="BKDelivery.Tests\UnitTests.cs" />
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Data\BkDeliveryContext.cs" />
     <Compile Include="Data\ClientsRepository.cs" />
@@ -110,11 +113,18 @@
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Package.cs" />
     <Compile Include="Model\TimeInterval.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="BKDelivery.Tests\App.config" />
+    <None Include="BKDelivery.Tests\packages.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BKDelivery.Tests\BKDelivery.Tests.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

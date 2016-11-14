@@ -160,12 +160,12 @@ namespace BKDelivery.Domain.Data
             return res;
         }
 
-        public IEnumerable<Order> SearchOrder(int orderId, int clientId, int courierId)
+        public IEnumerable<Order> SearchOrder(int orderId, int clientId, int courierId, string selectedStatus)
         {
             List<Order> res;
             using (var repo = _container.Resolve<IOrderRepository>())
             {
-                res = repo.GetOrders(orderId, clientId, courierId).ToList();
+                res = repo.GetOrders(orderId, clientId, courierId, selectedStatus).ToList();
             }
             return res;
         }
