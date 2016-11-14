@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Autofac;
 using BKDelivery.Domain.Model;
 
 namespace BKDelivery.Domain.Interfaces
@@ -8,6 +9,7 @@ namespace BKDelivery.Domain.Interfaces
     public interface IDataService
     {
         void InitializeDataBase();
+        void SetContainer(IContainer mockedContainer);
 
         IEnumerable<TEntity> GetAll<TEntity>() where TEntity : class;
         TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
