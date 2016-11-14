@@ -10,11 +10,6 @@ namespace BKDelivery.Domain.Data
 {
     public class OrderRepository : SqlRepository, IOrderRepository
     {
-        //public IEnumerable<Address> GetOrderAddresses(int orderId)
-        //{
-        //    return GetAll<Address>().Where(a => a.AddressId == orderId).SelectMany(o => o.Packages).AsEnumerable();
-        //}
-
         public IEnumerable<Order> GetOrders(int orderId, int clientId, int courierId)
         {
             if (orderId != 0 && clientId != 0 && courierId != 0)

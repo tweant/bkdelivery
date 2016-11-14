@@ -15,8 +15,6 @@
         <StackPanel Orientation="Vertical">
             <TextBlock Margin="5">Weight</TextBlock>
             <TextBox Name="WeightTextBox" Text="{Binding Weight, Mode=TwoWay}" Margin="5"/>
-            <TextBlock Margin="5">Cost</TextBlock>
-            <TextBox Name="CostTextBox" Text="{Binding Cost, Mode=TwoWay}" Margin="5"/>
             <TextBlock Text="Category" Margin="5"/>
             <ComboBox ItemsSource="{Binding CategoriesCollection}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" Margin="5">
                 <ComboBox.ItemTemplate>

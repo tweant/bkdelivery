@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.Generic;
 using BKDelivery.Domain.Interfaces;
+using System.Threading.Tasks;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -26,7 +27,6 @@ namespace BKDelivery.CallCenter.ViewModel
         private Order SelectedOrder => _navigationService.Parameter as Order;
 
         private double _weight;
-        private decimal _cost;
         private Category _selectedcategory;
         private List<Category> _categoriesCollection;
 
@@ -48,22 +48,14 @@ namespace BKDelivery.CallCenter.ViewModel
             set { Set(() => Weight, ref _weight, value); }
         }
 
-        //TODO Koszt musi uwzględniać mnożnik z kategorii i wagę, żeby ceny się jakoś różniły
-        public decimal Cost
-        {
-            get { return _cost; }
-            set { Set(() => Cost, ref _cost, value); }
-        }
-
         public RelayCommand AddCommand
         {
             get
             {
                 return _addCommand
                        ?? (_addCommand = new RelayCommand(
-                           () =>
+                           async () =>
                            {
-                               //TODO Koszt musi być wyliczany na podstawie wagi i kategorii nie wpisuje się go
                                if (SelectedCategory == null)
                                {
                                    _dialogService.Show(Helpers.DialogType.Error, "Please select category.");
@@ -73,10 +65,10 @@ namespace BKDelivery.CallCenter.ViewModel
                                    var pack = new Package
                                    {
                                        Weight = Weight,
-                                       Cost = Cost,
+                                       Cost = (decimal)SelectedCategory.Multiplier * (decimal)Weight / 1000,
                                        CategoryId = SelectedCategory.CategoryId,
                                    };
-                                   _dataService.Add(pack, SelectedOrder);
+                                   await Task.Run(() => _dataService.Add(pack, SelectedOrder));
                                    _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
                                }
                            }));

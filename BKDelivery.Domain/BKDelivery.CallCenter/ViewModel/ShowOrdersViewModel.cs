@@ -69,12 +69,39 @@ namespace BKDelivery.CallCenter.ViewModel
                                {
                                    if (SelectedOrder == null)
                                    {
-                                       _dialogService.Show(Helpers.DialogType.Error,
-                                           "Select order.");
+                                       _dialogService.Show(Helpers.DialogType.Error,"Select order.");
+                                   }
+                                   else if(SelectedOrder.CourierId == null)
+                                   {
+                                       _dialogService.Show(Helpers.DialogType.Error,"Wrong order.");
                                    }
                                    else
                                    {
                                        _navigationService.NavigateTo(ViewModelLocator.ShowOrdersDetailsPageKey, SelectedOrder);
+                                   }
+                               }
+                           }));
+            }
+        }
+
+        private RelayCommand _deleteCommand;
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                return _deleteCommand
+                       ?? (_deleteCommand = new RelayCommand(
+                           async () => 
+                           {
+                               {
+                                   if (SelectedOrder == null)
+                                   {
+                                       _dialogService.Show(Helpers.DialogType.Error, "Select order.");
+                                   }
+                                   else
+                                   {
+                                       await Task.Run(() => _dataService.Delete(_dataService.Get<Order>(x => x.OrderId == SelectedOrder.OrderId)));
+                                       _navigationService.NavigateTo(ViewModelLocator.ShowOrdersPageKey);
                                    }
                                }
                            }));

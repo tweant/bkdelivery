@@ -65,7 +65,7 @@ namespace BKDelivery.CallCenter.ViewModel
                 {
                     return _chooseclient
                            ?? (_chooseclient = new RelayCommand(
-                               () =>
+                               async () =>
                                {
                                    if (SelectedClient == null)
                                    {
@@ -79,7 +79,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                            ClientId = _selectedClient.ClientId,
                                        };
 
-                                       _dataService.Add(order);
+                                       await Task.Run(() => _dataService.Add(order));
                                        _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2,
                                            order);
                                    }

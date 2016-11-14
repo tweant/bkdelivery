@@ -20,6 +20,11 @@ namespace BKDelivery.Domain.Data
             return this.GetAll<Address>().Where(x => x.ClientId == userId).AsEnumerable();
         }
 
+        public IEnumerable<Address> GetOrderAddresses(int? FromId)
+        {
+            return GetAll<Address>().Where(a => a.AddressId == FromId).AsEnumerable();
+        }
+
         public void Add(Address address)
         {
             address.AddressType = GetAll<AddressType>().First(x => x.AddressTypeId == address.AddressTypeId);

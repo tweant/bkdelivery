@@ -5,6 +5,7 @@ using BKDelivery.Domain.Interfaces;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System.Threading.Tasks;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -100,9 +101,9 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return _saveCourierCommand
                        ?? (_saveCourierCommand = new RelayCommand(
-                           () =>
+                           async () =>
                            {
-                               _dataService.TimeIntervalAdd(TimeIntervalsCollection, SelectedCourier.CourierId);
+                               await Task.Run(() => _dataService.TimeIntervalAdd(TimeIntervalsCollection, SelectedCourier.CourierId));
                                _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
                                _dialogService.Show(Helpers.DialogType.Success,
                                    "Succesfully created courier " + SelectedCourier.Name + " " + SelectedCourier.Surname +

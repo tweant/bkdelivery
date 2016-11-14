@@ -9,6 +9,7 @@ namespace BKDelivery.Domain.Interfaces
 {
     public interface ICouriersRepository : IRepository
     {
+        IEnumerable<Courier> GetCourier(int? courierId);
         Courier SearchByTimeInterval(int intervalId);
     }
 }

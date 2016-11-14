@@ -50,47 +50,50 @@ namespace BKDelivery.CallCenter.ViewModel
                                var result = await Task.Run(() => _dataService.PackagesByOrder(SelectedOrder.OrderId));
                                foreach (Package package in result)
                                {
-                                   package.Category =
-                                       await
-                                           Task.Run(
-                                               () => _dataService.Get<Category>(x => x.CategoryId == package.CategoryId));
+                                   package.Category = await Task.Run(() => _dataService.Get<Category>(x => x.CategoryId == package.CategoryId));
                                    PacksCollection.Add(package);
                                }
                                PackagesCount = PacksCollection.Count;
+                               SelectedClient = new Client();
+                               Client client = await Task.Run(() => _dataService.Get<Client>(x => x.ClientId == SelectedOrder.ClientId));
+                               SelectedClient = client;
+                               //AvailableTimeInterval = new KeyValuePair<TimeInterval, Courier>();
+                               //KeyValuePair<TimeInterval, Courier> pair = await Task.Run(() => _dataService.TimeIntervalFirstAvailable());
+                               //AvailableTimeInterval = pair;
+
+                               AddressesCollection = new ObservableCollection<Address>();
+                               var result1 = await Task.Run(() => _dataService.AddressessByClient(SelectedClient.ClientId, 1));
+                               foreach (Address add in result1)
+                               {
+                                   AddressesCollection.Add(add);
+                               }
+                               DeliveryAddressesCollection = new ObservableCollection<Address>();
+                               var result2 = await Task.Run(() => _dataService.AddressessByClient(SelectedClient.ClientId, 3));
+                               foreach (Address add in result2)
+                               {
+                                   DeliveryAddressesCollection.Add(add);
+                               }
+                               InvoiceAddressesCollection = new ObservableCollection<Address>();
+                               var result3 = await Task.Run(() => _dataService.AddressessByClient(SelectedClient.ClientId, 2));
+                               foreach (Address add in result3)
+                               {
+                                   InvoiceAddressesCollection.Add(add);
+                               }
                            }));
             }
         }
 
 
         private Order SelectedOrder => _navigationService.Parameter as Order;
-        private Client SelectedClient => _dataService.Get<Client>(x => x.ClientId == SelectedOrder.ClientId);
+        private Client SelectedClient;
         public KeyValuePair<TimeInterval, Courier> AvailableTimeInterval => _dataService.TimeIntervalFirstAvailable();
-        //public KeyValuePair<TimeInterval, Courier> AvailableTimeInterval
-        //{
-        //    get
-        //    {
-        //        _dialogService.Show(Helpers.DialogType.Error, "couriers3.");
-        //        return _dataService.TimeIntervalFirstAvailable();
-        //    }
-        //    set
-        //    {
-        //        try
-        //        {
-        //            Set(() => AvailableTimeInterval, ref _availableTimeInterval, value);
-        //        }
-        //        catch
-        //        {
-        //            _dialogService.Show(Helpers.DialogType.Error, "No couriers.");
-        //        }
-        //    }
-        //}
+
 
         public ObservableCollection<Address> AddressesCollection
         {
             get
             {
-                return new ObservableCollection<Address>(_dataService.AddressessByClient(
-                    SelectedClient.ClientId, 1));
+                return _addressesTypesCollecion;
             }
             set { Set(() => AddressesCollection, ref _addressesTypesCollecion, value); }
         }
@@ -99,9 +102,7 @@ namespace BKDelivery.CallCenter.ViewModel
         {
             get
             {
-                return
-                    new ObservableCollection<Address>(_dataService.AddressessByClient(
-                        SelectedClient.ClientId, 3));
+                return _deliveryAddressesCollection;
             }
             set { Set(() => DeliveryAddressesCollection, ref _deliveryAddressesCollection, value); }
         }
@@ -110,9 +111,7 @@ namespace BKDelivery.CallCenter.ViewModel
         {
             get
             {
-                return
-                    new ObservableCollection<Address>(_dataService.AddressessByClient(
-                        SelectedClient.ClientId, 2));
+                return _invoiceAddressesCollection;
             }
             set { Set(() => InvoiceAddressesCollection, ref _invoiceAddressesCollection, value); }
         }
@@ -175,7 +174,7 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return _saveCommand
                        ?? (_saveCommand = new RelayCommand(
-                           () =>
+                           async () =>
                            {
                                if (SelectedHomeAddress == null || SelectedDeliveryAddress == null ||
                                    SelectedInvokeAddress == null)
@@ -196,8 +195,8 @@ namespace BKDelivery.CallCenter.ViewModel
 
                                    var interval = AvailableTimeInterval.Key;
                                    interval.IsTaken = true;
-                                   _dataService.Update(interval);
-                                   _dataService.Update(order);
+                                   await Task.Run(() => _dataService.Update(interval));
+                                   await Task.Run(() => _dataService.Update(order));
                                    _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
                                }
                            }));

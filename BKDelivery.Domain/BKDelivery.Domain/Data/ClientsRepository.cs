@@ -10,6 +10,10 @@ namespace BKDelivery.Domain.Data
 {
     public class ClientsRepository : SqlRepository, IClientsRepository
     {
+        public IEnumerable<Client> GetClient(int? clientId)
+        {
+            return this.GetAll<Client>().Where(x => x.ClientId == clientId).AsEnumerable();
+        }
         public IEnumerable<Client> GetClients(string name, long nip, int phonenumber, string email)
         {
             if (name != null && nip != 0 && phonenumber != 0 && email != null)

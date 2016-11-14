@@ -17,9 +17,75 @@
     </i:Interaction.Triggers>
     <Page.Resources>
         <DataTemplate x:Key="listBoxTemplate">
-            <StackPanel Margin="3" Orientation="Vertical">
+            <StackPanel Margin="3">
                 <DockPanel>
-                    <TextBlock Text="{Binding AddressId}" />
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Street: " Foreground ="DarkOrange" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Street}" FontWeight="Bold"/>
+                            <TextBlock Text=" Building number: " Foreground ="DarkOrange" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding BuildingNumber}" FontWeight="Bold"/>
+                            <TextBlock Text=" Flat number: " Foreground ="DarkOrange" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding FlatNumber}" FontWeight="Bold"/>
+                            <TextBlock Text=" Zip code: " Foreground ="DarkOrange" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding ZipCode}" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="City: " Foreground ="DarkOrange" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding City}" FontWeight="Bold"/>
+                            <TextBlock Text=" Voivodeship: " Foreground ="DarkOrange" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Voivodeship}" FontWeight="Bold"/>
+                            <TextBlock Text=" Country: " Foreground ="DarkOrange" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Country}" FontWeight="Bold"/>
+                            <TextBlock Text=" Address type: " Foreground ="DarkOrange" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding AddressType.Name}" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="listBoxTemplate1">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock FontWeight="Bold" Text="Weight:" Foreground ="DarkOrange" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Weight}" FontWeight="Bold" />
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Category:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding Category.Name}" FontWeight="Bold"/>
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Cost:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding Cost}" FontWeight="Bold"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="listBoxTemplate2">
+            <StackPanel Margin="3">
+                <DockPanel >
+                    <TextBlock FontWeight="Bold" Text="Name:" Foreground ="DarkOrange" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="NIP:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding NIP}" FontWeight="Bold"/>
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Phone number:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding PhoneNumber}" FontWeight="Bold"/>
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Email address:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding EmailAddress}" FontWeight="Bold"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="listBoxTemplate3">
+            <StackPanel Margin="3">
+                <DockPanel >
+                    <TextBlock FontWeight="Bold" Text="Name:" Foreground ="DarkOrange" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Surname:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding Surname}" FontWeight="Bold"/>
+                    <TextBlock Text="  " />
+                    <TextBlock FontWeight="Bold" Text="Phone number:" Foreground ="DarkOrange" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding PhoneNumber}" FontWeight="Bold"/>
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
@@ -27,9 +93,17 @@
 
     <GroupBox Header="Order details" Margin="5">
         <StackPanel Orientation="Vertical">
-            <ListBox Margin="17,8,15,26" Name="listBox1" ItemsSource="{Binding AddressesCollection}" ItemTemplate="{StaticResource listBoxTemplate}" MaxHeight="300"/>
+            <TextBlock FontWeight="Bold" Text="Client:" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+            <ListBox Margin="15,8,15,8" Name="listBox"  ItemsSource="{Binding ClientsCollection}" ItemTemplate="{StaticResource listBoxTemplate2}" MaxHeight="300"/>
+            <TextBlock FontWeight="Bold" Text="Addresses:" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+            <ListBox Margin="15,8,15,8" Name="listBox1" ItemsSource="{Binding AddressesCollection}" ItemTemplate="{StaticResource listBoxTemplate}" MaxHeight="300"/>
+            <TextBlock FontWeight="Bold" Text="Packages:" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+            <ListBox Margin="15,8,15,8" Name="listBox2"  ItemsSource="{Binding PacksCollection}" ItemTemplate="{StaticResource listBoxTemplate1}" MaxHeight="300"/>
+            <TextBlock FontWeight="Bold" Text="Courier:" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+            <ListBox Margin="15,8,15,8" Name="listBox3"  ItemsSource="{Binding CouriersCollection}" ItemTemplate="{StaticResource listBoxTemplate3}" MaxHeight="300"/>
             <StackPanel Orientation="Horizontal">
                 <Button Name="BackButton" Content="Back" Command="{Binding BackCommand}" Margin="5" Width="100" HorizontalAlignment="Left"/>
+                <Button Name="Edit" Content="Edit" Command="{Binding EditCommand}" Margin="5" Width="100" />
             </StackPanel>
         </StackPanel>
     </GroupBox>

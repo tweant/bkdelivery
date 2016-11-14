@@ -120,15 +120,15 @@ namespace BKDelivery.Domain.Data
             return res;
         }
 
-        //public List<Address> AddressesByOrder(int orderId)
-        //{
-        //    List<Address> res;
-        //    using (var repo = _container.Resolve<IOrderRepository>())
-        //    {
-        //        res = repo.GetOrderAddresses(orderId).ToList();
-        //    }
-        //    return res;
-        //}
+        public List<Address> AddressesByOrder(int? FromId)
+        {
+            List<Address> res;
+            using (var repo = _container.Resolve<IAddressesRepository>())
+            {
+                res = repo.GetOrderAddresses(FromId).ToList();
+            }
+            return res;
+        }
 
         public IEnumerable<Client> SearchClient(string name, long nip, int phonenumber, string email)
         {
@@ -136,6 +136,26 @@ namespace BKDelivery.Domain.Data
             using (var repo = _container.Resolve<IClientsRepository>())
             {
                 res = repo.GetClients(name, nip, phonenumber, email).ToList();
+            }
+            return res;
+        }
+
+        public List<Client> SearchClientId(int? clientId)
+        {
+            List<Client> res;
+            using (var repo = _container.Resolve<IClientsRepository>())
+            {
+                res = repo.GetClient(clientId).ToList();
+            }
+            return res;
+        }
+
+        public List<Courier> SearchCourierId(int? courierId)
+        {
+            List<Courier> res;
+            using (var repo = _container.Resolve<ICouriersRepository>())
+            {
+                res = repo.GetCourier(courierId).ToList();
             }
             return res;
         }

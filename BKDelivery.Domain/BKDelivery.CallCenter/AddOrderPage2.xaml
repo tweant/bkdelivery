@@ -111,7 +111,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="AddAddressButton" Content="Add address" Command="{Binding AddAddressCommand}" Margin="5" Width="110" HorizontalAlignment="Left" />
             </StackPanel>
-            <ListBox Margin="17,8,15,26" Name="listBox1"  ItemsSource="{Binding PacksCollection}" ItemTemplate="{StaticResource listBoxTemplate}" />
+            <ListBox Margin="17,8,15,26" Name="listBox1"  ItemsSource="{Binding PacksCollection}" ItemTemplate="{StaticResource listBoxTemplate}" MaxHeight="300"/>
             <StackPanel Orientation="Horizontal"
                         Visibility="{Binding PackagesCount, Converter={StaticResource ReverseNullVis}}" Margin="5,0,5,5">
                 <TextBlock Text="Please add some packages." HorizontalAlignment="Center"/>

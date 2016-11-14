@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.ComponentModel;
 using BKDelivery.Domain.Interfaces;
+using System.Threading.Tasks;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -74,7 +75,7 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return _saveCommand
                        ?? (_saveCommand = new RelayCommand(
-                           () =>
+                           async () =>
                            {
                                if (PhoneNumber < 100000000 || PhoneNumber > 999999999)
                                {
@@ -105,7 +106,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                        PhoneNumber = PhoneNumber,
                                        EmailAddress = EmailAddress,
                                    };
-                                   _dataService.Insert(client);
+                                   await Task.Run(() => _dataService.Insert(client));
                                    _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
                                }
                            }));

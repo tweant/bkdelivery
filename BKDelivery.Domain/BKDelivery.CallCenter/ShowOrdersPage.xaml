@@ -46,6 +46,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Button Name="Search" Grid.Row="1" Content="Search" Command="{Binding CleanupCommand}" Margin="5" Width="100" HorizontalAlignment="Left"/>
                         <Button Name="Choose" Grid.Row="1" Content="Choose" Command="{Binding OrdersButtonCommand}" Margin="5" Width="100" />
+                        <Button Name="Delete" Grid.Row="1" Content="Delete" Command="{Binding DeleteCommand}" Margin="5" Width="100" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

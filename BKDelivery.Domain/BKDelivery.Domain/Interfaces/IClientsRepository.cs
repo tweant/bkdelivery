@@ -9,6 +9,7 @@ namespace BKDelivery.Domain.Interfaces
 {
     public interface IClientsRepository : IRepository
     {
-        IEnumerable<Client> GetClients(string name, long nip, int phonenumber, string email);   
+        IEnumerable<Client> GetClients(string name, long nip, int phonenumber, string email);
+        IEnumerable<Client> GetClient(int? clientId);   
     }
 }

@@ -18,8 +18,10 @@ namespace BKDelivery.Domain.Interfaces
         IEnumerable<Address> AddressessByClient(int clientId);
         IEnumerable<Address> AddressessByClient(int clientId, int addressTypeId);
 
+        List<Courier> SearchCourierId(int? courierId);
+        List<Client> SearchClientId(int? clientId);
         List<Package> PackagesByOrder(int orderId);
-        //List<Address> AddressesByOrder(int orderId);
+        List<Address> AddressesByOrder(int? FromId);
         IEnumerable<Client> SearchClient(string name, long nip, int phonenumber, string email);
         IEnumerable<Order> SearchOrder(int orderId, int clientId, int courierId);
 

@@ -4,6 +4,7 @@ using BKDelivery.Domain.Interfaces;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System.Threading.Tasks;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -66,7 +67,7 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return _saveCommand
                        ?? (_saveCommand = new RelayCommand(
-                           () =>
+                           async () =>
                            {
                                if (PhoneNumber < 100000000 || PhoneNumber > 999999999)
                                {
@@ -91,7 +92,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                        Surname = Surname,
                                        PhoneNumber = PhoneNumber
                                    };
-                                   _dataService.Insert(courier);
+                                   await Task.Run(() => _dataService.Insert(courier));
                                    _navigationService.NavigateTo(ViewModelLocator.CourierInitialiserTimeIntervalsPageKey, courier);
                                }
                            }));
