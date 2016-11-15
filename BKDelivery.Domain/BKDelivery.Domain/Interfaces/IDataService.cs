@@ -25,7 +25,7 @@ namespace BKDelivery.Domain.Interfaces
         List<Package> PackagesByOrder(int orderId);
         List<Address> AddressesByOrder(int? FromId);
         IEnumerable<Client> SearchClient(string name, long nip, int phonenumber, string email);
-        IEnumerable<Order> SearchOrder(int orderId, int clientId, int courierId);
+        IEnumerable<Order> SearchOrder(int orderId, int clientId, int courierId, string selectedStatus);
 
         void TimeIntervalAdd(TimeInterval interval, int courierId);
         void TimeIntervalAdd(IEnumerable<TimeInterval> intervals, int courierId);

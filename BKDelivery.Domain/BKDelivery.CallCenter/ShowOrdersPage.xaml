@@ -43,6 +43,12 @@
                     <TextBox Name="SurnameTextBox" Text="{Binding ClientId, Mode=TwoWay}" Margin="5"/>
                     <TextBlock Margin="5">Courier ID</TextBlock>
                     <TextBox Name="PhoneNumberTextBox" Text="{Binding CourierId, Mode=TwoWay}" Margin="5"/>
+                    <TextBlock Margin="5">Status of order</TextBlock>
+                    <ComboBox Margin="5" SelectedItem="{Binding SelectedStatus}">
+                        <ComboBoxItem IsSelected="True">All</ComboBoxItem>
+                        <ComboBoxItem>Active</ComboBoxItem>
+                        <ComboBoxItem>Ended</ComboBoxItem>
+                    </ComboBox>
                     <StackPanel Orientation="Horizontal">
                         <Button Name="Search" Grid.Row="1" Content="Search" Command="{Binding CleanupCommand}" Margin="5" Width="100" HorizontalAlignment="Left"/>
                         <Button Name="Choose" Grid.Row="1" Content="Choose" Command="{Binding OrdersButtonCommand}" Margin="5" Width="100" />

@@ -5,6 +5,7 @@ using BKDelivery.Domain.Interfaces;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System.Threading.Tasks;
 
 namespace BKDelivery.CallCenter.ViewModel
 {
@@ -18,14 +19,16 @@ namespace BKDelivery.CallCenter.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
+        private readonly IDialogService _dialogService;
 
         private RelayCommand _saveCommand;
         private RelayCommand _backCommand;
 
-        public AddAddressViewModel(INavigationService navigationService, IDataService dataService)
+        public AddAddressViewModel(INavigationService navigationService, IDataService dataService, IDialogService dialogService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
+            _dialogService = dialogService;
             VoivodeshipsCollection = new List<string>
             {
                 "dolnośląskie",
@@ -44,10 +47,7 @@ namespace BKDelivery.CallCenter.ViewModel
                 "warmińsko-mazurskie",
                 "wielkopolskie",
                 "zachodniopomorskie"
-            };
-
-            TypesCollection = new List<AddressType>(_dataService.GetAll<AddressType>());
-
+            };       
         }
 
         private string _street;
@@ -122,23 +122,80 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return _saveCommand
                        ?? (_saveCommand = new RelayCommand(
-                           () =>
+                           async () =>
                            {
-                               var address = new Address
+                               if (Street.Length == 0)
                                {
-                                   Street = Street,
-                                   BuildingNumber = BuildingNumber,
-                                   FlatNumber = FlatNumber,
-                                   ZipCode = int.Parse(PostalCode),
-                                   City = City,
-                                   Country = "Poland",
-                                   Voivodeship = SelectedVoivodeship,
-                                   AddressTypeId = SelectedType.AddressTypeId,
-                                   ClientId=SelectedOrder.ClientId,
-                                  
-                               };
-                               _dataService.Add(address);
-                               _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Empty street.");
+                               }
+                               else if (BuildingNumber.Length == 0)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Empty building number.");
+                               }
+                               else if (PostalCode.Length != 5)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Incorrect postal code.");
+                               }
+                               else if (City.Length == 0)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Empty city.");
+                               }
+                               else if (SelectedVoivodeship == null)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Empty voivodship.");
+                               }
+                               else if (SelectedType == null)
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Empty type.");
+                               }
+                               else
+                               {
+                                   var address = new Address
+                                   {
+                                       Street = Street,
+                                       BuildingNumber = BuildingNumber,
+                                       FlatNumber = FlatNumber,
+                                       ZipCode = int.Parse(PostalCode),
+                                       City = City,
+                                       Country = "Poland",
+                                       Voivodeship = SelectedVoivodeship,
+                                       AddressTypeId = SelectedType.AddressTypeId,
+                                       ClientId = SelectedOrder.ClientId,
+
+                                   };
+                                   await Task.Run(() => _dataService.Add(address));
+                                   _navigationService.NavigateTo(ViewModelLocator.AddOrderPageKey2);
+                               }
+                           }));
+            }
+        }
+
+        private RelayCommand _cleanupCommand;
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           async () =>
+                           {
+                               TypesCollection = new List<AddressType>();
+                               var result = await Task.Run(() => _dataService.GetAll<AddressType>());
+                               foreach(AddressType at in result)
+                               {
+                                   TypesCollection.Add(at);
+                               }
+                               Street = string.Empty;
+                               BuildingNumber = string.Empty;
+                               FlatNumber = string.Empty;
+                               PostalCode = string.Empty;
+                               City = string.Empty;
                            }));
             }
         }

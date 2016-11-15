@@ -32,7 +32,7 @@ namespace BKDelivery.CallCenter.ViewModel
 
         public List<Category> CategoriesCollection
         {
-            get { return new List<Category>(_dataService.GetAll<Category>()); }
+            get { return _categoriesCollection; }
             set { Set(() => CategoriesCollection, ref _categoriesCollection, value); }
         }
 
@@ -46,6 +46,26 @@ namespace BKDelivery.CallCenter.ViewModel
         {
             get { return _weight; }
             set { Set(() => Weight, ref _weight, value); }
+        }
+
+        private RelayCommand _cleanupCommand;
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           async () =>
+                           {
+                               CategoriesCollection = new List<Category>();
+                               var result = await Task.Run(() => _dataService.GetAll<Category>());
+                               foreach (Category c in result)
+                               {
+                                   CategoriesCollection.Add(c);
+                               }
+                               Weight = 0;
+                           }));
+            }
         }
 
         public RelayCommand AddCommand

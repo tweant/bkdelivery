@@ -84,6 +84,13 @@ namespace BKDelivery.CallCenter.ViewModel
             }
         }
 
+        private string _selectedstatus;
+        public string SelectedStatus
+        {
+            get { return _selectedstatus; }
+            set { Set(() => SelectedStatus, ref _selectedstatus, value); }
+        }
+
         private RelayCommand _deleteCommand;
         public RelayCommand DeleteCommand
         {
@@ -96,7 +103,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                {
                                    if (SelectedOrder == null)
                                    {
-                                       _dialogService.Show(Helpers.DialogType.Error, "Select order.");
+                                       _dialogService.Show(Helpers.DialogType.Error, "Select order.");                                      
                                    }
                                    else
                                    {
@@ -128,7 +135,7 @@ namespace BKDelivery.CallCenter.ViewModel
                            {
                                _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading orders.");
                                OrdersCollection = new ObservableCollection<Order>();
-                               var result = await Task.Run(() => _dataService.SearchOrder(OrderId, ClientId, CourierId));
+                               var result = await Task.Run(() => _dataService.SearchOrder(OrderId, ClientId, CourierId, SelectedStatus));
                                foreach (Order order in result)
                                {
                                    OrdersCollection.Add(order);

@@ -28,6 +28,7 @@ namespace BKDelivery.CallCenter.ViewModel
         private ObservableCollection<Address> _addressesTypesCollecion;
         private ObservableCollection<Address> _invoiceAddressesCollection;
         private ObservableCollection<Address> _deliveryAddressesCollection;
+        private KeyValuePair<TimeInterval, Courier> _availabletimeinterval;
         private int _packagesCount;
 
         public AddOrder2ViewModel(INavigationService navigationService, IDataService dataService,
@@ -57,9 +58,19 @@ namespace BKDelivery.CallCenter.ViewModel
                                SelectedClient = new Client();
                                Client client = await Task.Run(() => _dataService.Get<Client>(x => x.ClientId == SelectedOrder.ClientId));
                                SelectedClient = client;
-                               //AvailableTimeInterval = new KeyValuePair<TimeInterval, Courier>();
-                               //KeyValuePair<TimeInterval, Courier> pair = await Task.Run(() => _dataService.TimeIntervalFirstAvailable());
-                               //AvailableTimeInterval = pair;
+                               AvailableTimeInterval = new KeyValuePair<TimeInterval, Courier>();
+                               try
+                               {
+                                   KeyValuePair<TimeInterval, Courier> pair = await Task.Run(() => _dataService.TimeIntervalFirstAvailable());
+                                   AvailableTimeInterval = pair;
+                               }
+                               catch
+                               {
+                                   _dialogService.Show(Helpers.DialogType.Error, "No avaliable couriers.");
+                                   _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                               }
+                               
+                                                            
 
                                AddressesCollection = new ObservableCollection<Address>();
                                var result1 = await Task.Run(() => _dataService.AddressessByClient(SelectedClient.ClientId, 1));
@@ -86,7 +97,15 @@ namespace BKDelivery.CallCenter.ViewModel
 
         private Order SelectedOrder => _navigationService.Parameter as Order;
         private Client SelectedClient;
-        public KeyValuePair<TimeInterval, Courier> AvailableTimeInterval => _dataService.TimeIntervalFirstAvailable();
+
+        public KeyValuePair<TimeInterval, Courier> AvailableTimeInterval
+        {
+            get
+            {
+                return _availabletimeinterval;
+            }
+            set { Set(() => AvailableTimeInterval, ref _availabletimeinterval, value); }
+        }
 
 
         public ObservableCollection<Address> AddressesCollection
@@ -190,14 +209,12 @@ namespace BKDelivery.CallCenter.ViewModel
                                    order.TimeIntervalId = AvailableTimeInterval.Key.TimeIntervalId;
                                    order.CourierId = AvailableTimeInterval.Value.CourierId;
                                    order.InvoiceAddressId = SelectedInvokeAddress.AddressId;
-
-                                   //MessageBox.Show(PacksCollection[0].Category.Name);
-
                                    var interval = AvailableTimeInterval.Key;
                                    interval.IsTaken = true;
                                    await Task.Run(() => _dataService.Update(interval));
                                    await Task.Run(() => _dataService.Update(order));
                                    _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                                   _dialogService.Show(Helpers.DialogType.Success, "Succesfully created or edited order.");
                                }
                            }));
             }
