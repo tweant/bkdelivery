@@ -1,5 +1,9 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
 using BKDelivery.CallCenter.Model;
+using BKDelivery.Domain.Interfaces;
+using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight.Command;
 
 namespace BKDelivery.CallCenter.ViewModel
@@ -13,10 +17,14 @@ namespace BKDelivery.CallCenter.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private INavigationService _navigationService;
+        private IDialogService _dialogService;
+        private IDataService _dataService;
 
-        public MainViewModel(INavigationService navigationService)
+        public MainViewModel(INavigationService navigationService,IDialogService dialogService, IDataService dataService)
         {
             _navigationService = navigationService;
+            _dialogService = dialogService;
+            _dataService = dataService;
         }
 
         private RelayCommand ButtonCommand;
@@ -24,6 +32,7 @@ namespace BKDelivery.CallCenter.ViewModel
         private RelayCommand ButtonCommand2;
         private RelayCommand ButtonCommand3;
         private RelayCommand ButtonCommand4;
+        private RelayCommand _cleanupCommand;
 
         /// <summary>
         /// Gets the AddressesButtonCommand.
@@ -75,6 +84,21 @@ namespace BKDelivery.CallCenter.ViewModel
                 return ButtonCommand4
                        ?? (ButtonCommand4 = new RelayCommand(
                            () => { _navigationService.NavigateTo(ViewModelLocator.ShowOrdersPageKey); }));
+            }
+        }
+
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           async () =>
+                           {
+                               _dialogService.Show(Helpers.DialogType.BusyWaiting,"Connecting to \"268770.database.windows.net\" database. Please wait.");
+                               await Task.Run(()=> _dataService.InitializeDataBase());
+                               _dialogService.Hide();
+                           }));
             }
         }
     }

@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d ignore"
         Height="600"
         Width="700"
@@ -11,6 +13,11 @@
         DataContext="{Binding Main, Source={StaticResource Locator}}" MinWidth="700" MinHeight="400" Icon="Images/icon.png">
 
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <command:EventToCommand Command="{Binding CleanupCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <DockPanel>
             <StackPanel Orientation="Vertical" DockPanel.Dock="Left">

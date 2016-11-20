@@ -1,0 +1,7 @@
+﻿Azure:
+Server=tcp:268770.database.windows.net,1433;Initial Catalog=BKDeliveryDatabase;Persist Security Info=False;User ID=dbserveradmin;Password=3a6RyPGCU4EHN;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
+Local:
+    <add name="BKDeliveryDatabase"
+        providerName="System.Data.SqlClient"
+        connectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BKDelivery.Domain.Data.BkDeliveryContext;Integrated Security=True;" />
