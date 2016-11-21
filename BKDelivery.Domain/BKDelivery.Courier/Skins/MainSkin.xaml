@@ -64,6 +64,66 @@
     </Style>
     
     <Style TargetType="mui:ModernWindow" x:Key="MyModernWindow">
+        <Style.Resources>
+            <ControlTemplate x:Key="NotificationCenterTemplate">
+                <StackPanel HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Margin="0,0,20,20" x:Name="NotificationCenterPanel">
+                    <ItemsControl ItemsSource="{Binding NotificationsCollection}">
+                        
+                    </ItemsControl>
+                    <!--<Border x:Name="DialogBox" HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Background="#242424"
+                                            Margin="0,0,20,20"
+                                            BorderBrush="#242424"
+                                            BorderThickness="4" Panel.ZIndex="99">
+                                        <Border.Triggers>
+                                            <EventTrigger RoutedEvent="Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5"  AutoReverse="True"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Border.Triggers>
+                                        <StackPanel Orientation="Vertical">
+
+                                            <TextBlock x:Name="DialogBoxMessage" Text="Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. " TextWrapping="Wrap"
+                                                       FontFamily="Segoe UI" FontSize="13" Margin="10" Foreground="#FFFFFF" MaxWidth="400"/>
+                                            <ProgressBar x:Name="DialogProgressBar" Minimum="0" Maximum="10"
+                                                         Height="4" IsIndeterminate="True"/>
+                                        </StackPanel>
+
+                        
+                                    </Border>
+                    <Border   HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Background="#242424"
+                                            Margin="0,0,20,20"
+                                            BorderBrush="#242424"
+                                            BorderThickness="4" Panel.ZIndex="99">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5"  AutoReverse="True"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBlock  Text="Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. " TextWrapping="Wrap"
+                                                       FontFamily="Segoe UI" FontSize="13" Margin="10" Foreground="#FFFFFF" MaxWidth="400"/>
+                            <ProgressBar Minimum="0" Maximum="10"
+                                                         Height="4" IsIndeterminate="True"/>
+                        </StackPanel>
+
+                    </Border>-->
+                </StackPanel>
+            </ControlTemplate>
+        </Style.Resources>
         <!--<Setter Property="BackgroundContent" Value="{DynamicResource WindowBackgroundContent}" />-->
         <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
@@ -243,9 +303,9 @@
                                                     </BeginStoryboard>
                                                 </EventTrigger>
                                             </StackPanel.Triggers>
-                                            <!--Menu-->
+                                            <!--MainMenu-->
                                             <Image Source="/Images/logo.png" Stretch="Uniform" />
-                                            <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Timetable"/>
+                                            <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Timetable" Command="{Binding AddNotification}"/>
                                             <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Route"/>
                                             <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Orders"/>
                                             <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Time intervals"/>
@@ -373,7 +433,9 @@
                                               Data="F1 M1,10 L3,10 M5,10 L7,10 M9,10 L11,10 M2,9 L2,11 M6,9 L6,11 M10,9 L10,11 M5,6 L7,6 M9,6 L11,6 M6,5 L6,7 M10,5 L10,7 M9,2 L11,2 M10,1 L10,3" />
                                     </Grid>
 
-                                    <Border Grid.Row="2" x:Name="DialogBox" HorizontalAlignment="Right"
+                                    <ContentControl Template="{StaticResource NotificationCenterTemplate}" Grid.Row="2" >
+                                    </ContentControl>
+                                    <!--<Border Grid.Row="2" x:Name="DialogBox" HorizontalAlignment="Right"
                                             VerticalAlignment="Bottom"
                                             Background="#242424"
                                             Margin="0,0,20,20"
@@ -383,7 +445,7 @@
                                             <EventTrigger RoutedEvent="Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="Forever"/>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5"  AutoReverse="True"/>
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </EventTrigger>
@@ -396,7 +458,7 @@
                                                          Height="4" IsIndeterminate="True"/>
                                         </StackPanel>
 
-                                    </Border>
+                                    </Border>-->
                                 </Grid>
                             </AdornerDecorator>
                         </Border>

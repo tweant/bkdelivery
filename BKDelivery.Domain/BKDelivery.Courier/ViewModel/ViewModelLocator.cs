@@ -37,6 +37,7 @@ namespace BKDelivery.Courier.ViewModel
             {
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
+            SimpleIoc.Default.Register<IDialogService, DialogService>();
 
             SimpleIoc.Default.Register<MainViewModel>();
         }
