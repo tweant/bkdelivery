@@ -45,6 +45,10 @@ namespace BKDelivery.CallCenter.Model
                     _message.Text = message;
                     _dialogbox.Visibility = Visibility.Visible;
 
+                    if (_type == DialogType.BusyWaiting)
+                        _progress.IsIndeterminate = true;
+                    else
+                        _progress.IsIndeterminate = false;
                     _progress.Visibility = Visibility.Visible;
                     _dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
                     _dispatcherTimer.Tick += dispatcherTimer_Tick;
