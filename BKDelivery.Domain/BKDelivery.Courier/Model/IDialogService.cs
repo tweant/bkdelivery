@@ -4,7 +4,7 @@ namespace BKDelivery.Courier.Model
 {
     public interface IDialogService
     {
-        void Show(DialogType type, string message);
-        void Hide();
+        NotificationElement Show(DialogType type, string message,int? time=null);
+        void Hide(NotificationElement notification);
     }
 }

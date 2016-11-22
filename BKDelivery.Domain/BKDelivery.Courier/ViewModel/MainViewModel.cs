@@ -6,103 +6,144 @@ using GalaSoft.MvvmLight.CommandWpf;
 
 namespace BKDelivery.Courier.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// See http://www.mvvmlight.net
-    /// </para>
-    /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private readonly IDataService _dataService;
         private readonly IDialogService _dialogService;
+        private RelayCommand _timetableNavigationCommand;
+        private RelayCommand _routeNavigationCommand;
+        private RelayCommand _ordersNavigationCommand;
+        private RelayCommand _timeintervalsNavigationCommand;
+        private ObservableCollection<UIElement> _notificationsCollection;
 
-        private string _welcomeTitle = string.Empty;
+        //User
+        private string _userProfilePhotoString = "/Images/defaultUser50.png";
+        private string _userProfileName = "It's pretty alone down here.";
+        private RelayCommand _loginoutCommand;
+        private bool _isLoggedIn;
+        private string _loginoutString = "Login";
 
-        /// <summary>
-        /// Gets the WelcomeTitle property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public string WelcomeTitle
-        {
-            get
-            {
-                return _welcomeTitle;
-            }
-            set
-            {
-                Set(ref _welcomeTitle, value);
-            }
-        }
 
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        public MainViewModel(IDataService dataService, IDialogService dialogService)
+        public MainViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
-            _dataService = dataService;
-            _dataService.GetData(
-                (item, error) =>
-                {
-                    if (error != null)
-                    {
-                        // Report error here
-                        return;
-                    }
-
-                    WelcomeTitle = item.Title;
-                });
             NotificationsCollection = new ObservableCollection<UIElement>();
         }
 
-        private RelayCommand _addNotification;
-
-        /// <summary>
-        /// Gets the AddNotification.
-        /// </summary>
-        public RelayCommand AddNotification
+        public RelayCommand TimeIntervalsNavigationCommand
         {
             get
             {
-                return _addNotification
-                    ?? (_addNotification = new RelayCommand(
-                    () =>
-                    {
-                        _dialogService.Show(Helpers.DialogType.BusyWaiting, "lol");
-                    }));
+                return _timeintervalsNavigationCommand
+                       ?? (_timeintervalsNavigationCommand = new RelayCommand(
+                           () => {
+                               if (!IsLoggedIn)
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Please log in first to access that data.");
+                               else
+                                   _last.Hide(); }));
             }
         }
 
-        /// <summary>
-        /// The <see cref="NotificationsCollection" /> property's name.
-        /// </summary>
-        public const string NotificationsCollectionPropertyName = "NotificationsCollection";
+        public RelayCommand OrdersNavigationCommand
+        {
+            get
+            {
+                return _ordersNavigationCommand
+                       ?? (_ordersNavigationCommand = new RelayCommand(
+                           () =>
+                           {
+                               if (!IsLoggedIn)
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Please log in first to access that data.");
+                               else
+                                   _last = _dialogService.Show(Helpers.DialogType.Success,
+                                   "Congratulations!");
+                           }));
+            }
+        }
 
-        private ObservableCollection<UIElement> _notificationsCollection;
+        public RelayCommand RouteNavigationCommand
+        {
+            get
+            {
+                return _routeNavigationCommand
+                       ?? (_routeNavigationCommand = new RelayCommand(
+                           () =>
+                           {
+                               if (!IsLoggedIn)
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Please log in first to access that data.");
+                               else
+                                   _lastbusy.Hide();
+                           }));
+            }
+        }
 
-        /// <summary>
-        /// Sets and gets the NotificationsCollection property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
+        public RelayCommand TimetableNavigationCommand
+        {
+            get
+            {
+                return _timetableNavigationCommand
+                       ?? (_timetableNavigationCommand = new RelayCommand(
+                           () =>
+                           {
+                               if (!IsLoggedIn)
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Please log in first to access that data.");
+                               else
+                                   _lastbusy = _dialogService.Show(Helpers.DialogType.BusyWaiting,
+                                       "Connecting to \"268770.database.windows.net\" database. Please wait.");
+                           }));
+            }
+        }
+
+        private NotificationElement _lastbusy;
+        private NotificationElement _last;
+
+
         public ObservableCollection<UIElement> NotificationsCollection
         {
-            get
-            {
-                return _notificationsCollection;
-            }
-
-            set
-            {
-                if (_notificationsCollection == value)
-                {
-                    return;
-                }
-
-                _notificationsCollection = value;
-                RaisePropertyChanged(NotificationsCollectionPropertyName);
-            }
+            get { return _notificationsCollection; }
+            set { Set(() => NotificationsCollection, ref _notificationsCollection, value); }
         }
+
+        public bool IsLoggedIn
+        {
+            get { return _isLoggedIn; }
+            set { Set(() => IsLoggedIn, ref _isLoggedIn, value); }
+        }
+
+        public string UserProfilePhotoString
+        {
+            get { return _userProfilePhotoString; }
+            set { Set(() => UserProfilePhotoString, ref _userProfilePhotoString, value); }
+        }
+
+        public string UserProfileName
+        {
+            get { return _userProfileName; }
+            set { Set(() => UserProfileName, ref _userProfileName, value); }
+        }
+
+        public RelayCommand LogInOutCommand
+            => _loginoutCommand ?? (_loginoutCommand = new RelayCommand(ExecuteLogInOutCommand));
+
+
+        private void ExecuteLogInOutCommand()
+        {
+            if (IsLoggedIn)
+                _dialogService.Show(Helpers.DialogType.Success, "Logout");
+            else
+                _dialogService.Show(Helpers.DialogType.Success, "Login");
+        }
+
+
+        public string LogInOutString
+        {
+            get { return _loginoutString; }
+            set { Set(() => LogInOutString, ref _loginoutString, value); }
+        }
+
         ////public override void Cleanup()
         ////{
         ////    // Clean up if needed

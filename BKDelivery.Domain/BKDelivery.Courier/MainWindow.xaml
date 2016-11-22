@@ -10,6 +10,6 @@
                   IsTitleVisible="True"
                   DataContext="{Binding Main, Source={StaticResource Locator}}"
                   Style="{StaticResource MyModernWindow}"
-                  ContentSource="/Pages/Home.xaml">
+                  ContentSource="/Pages/FacebookLogIn.xaml">
     
 </mui:ModernWindow>

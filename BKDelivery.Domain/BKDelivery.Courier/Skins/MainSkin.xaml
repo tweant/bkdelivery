@@ -12,66 +12,117 @@
     <!--Button-->
     <Style x:Key="BlackMenuButtonStyle"
            TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Background"
-                Value="#242424"/>
+                Value="#242424" />
         <Setter Property="BorderBrush"
-                Value="#242424"/>
+                Value="#242424" />
         <Setter Property="BorderThickness"
-                Value="1"/>
+                Value="1" />
         <Setter Property="Foreground"
-                Value="#FFFFFF"/>
+                Value="#FFFFFF" />
         <Setter Property="HorizontalContentAlignment"
-                Value="Center"/>
+                Value="Center" />
         <Setter Property="VerticalContentAlignment"
-                Value="Center"/>
+                Value="Center" />
         <Setter Property="Padding"
-                Value="16,5,16,7"/>
+                Value="16,5,16,7" />
         <Setter Property="Margin"
-                Value="0,2,0,2"/>
+                Value="0,2,0,2" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border Name="Chrome"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        SnapsToDevicePixels="true">
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
                         <ContentPresenter Name="Presenter" Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{DynamicResource ButtonTextDisabled}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonTextDisabled}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBackgroundHover}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource ButtonTextHover}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBackgroundHover}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonTextHover}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="#F3734C" />
-                            <Setter Property="BorderBrush" Value="#F3734C"/>
-                            <Setter Property="Foreground" Value="{DynamicResource ButtonTextPressed}"/>
+                            <Setter Property="BorderBrush" Value="#F3734C" />
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonTextPressed}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="LoginOutButtonStyle"
+           TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background"
+                Value="#A7A9AB" />
+        <Setter Property="BorderBrush"
+                Value="#A7A9AB" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Foreground"
+                Value="#FFFFFF" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <!--<Setter Property="Padding"
+                Value="16,5,16,7" />
+        <Setter Property="Margin"
+                Value="0,2,0,2" />-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="Chrome"
+                            Background="#A7A9AB"
+                            BorderBrush="#A7A9AB"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter Name="Presenter" Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#A7A9AB" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#A7A9AB" />
+                            <Setter Property="BorderBrush" Value="#A7A9AB" />
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonTextHover}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#A7A9AB" />
+                            <Setter Property="BorderBrush" Value="#A7A9AB" />
+                            <Setter Property="Foreground" Value="Gray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="mui:ModernWindow" x:Key="MyModernWindow">
         <Style.Resources>
             <ControlTemplate x:Key="NotificationCenterTemplate">
                 <StackPanel HorizontalAlignment="Right"
-                                            VerticalAlignment="Bottom"
-                                            Margin="0,0,20,20" x:Name="NotificationCenterPanel">
-                    <ItemsControl ItemsSource="{Binding NotificationsCollection}">
-                        
-                    </ItemsControl>
+                            VerticalAlignment="Bottom"
+                            Margin="0,0,20,20" x:Name="NotificationCenterPanel">
+                    <ItemsControl ItemsSource="{Binding NotificationsCollection}" />
                     <!--<Border x:Name="DialogBox" HorizontalAlignment="Right"
                                             VerticalAlignment="Bottom"
                                             Background="#242424"
@@ -129,28 +180,32 @@
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowText}" />
         <Setter Property="BorderBrush" Value="{DynamicResource WindowBorder}" />
-        <Setter Property="Width" Value="1280" />
+        <Setter Property="Width" Value="1080" />
         <Setter Property="Height" Value="720" />
-        <Setter Property="MinWidth" Value="320" />
-        <Setter Property="MinHeight" Value="320" />
-        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="MinWidth" Value="720" />
+        <Setter Property="MaxWidth" Value="1280" />
+        <Setter Property="MinHeight" Value="720" />
+        <Setter Property="MaxHeight" Value="720" />
+        <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="mui:ModernWindow">
-                    <Border x:Name="WindowBorder" Margin="{Binding Source={x:Static SystemParameters.WindowNonClientFrameThickness}}">
+                    <Border x:Name="WindowBorder"
+                            Margin="{Binding Source={x:Static SystemParameters.WindowNonClientFrameThickness}}">
                         <Border.Background>
                             <SolidColorBrush x:Name="WindowBorderBackground" Color="White" />
                         </Border.Background>
                         <Border.Resources>
                             <Storyboard x:Key="BackgroundAnimation">
-                                <ColorAnimation Storyboard.TargetName="WindowBorderBackground" Storyboard.TargetProperty="Color" To="White" Duration="0:0:.6" />
+                                <ColorAnimation Storyboard.TargetName="WindowBorderBackground"
+                                                Storyboard.TargetProperty="Color" To="White" Duration="0:0:.6" />
                             </Storyboard>
                         </Border.Resources>
 
-                        <Border BorderBrush="#242424"  BorderThickness="1">
+                        <Border BorderBrush="#242424" BorderThickness="1">
                             <AdornerDecorator>
                                 <Grid x:Name="LayoutRoot">
                                     <Grid.RowDefinitions>
@@ -172,12 +227,16 @@
                                         </Grid.ColumnDefinitions>
 
                                         <!-- title -->
-                                        <TextBlock Text="{TemplateBinding Title}" Margin="8,0" VerticalAlignment="Center" Style="{StaticResource ModernWindowTitle}"
+                                        <TextBlock Text="{TemplateBinding Title}" Margin="8,0"
+                                                   VerticalAlignment="Center"
+                                                   Style="{StaticResource ModernWindowTitle}"
                                                    DataContext="{TemplateBinding IsTitleVisible}"
-                                                   Visibility="{Binding Converter={StaticResource BooleanToVisibilityConverter}}" Foreground="#FFFFFF"/>
+                                                   Visibility="{Binding Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                   Foreground="#FFFFFF" />
 
                                         <!-- title links -->
-                                        <ItemsControl Grid.Column="1" ItemsSource="{TemplateBinding TitleLinks}" Margin="0,0,24,0" WindowChrome.IsHitTestVisibleInChrome="True">
+                                        <ItemsControl Grid.Column="1" ItemsSource="{TemplateBinding TitleLinks}"
+                                                      Margin="0,0,24,0" WindowChrome.IsHitTestVisibleInChrome="True">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <StackPanel Orientation="Horizontal" />
@@ -186,7 +245,9 @@
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Line x:Name="Separator" X1=".5" Y1="3" X2=".5" Y2="12" Margin="5,0" VerticalAlignment="Center" Stroke="{DynamicResource SeparatorBackground}" />
+                                                        <Line x:Name="Separator" X1=".5" Y1="3" X2=".5" Y2="12"
+                                                              Margin="5,0" VerticalAlignment="Center"
+                                                              Stroke="{DynamicResource SeparatorBackground}" />
 
                                                         <Button Content="{Binding DisplayName}"
                                                                 Command="mui:LinkCommands.NavigateLink"
@@ -195,8 +256,11 @@
                                                                 Style="{StaticResource SystemButtonLink}" />
                                                     </StackPanel>
                                                     <DataTemplate.Triggers>
-                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" TargetName="Separator" Value="Collapsed"/>
+                                                        <DataTrigger
+                                                            Binding="{Binding RelativeSource={RelativeSource PreviousData}}"
+                                                            Value="{x:Null}">
+                                                            <Setter Property="Visibility" TargetName="Separator"
+                                                                    Value="Collapsed" />
                                                         </DataTrigger>
                                                     </DataTemplate.Triggers>
                                                 </DataTemplate>
@@ -207,42 +271,67 @@
                                         <Border Grid.Column="2" Width="36" Height="36" Margin="8,0"
                                                 DataContext="{TemplateBinding LogoData}"
                                                 Visibility="{Binding Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=inverse}">
-                                            <Path Data="{Binding}" Stretch="Fill" Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            <Path Data="{Binding}" Stretch="Fill" Fill="White" Width="24" Height="24"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Border>
 
                                         <!-- window system buttons-->
-                                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True">
-                                            <Button Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}" ToolTip="{x:Static modernUi:Resources.Minimize}" Style="{StaticResource SystemButton}">
+                                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Top"
+                                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                            <Button
+                                                Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}"
+                                                ToolTip="{x:Static modernUi:Resources.Minimize}"
+                                                Style="{StaticResource SystemButton}">
                                                 <Button.Content>
                                                     <Grid Width="13" Height="12" RenderTransform="1,0,0,1,0,1">
-                                                        <Path Data="M0,6 L8,6 Z" Width="8" Height="7" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                              Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2"  />
+                                                        <Path Data="M0,6 L8,6 Z" Width="8" Height="7"
+                                                              VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                              Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"
+                                                              StrokeThickness="2" />
                                                     </Grid>
                                                 </Button.Content>
                                             </Button>
                                             <Grid Margin="1,0,1,0">
-                                                <Button x:Name="Restore" Command="{Binding Source={x:Static SystemCommands.RestoreWindowCommand}}" ToolTip="{x:Static modernUi:Resources.Restore}" Style="{StaticResource SystemButton}" Visibility="Collapsed" >
+                                                <Button x:Name="Restore"
+                                                        Command="{Binding Source={x:Static SystemCommands.RestoreWindowCommand}}"
+                                                        ToolTip="{x:Static modernUi:Resources.Restore}"
+                                                        Style="{StaticResource SystemButton}" Visibility="Collapsed">
                                                     <Button.Content>
-                                                        <Grid Width="13" Height="12" UseLayoutRounding="True" RenderTransform="1,0,0,1,.5,.5">
-                                                            <Path Data="M2,0 L8,0 L8,6 M0,3 L6,3 M0,2 L6,2 L6,8 L0,8 Z" Width="8" Height="8" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="1"  />
+                                                        <Grid Width="13" Height="12" UseLayoutRounding="True"
+                                                              RenderTransform="1,0,0,1,.5,.5">
+                                                            <Path Data="M2,0 L8,0 L8,6 M0,3 L6,3 M0,2 L6,2 L6,8 L0,8 Z"
+                                                                  Width="8" Height="8" VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"
+                                                                  StrokeThickness="1" />
                                                         </Grid>
                                                     </Button.Content>
                                                 </Button>
-                                                <Button x:Name="Maximize" Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}" ToolTip="{x:Static modernUi:Resources.Maximize}" Style="{StaticResource SystemButton}" >
+                                                <Button x:Name="Maximize"
+                                                        Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}"
+                                                        ToolTip="{x:Static modernUi:Resources.Maximize}"
+                                                        Style="{StaticResource SystemButton}">
                                                     <Button.Content>
                                                         <Grid Width="13" Height="12">
-                                                            <Path Data="M0,1 L9,1 L9,8 L0,8 Z" Width="9" Height="8" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2"  />
+                                                            <Path Data="M0,1 L9,1 L9,8 L0,8 Z" Width="9" Height="8"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"
+                                                                  StrokeThickness="2" />
                                                         </Grid>
                                                     </Button.Content>
                                                 </Button>
                                             </Grid>
-                                            <Button Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}" ToolTip="{x:Static modernUi:Resources.Close}" Style="{StaticResource SystemCloseButton}" >
+                                            <Button
+                                                Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}"
+                                                ToolTip="{x:Static modernUi:Resources.Close}"
+                                                Style="{StaticResource SystemCloseButton}">
                                                 <Button.Content>
                                                     <Grid Width="13" Height="12" RenderTransform="1,0,0,1,0,1">
-                                                        <Path Data="M0,0 L8,7 M8,0 L0,7 Z" Width="8" Height="7" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                              Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="1.5"  />
+                                                        <Path Data="M0,0 L8,7 M8,0 L0,7 Z" Width="8" Height="7"
+                                                              VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                              Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"
+                                                              StrokeThickness="1.5" />
                                                     </Grid>
                                                 </Button.Content>
                                             </Button>
@@ -276,47 +365,56 @@
 
                                     <Grid Grid.Row="3" Grid.RowSpan="2" Margin="0,-24,0,0" Panel.ZIndex="-5">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="200"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="200" />
                                         </Grid.ColumnDefinitions>
                                         <Rectangle Grid.Column="0" Height="Auto" Width="200" Fill="#242424">
                                             <Rectangle.Triggers>
                                                 <EventTrigger RoutedEvent="Loaded">
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="-400,-24,0,0" To="0,-24,0,0" AccelerationRatio=".9" Duration="0:0:1" />
+                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                                From="-400,-24,0,0" To="0,-24,0,0"
+                                                                                AccelerationRatio=".9" Duration="0:0:1" />
                                                         </Storyboard>
 
                                                     </BeginStoryboard>
                                                 </EventTrigger>
                                             </Rectangle.Triggers>
                                         </Rectangle>
-                                        <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,30,0,0" Width="200">
+                                        <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,30,0,0"
+                                                    Width="200">
                                             <StackPanel.Triggers>
                                                 <EventTrigger RoutedEvent="Loaded">
                                                     <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ThicknessAnimation Storyboard.TargetProperty="Margin" From="-400,30,0,0" To="0,30,0,0" AccelerationRatio=".9" Duration="0:0:1" />
-                                                    </Storyboard>
+                                                        <Storyboard>
+                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                                From="-400,30,0,0" To="0,30,0,0"
+                                                                                AccelerationRatio=".9" Duration="0:0:1" />
+                                                        </Storyboard>
 
                                                     </BeginStoryboard>
                                                 </EventTrigger>
                                             </StackPanel.Triggers>
                                             <!--MainMenu-->
                                             <Image Source="/Images/logo.png" Stretch="Uniform" />
-                                            <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Timetable" Command="{Binding AddNotification}"/>
-                                            <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Route"/>
-                                            <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Orders"/>
-                                            <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Time intervals"/>
+                                            <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Timetable"
+                                                    Command="{Binding TimetableNavigationCommand}" />
+                                            <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Route" Command="{Binding RouteNavigationCommand}"/>
+                                            <Button Style="{StaticResource BlackMenuButtonStyle}" Content="Orders" Command="{Binding OrdersNavigationCommand}"/>
+                                            <Button Style="{StaticResource BlackMenuButtonStyle}"
+                                                    Content="Time intervals" Command="{Binding TimeIntervalsNavigationCommand}"/>
                                         </StackPanel>
                                         <Rectangle Height="720" Width="60"
-                           HorizontalAlignment="Right" Grid.Column="0" Panel.ZIndex="1">
+                                                   HorizontalAlignment="Right" Grid.Column="0" Panel.ZIndex="1">
                                             <Rectangle.Triggers>
                                                 <EventTrigger RoutedEvent="Loaded">
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,200,0" To="0,0,0,0" AccelerationRatio=".9" Duration="0:0:1" />
+                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                                From="0,0,200,0" To="0,0,0,0"
+                                                                                AccelerationRatio=".9" Duration="0:0:1" />
                                                         </Storyboard>
 
                                                     </BeginStoryboard>
@@ -331,10 +429,11 @@
                                                                     <PathGeometry>
                                                                         <PathGeometry.Figures>
                                                                             <PathFigureCollection>
-                                                                                <PathFigure IsClosed="true" StartPoint="60,0">
+                                                                                <PathFigure IsClosed="true"
+                                                                                            StartPoint="60,0">
                                                                                     <PathFigure.Segments>
-                                                                                        <LineSegment Point="60,720"/>
-                                                                                        <LineSegment Point="0,720"/>
+                                                                                        <LineSegment Point="60,720" />
+                                                                                        <LineSegment Point="0,720" />
                                                                                     </PathFigure.Segments>
                                                                                 </PathFigure>
                                                                             </PathFigureCollection>
@@ -350,15 +449,23 @@
 
                                         <Grid Grid.Column="1">
                                             <!--<ScrollViewer Width="Auto" Height="Auto" Margin="10,30,0,0">-->
-                                                <mui:ModernFrame x:Name="ContentFrame" Source="{Binding ContentSource, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" ContentLoader="{TemplateBinding ContentLoader}" Margin="10,30,60,0" />
+                                            <mui:ModernFrame x:Name="ContentFrame"
+                                                             Source="{Binding ContentSource, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                             ContentLoader="{TemplateBinding ContentLoader}"
+                                                             Margin="10,30,60,0" />
                                             <!--</ScrollViewer>-->
                                             <Rectangle Height="720" Width="60"
-                           HorizontalAlignment="Right" Grid.Column="0" Panel.ZIndex="1" Margin="0,0,-260,0">
+                                                       HorizontalAlignment="Right" Grid.Column="0" Panel.ZIndex="1"
+                                                       Margin="0,0,-260,0">
                                                 <Rectangle.Triggers>
                                                     <EventTrigger RoutedEvent="Loaded">
                                                         <BeginStoryboard>
                                                             <Storyboard>
-                                                                <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,-260,0" To="0,0,0,0" AccelerationRatio=".9" Duration="0:0:1" BeginTime="0:0:0.5"/>
+                                                                <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                                    From="0,0,-260,0" To="0,0,0,0"
+                                                                                    AccelerationRatio=".9"
+                                                                                    Duration="0:0:1"
+                                                                                    BeginTime="0:0:0.5" />
                                                             </Storyboard>
 
                                                         </BeginStoryboard>
@@ -373,10 +480,11 @@
                                                                         <PathGeometry>
                                                                             <PathGeometry.Figures>
                                                                                 <PathFigureCollection>
-                                                                                    <PathFigure IsClosed="true" StartPoint="60,0">
+                                                                                    <PathFigure IsClosed="true"
+                                                                                                StartPoint="60,0">
                                                                                         <PathFigure.Segments>
-                                                                                            <LineSegment Point="60,720"/>
-                                                                                            <LineSegment Point="0,720"/>
+                                                                                            <LineSegment Point="60,720" />
+                                                                                            <LineSegment Point="0,720" />
                                                                                         </PathFigure.Segments>
                                                                                     </PathFigure>
                                                                                 </PathFigureCollection>
@@ -391,12 +499,16 @@
                                             </Rectangle>
                                         </Grid>
 
-                                        <Rectangle Grid.Column="2" Height="Auto" Width="200" Fill="#F3734C" Margin="260,0,0,0">
+                                        <Rectangle Grid.Column="2" Height="Auto" Width="200" Fill="#F3734C"
+                                                   Margin="260,0,0,0">
                                             <Rectangle.Triggers>
                                                 <EventTrigger RoutedEvent="Loaded">
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="260,0,0,0" To="0,0,0,0" AccelerationRatio=".9" Duration="0:0:1" BeginTime="0:0:0.5"/>
+                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                                From="260,0,0,0" To="0,0,0,0"
+                                                                                AccelerationRatio=".9" Duration="0:0:1"
+                                                                                BeginTime="0:0:0.5" />
                                                         </Storyboard>
 
                                                     </BeginStoryboard>
@@ -408,57 +520,74 @@
                                                 <EventTrigger RoutedEvent="Loaded">
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="270,30,0,0" To="10,30,0,0" AccelerationRatio=".9" Duration="0:0:1" BeginTime="0:0:0.5"/>
+                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                                From="270,30,0,0" To="10,30,0,0"
+                                                                                AccelerationRatio=".9" Duration="0:0:1"
+                                                                                BeginTime="0:0:0.5" />
                                                         </Storyboard>
 
                                                     </BeginStoryboard>
                                                 </EventTrigger>
                                             </StackPanel.Triggers>
-                                            <Button Content="Page"/>
-                                            <Button Content="Page sdfnsdjfd jdsfnjddskfdssdkf"/>
-                                            <Button Content="Page"/>
-                                            <Button Content="Page"/>
+                                            <Button Content="Page" />
+                                            <Button Content="Page sdfnsdjfd jdsfnjddskfdssdkf" />
+                                            <Button Content="Page" />
+                                            <Button Content="Page" />
                                         </StackPanel>
 
-                                        
 
                                     </Grid>
 
                                     <!-- resize grip -->
-                                    <Grid Grid.Row="2" x:Name="ResizeGrip" Background="Transparent" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" WindowChrome.ResizeGripDirection="BottomRight">
-                                        <Path Width="12" Height="12" Margin="1" 
+                                    <Grid Grid.Row="2" x:Name="ResizeGrip" Background="Transparent"
+                                          Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                          WindowChrome.ResizeGripDirection="BottomRight">
+                                        <Path Width="12" Height="12" Margin="1"
                                               Stroke="{DynamicResource WindowText}"
                                               StrokeThickness="1"
                                               Stretch="None"
                                               Data="F1 M1,10 L3,10 M5,10 L7,10 M9,10 L11,10 M2,9 L2,11 M6,9 L6,11 M10,9 L10,11 M5,6 L7,6 M9,6 L11,6 M6,5 L6,7 M10,5 L10,7 M9,2 L11,2 M10,1 L10,3" />
                                     </Grid>
 
-                                    <ContentControl Template="{StaticResource NotificationCenterTemplate}" Grid.Row="2" >
-                                    </ContentControl>
-                                    <!--<Border Grid.Row="2" x:Name="DialogBox" HorizontalAlignment="Right"
+                                    <!--Notification Center-->
+                                    <ContentControl Template="{StaticResource NotificationCenterTemplate}" Grid.Row="2" />
+
+                                    <!--User Account-->
+                                    <Border Grid.Row="2" x:Name="DialogBox" HorizontalAlignment="Left"
                                             VerticalAlignment="Bottom"
-                                            Background="#242424"
-                                            Margin="0,0,20,20"
-                                            BorderBrush="#242424"
-                                            BorderThickness="4" Panel.ZIndex="99">
+                                            Background="#A7A9AB"
+                                            Margin="20,0,0,20"
+                                            BorderBrush="#A7A9AB"
+                                            BorderThickness="4" Panel.ZIndex="99"
+                                            Opacity="0">
                                         <Border.Triggers>
                                             <EventTrigger RoutedEvent="Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5"  AutoReverse="True"/>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0"
+                                                                         To="1.0" Duration="0:0:0.1" BeginTime="0:0:1" />
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </EventTrigger>
                                         </Border.Triggers>
-                                        <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" Margin="10">
+                                            <Image Source="{Binding UserProfilePhotoString}" Stretch="Uniform" Width="50"
+                                                       Height="50" />
 
-                                            <TextBlock x:Name="DialogBoxMessage" Text="Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. " TextWrapping="Wrap"
-                                                       FontFamily="Segoe UI" FontSize="13" Margin="10" Foreground="#FFFFFF" MaxWidth="400"/>
-                                            <ProgressBar x:Name="DialogProgressBar" Minimum="0" Maximum="10"
-                                                         Height="4" IsIndeterminate="True"/>
+
+                                            <StackPanel Orientation="Vertical" VerticalAlignment="Center"
+                                                        Margin="10,0,0,0">
+
+                                                <TextBlock x:Name="UserName" Text="{Binding UserProfileName}" TextWrapping="Wrap"
+                                                           FontFamily="Segoe UI" FontSize="13" Foreground="#242424"
+                                                           MaxWidth="120" />
+                                                <Button Content="{Binding LogInOutString}" Command="{Binding LogInOutCommand}" x:Name="Logout" 
+                                                           Style="{StaticResource LoginOutButtonStyle}"
+                                                           MaxWidth="200"/>
+                                            </StackPanel>
                                         </StackPanel>
 
-                                    </Border>-->
+                                    </Border>
                                 </Grid>
                             </AdornerDecorator>
                         </Border>
@@ -491,7 +620,8 @@
 
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome CornerRadius="0" GlassFrameThickness="1" UseAeroCaptionButtons="False" NonClientFrameEdges="None" />
+                <WindowChrome CornerRadius="0" GlassFrameThickness="1" UseAeroCaptionButtons="False"
+                              NonClientFrameEdges="None" />
             </Setter.Value>
         </Setter>
     </Style>

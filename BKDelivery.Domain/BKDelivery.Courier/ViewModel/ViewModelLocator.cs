@@ -9,6 +9,7 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
@@ -25,6 +26,9 @@ namespace BKDelivery.Courier.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
+        public static string HomePageKey = "HomePage";
+
+
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -38,8 +42,16 @@ namespace BKDelivery.Courier.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
             SimpleIoc.Default.Register<IDialogService, DialogService>();
+            SimpleIoc.Default.Register<INavigationService, NavigationService>();
+
+            var navigationService = ServiceLocator.Current.GetInstance<INavigationService>();
+            navigationService.Configure(HomePageKey, new Uri("/Pages/Home.xaml", UriKind.Relative));
+
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<FbLoginViewModel>();
+            SimpleIoc.Default.Register<UserSession>();
+
         }
 
         /// <summary>
@@ -48,13 +60,9 @@ namespace BKDelivery.Courier.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
+        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+        public FbLoginViewModel FbLogin => ServiceLocator.Current.GetInstance<FbLoginViewModel>();
+        public UserSession Session => ServiceLocator.Current.GetInstance<UserSession>();
 
         /// <summary>
         /// Cleans up all the resources.
