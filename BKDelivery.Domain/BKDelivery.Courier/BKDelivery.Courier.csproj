@@ -131,6 +131,9 @@
     <Compile Include="Pages\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StartUp.xaml.cs">
+      <DependentUpon>StartUp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\FbLoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -151,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StartUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

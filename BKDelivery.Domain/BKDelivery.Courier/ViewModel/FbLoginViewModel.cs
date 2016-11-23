@@ -130,8 +130,9 @@ namespace BKDelivery.Courier.ViewModel
                                    (Application.Current.Resources["Locator"] as ViewModelLocator).Main;
 
                                FacebookClient fbClient = new FacebookClient(userSesssion.AccessToken);
-                               var result = await fbClient.GetTaskAsync("https://graph.facebook.com/v2.8/me?fields=name");
-                               
+                               var result =
+                                   await fbClient.GetTaskAsync("https://graph.facebook.com/v2.8/me?fields=name");
+
                                JObject o = JObject.Parse(result.ToString());
                                mainViewModel.IsLoggedIn = true;
                                mainViewModel.LogInOutString = "Logout";
@@ -142,13 +143,10 @@ namespace BKDelivery.Courier.ViewModel
                                o = JObject.Parse(result.ToString());
                                mainViewModel.UserProfilePhotoString = o.SelectToken("$.picture.data.url").ToString();
 
-                               
+
                                not.Hide();
-                               _dialogService.Show(Helpers.DialogType.Success, $"Logged in as {mainViewModel.UserProfileName}");
-
-
-
-
+                               _dialogService.Show(Helpers.DialogType.Success,
+                                   $"Logged in as {mainViewModel.UserProfileName}");
                            }));
             }
         }
@@ -177,6 +175,14 @@ namespace BKDelivery.Courier.ViewModel
                        ?? (_stopLoadingPageCommand = new RelayCommand(
                            () => { _loadingNotification.Hide(); }));
             }
+        }
+
+        private string _webBrowserAddress = "http://google.pl";
+
+        public string WebBrowserAddress
+        {
+            get { return _webBrowserAddress; }
+            set { Set(() => WebBrowserAddress, ref _webBrowserAddress, value); }
         }
     }
 }

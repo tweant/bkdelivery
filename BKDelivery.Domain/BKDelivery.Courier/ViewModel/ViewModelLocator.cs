@@ -27,6 +27,8 @@ namespace BKDelivery.Courier.ViewModel
     public class ViewModelLocator
     {
         public static string HomePageKey = "HomePage";
+        public static string FacebookLogInPageKey = "FacebookLogInPage";
+        public static string StartUpPageKey = "StartUpPage";
 
 
         static ViewModelLocator()
@@ -46,12 +48,13 @@ namespace BKDelivery.Courier.ViewModel
 
             var navigationService = ServiceLocator.Current.GetInstance<INavigationService>();
             navigationService.Configure(HomePageKey, new Uri("/Pages/Home.xaml", UriKind.Relative));
+            navigationService.Configure(FacebookLogInPageKey, new Uri("/Pages/FacebookLogIn.xaml", UriKind.Relative));
+            navigationService.Configure(StartUpPageKey, new Uri("/Pages/StartUp.xaml", UriKind.Relative));
 
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<FbLoginViewModel>();
             SimpleIoc.Default.Register<UserSession>();
-
         }
 
         /// <summary>
@@ -69,6 +72,7 @@ namespace BKDelivery.Courier.ViewModel
         /// </summary>
         public static void Cleanup()
         {
+            
         }
     }
 }

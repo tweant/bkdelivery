@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using BKDelivery.Courier.ViewModel;
+using CefSharp;
 
 namespace BKDelivery.Courier.Pages
 {
@@ -50,18 +51,19 @@ namespace BKDelivery.Courier.Pages
         public FacebookLogIn()
         {
             InitializeComponent();
-            //WebBrowser.Navigate(
-            //    @"https://www.facebook.com/v2.8/dialog/oauth?client_id={1335179443167660}&response_type=token&redirect_uri={https://www.facebook.com/connect/login_success.html}");
-            //string p_appID = "1335179443167660";
-            //string p_scopes = "public_profile,email,user_about_me";
-            string returnURL = WebUtility.UrlEncode("https://www.facebook.com/connect/login_success.html");
-            string scopes = WebUtility.UrlEncode(_viewModel.Scopes);
-            _viewModel.StartLoadingPageCommand.Execute(null);
-            WebBrowser.Address =
-                (string.Format(
-                    "https://www.facebook.com/v2.8/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=token%2Cgranted_scopes&scope={2}&display=popup",
-                    new object[] {_viewModel.AppID, returnURL, scopes}));
-            
+            //WARNING UPDATED VIA VIEWMODEL (I KNOW) currently at MainWindowViewModel
+            ////WebBrowser.Navigate(
+            ////    @"https://www.facebook.com/v2.8/dialog/oauth?client_id={1335179443167660}&response_type=token&redirect_uri={https://www.facebook.com/connect/login_success.html}");
+            ////string p_appID = "1335179443167660";
+            ////string p_scopes = "public_profile,email,user_about_me";
+            //string returnURL = WebUtility.UrlEncode("https://www.facebook.com/connect/login_success.html");
+            //string scopes = WebUtility.UrlEncode(_viewModel.Scopes);
+            //_viewModel.StartLoadingPageCommand.Execute(null);
+            //_viewModel.WebBrowserAddress =
+            //    (string.Format(
+            //        "https://www.facebook.com/v2.8/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=token%2Cgranted_scopes&scope={2}&display=popup",
+            //        new object[] {_viewModel.AppID, returnURL, scopes}));
+
         }
 
         private void WebBrowser_FrameLoadEnd(object sender, CefSharp.FrameLoadEndEventArgs e)
@@ -143,6 +145,11 @@ namespace BKDelivery.Courier.Pages
                         break;
                 }
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
