@@ -223,5 +223,11 @@ namespace BKDelivery.Courier.Model
             }
             return (Group) retrievedGroup;
         }
+
+        public static void HandleException(Exception e)
+        {
+            _dialogService.Show(DialogType.Error,
+                            $"Error getting signed in user {AzureAdService.ExtractErrorMessage(e)}");
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Data.Services.Client;
 using System.IO;
 using System.Net;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
 using BKDelivery.Courier.Model;
@@ -24,11 +25,14 @@ namespace BKDelivery.Courier.ViewModel
         private ObservableCollection<UIElement> _notificationsCollection;
 
         //User
-        private string _userProfilePhotoString = "/Images/defaultUser50.png";
+        private ImageSource _userProfilePhotoString;
         private string _userProfileName = "It's pretty alone down here.";
         private RelayCommand _loginoutCommand;
         private bool _isLoggedIn;
         private string _loginoutString = "Login";
+
+        //
+        private BitmapImage _defaultUserPhoto;
 
 
         public MainViewModel(IDialogService dialogService, INavigationService navigationService)
@@ -36,6 +40,9 @@ namespace BKDelivery.Courier.ViewModel
             _dialogService = dialogService;
             _navigationService = navigationService;
             NotificationsCollection = new ObservableCollection<UIElement>();
+
+            _defaultUserPhoto = new BitmapImage(new Uri("/Images/defaultUser50.png", UriKind.Relative));
+            UserProfilePhotoString = _defaultUserPhoto;
         }
 
         public RelayCommand TimeIntervalsNavigationCommand
@@ -124,7 +131,7 @@ namespace BKDelivery.Courier.ViewModel
             set { Set(() => IsLoggedIn, ref _isLoggedIn, value); }
         }
 
-        public string UserProfilePhotoString
+        public ImageSource UserProfilePhotoString
         {
             get { return _userProfilePhotoString; }
             set { Set(() => UserProfilePhotoString, ref _userProfilePhotoString, value); }
@@ -147,7 +154,7 @@ namespace BKDelivery.Courier.ViewModel
                 AzureAdService.Logout();
                 IsLoggedIn = false;
                 UserProfileName = "It's pretty alone down here.";
-                UserProfilePhotoString = "/Images/defaultUser50.png";
+                UserProfilePhotoString = _defaultUserPhoto;
                 LogInOutString = "Login";
 
                 _navigationService.NavigateTo(ViewModelLocator.StartUpPageKey);
@@ -155,7 +162,15 @@ namespace BKDelivery.Courier.ViewModel
             }
             else
             {
-                await AzureAdService.Login();
+                try
+                {
+                    await AzureAdService.Login();
+                }
+                catch (Exception e)
+                {
+                    AzureAdService.HandleException(e);
+                }
+
                 if (AzureAdService.IsLoggedIn())
                 {
                     IsLoggedIn = true;
@@ -178,47 +193,25 @@ namespace BKDelivery.Courier.ViewModel
                         IUser sUser = (IUser) signedInUser;
                         try
                         {
-
-                            //
-                            // Download the thumbnailphoto.
-                            // if no value in the attribute, then you will need to handle the exception.
-                            //
-
                             using (var dssr = await sUser.ThumbnailPhoto.DownloadAsync())
                             {
-                                var stream = dssr.Stream;
-                                byte[] buffer = null;
-                                long bCount = 0;
-                                if (stream.CanSeek)
-                                {
-                                    buffer = new byte[stream.Length];
-                                    bCount = stream.Length;
-                                }
-                                else
-                                {
-                                    buffer = new byte[long.Parse(dssr.Headers["Content-Length"])];
-                                    bCount = long.Parse(dssr.Headers["Content-Length"]);
-                                }
-                                await stream.ReadAsync(buffer, 0, (int) bCount);
 
-                                string pickPath = "Images/Users/userphoto.png";
-                                Directory.CreateDirectory(Path.GetDirectoryName(pickPath));
-                                FileStream fs = new FileStream(pickPath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                                await fs.WriteAsync(buffer, 0, (int) bCount);
-                                UserProfilePhotoString = @"pack://siteoforigin:,,,/Images/Users/userphoto.png";
-                                _dialogService.Show(Helpers.DialogType.Success, UserProfilePhotoString);
+                                BitmapImage bitmapimage = new BitmapImage();
+                                bitmapimage.BeginInit();
+                                bitmapimage.StreamSource = dssr.Stream;
+                                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                                bitmapimage.EndInit();
+                                UserProfilePhotoString = bitmapimage;
+
                             }
+
                         }
                         catch (Exception e)
                         {
-                            if (e.InnerException != null)
+                            if (e.Message.Contains("Request_ResourceNotFound") || (e.InnerException!=null && e.InnerException.Message.Contains("Request_ResourceNotFound")))
                             {
-                                string sEx = e.InnerException.GetType().ToString();
-                                if (sEx == "Microsoft.Data.OData.ODataErrorException")
-                                {
-                                    //
-                                    // Handle exception.
-                                }
+                                    //User doesn't have profile picture
+                                    return;
                             }
                             else
                             {

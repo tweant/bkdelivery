@@ -79,7 +79,7 @@ namespace BKDelivery.Courier.Model
             {
                 _dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
                 _dispatcherTimer.Tick += dispatcherTimer_Tick;
-                _interval = 100;
+                _interval = 10;
                 _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, _interval);
                 _progressBar.Value = 0;
                 _progressBar.Maximum = (int)_time;

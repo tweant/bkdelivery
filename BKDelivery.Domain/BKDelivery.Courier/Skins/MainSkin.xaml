@@ -571,8 +571,8 @@
                                             </EventTrigger>
                                         </Border.Triggers>
                                         <StackPanel Orientation="Horizontal" Margin="10">
-                                        <Image Source="{Binding UserProfilePhotoString,Mode=TwoWay}" Stretch="Uniform" Width="50"
-                                                    Height="50" />
+                                        <Image Source="{Binding UserProfilePhotoString}" Stretch="Uniform" Width="60"
+                                                    Height="60" />
 
 
                                         <StackPanel Orientation="Vertical" VerticalAlignment="Center"
