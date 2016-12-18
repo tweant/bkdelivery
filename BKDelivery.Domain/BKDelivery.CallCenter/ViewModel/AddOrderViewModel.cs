@@ -35,10 +35,10 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_cleanupCommand = new RelayCommand(
                            async () =>
                            {
-                               _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading clients.");
+                               var dialog = _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading clients.");
                                var result = await Task.Run(() => _dataService.GetAll<Client>());
                                ClientsCollection = new ObservableCollection<Client>(result);
-                               _dialogService.Hide();
+                               _dialogService.Hide(dialog);
                            }));
             }
         }

@@ -107,7 +107,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                    }
                                    else
                                    {
-                                       _dialogService.Show(Helpers.DialogType.BusyWaiting,
+                                       var dialog = _dialogService.Show(Helpers.DialogType.BusyWaiting,
                                            "Please wait. Deleteing the order.");
                                        var result3 = await Task.Run(() => _dataService.PackagesByOrder(SelectedOrder.OrderId));
                                        foreach (Package package in result3)
@@ -116,7 +116,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                        }
                                        await Task.Run(() => _dataService.Delete(_dataService.Get<Order>(x => x.OrderId == SelectedOrder.OrderId)));
                                        CleanupCommand.Execute(null);
-                                       _dialogService.Hide();
+                                       _dialogService.Hide(dialog);
                                        _dialogService.Show(Helpers.DialogType.Success, "Succesfully deleted the order.");
                                    }
                                }
@@ -133,7 +133,7 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_cleanupCommand = new RelayCommand(
                            async () =>
                            {
-                               _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading orders.");
+                               var dialog = _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading orders.");
                                OrdersCollection = new ObservableCollection<Order>();
                                var result = await Task.Run(() => _dataService.SearchOrder(OrderId, ClientId, CourierId, SelectedStatus));
                                foreach (Order order in result)
@@ -143,7 +143,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                OrderId = 0;
                                ClientId = 0;
                                CourierId = 0;
-                               _dialogService.Hide();
+                               _dialogService.Hide(dialog);
                            }));
             }
         }

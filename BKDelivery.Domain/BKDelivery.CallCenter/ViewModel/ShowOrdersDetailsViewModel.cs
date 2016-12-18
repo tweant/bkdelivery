@@ -69,7 +69,7 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_cleanupCommand = new RelayCommand(
                            async () =>
                            {
-                               _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading order details.");
+                               var dialog = _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading order details.");
                                Time = new TimeInterval();
                                Time = await Task.Run(() => _dataService.Get<TimeInterval>(x => x.TimeIntervalId == SelectedOrder.TimeIntervalId));
                                ClientsCollection = new ObservableCollection<Client>();
@@ -110,7 +110,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                    package.Category = await Task.Run(() => _dataService.Get<Category>(x => x.CategoryId == package.CategoryId));
                                    PacksCollection.Add(package);
                                }   
-                               _dialogService.Hide();
+                               _dialogService.Hide(dialog);
                            }));
             }
         }

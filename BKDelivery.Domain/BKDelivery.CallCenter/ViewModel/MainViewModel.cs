@@ -1,5 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using BKDelivery.CallCenter.Model;
 using BKDelivery.Domain.Interfaces;
@@ -20,12 +24,30 @@ namespace BKDelivery.CallCenter.ViewModel
         private IDialogService _dialogService;
         private IDataService _dataService;
 
-        public MainViewModel(INavigationService navigationService,IDialogService dialogService, IDataService dataService)
+        public MainViewModel(INavigationService navigationService, IDialogService dialogService,
+            IDataService dataService)
         {
             _navigationService = navigationService;
             _dialogService = dialogService;
             _dataService = dataService;
+            _notificationsCollection = new ObservableCollection<UIElement>();
+
+            //Azure
+            ServicePointManager.ServerCertificateValidationCallback +=
+                    (sender, cert, chain, sslPolicyErrors) => true;
         }
+
+        #region Notifications
+
+        private ObservableCollection<UIElement> _notificationsCollection;
+
+        public ObservableCollection<UIElement> NotificationsCollection
+        {
+            get { return _notificationsCollection; }
+            set { Set(() => NotificationsCollection, ref _notificationsCollection, value); }
+        }
+
+        #endregion
 
         private RelayCommand ButtonCommand;
         private RelayCommand ButtonCommand1;
@@ -33,6 +55,8 @@ namespace BKDelivery.CallCenter.ViewModel
         private RelayCommand ButtonCommand3;
         private RelayCommand ButtonCommand4;
         private RelayCommand _cleanupCommand;
+        private RelayCommand _azureAdLoginCommand;
+        private string _azureAdLoginButtonContext = "Azure AD Login";
 
         /// <summary>
         /// Gets the AddressesButtonCommand.
@@ -43,7 +67,42 @@ namespace BKDelivery.CallCenter.ViewModel
             {
                 return ButtonCommand
                        ?? (ButtonCommand = new RelayCommand(
-                           () => { _navigationService.NavigateTo(ViewModelLocator.AddCourierPageKey); }));
+                           () =>
+                           {
+                               if (AzureAdService.IsLoggedIn())
+                                   _navigationService.NavigateTo(ViewModelLocator.AddCourierPageKey);
+                               else
+                               {
+                                   _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+                                   _dialogService.Show(Helpers.DialogType.Error,
+                                       "Log in to Azure Active Directory first to access that data.");
+                               }
+                           }));
+            }
+        }
+
+        public string AzureAdLoginButtonContext
+        {
+            get { return _azureAdLoginButtonContext; }
+            set { Set(() => AzureAdLoginButtonContext, ref _azureAdLoginButtonContext, value); }
+        }
+
+        public RelayCommand AzureAdLoginCommand => _azureAdLoginCommand
+                                                   ?? (_azureAdLoginCommand = new RelayCommand(ExecuteMyCommand));
+
+        private async void ExecuteMyCommand()
+        {
+            if (AzureAdService.IsLoggedIn())
+            {
+                AzureAdService.Logout();
+                AzureAdLoginButtonContext = "Azure AD Login";
+                _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
+            }
+            else
+            {
+                await AzureAdService.Login();
+                if(AzureAdService.IsLoggedIn())
+                    AzureAdLoginButtonContext = "Azure AD Logout";
             }
         }
 
@@ -95,9 +154,10 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_cleanupCommand = new RelayCommand(
                            async () =>
                            {
-                               _dialogService.Show(Helpers.DialogType.BusyWaiting,"Connecting to \"268770.database.windows.net\" database. Please wait.");
-                               await Task.Run(()=> _dataService.InitializeDataBase());
-                               _dialogService.Hide();
+                               var dialog = _dialogService.Show(Helpers.DialogType.BusyWaiting,
+                                   "Connecting to \"bkdelivery.database.windows.net\" database. Please wait.");
+                               await Task.Run(() => _dataService.InitializeDataBase());
+                               _dialogService.Hide(dialog);
                            }));
             }
         }

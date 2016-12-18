@@ -11,7 +11,15 @@
         Width="700"
         Title="BKDelivery"
         DataContext="{Binding Main, Source={StaticResource Locator}}" MinWidth="700" MinHeight="400" Icon="Images/icon.png">
-
+    <Window.Resources>
+        <ControlTemplate x:Key="NotificationCenterTemplate">
+            <StackPanel HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Margin="0,0,20,20" x:Name="NotificationCenterPanel">
+                <ItemsControl ItemsSource="{Binding NotificationsCollection}" />
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -23,7 +31,8 @@
             <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
                 <Image Source="Images/logo.png" Stretch="None" />
                 <TextBlock Text="Couriers" Margin="5,5,5,0" FontFamily="Segoe UI" FontSize="15"/>
-                <Button Name="PageButton1" Content="Add"  Command="{Binding CourierButtonCommand}" Margin="5"/>
+                <Button Name="PageButton1" Content="Add"  Command="{Binding CourierButtonCommand}" Margin="5,5,5,0"/>
+                <Button Name="AadLoginButton" Content="{Binding AzureAdLoginButtonContext}"  Command="{Binding AzureAdLoginCommand}" Margin="5,-1,5,0"/>
 
                 <TextBlock Text="Clients" Margin="5,5,5,0" FontFamily="Segoe UI" FontSize="15"/>
                 <Button Name="PageButton2" Content="Add" Command="{Binding ClientButtonCommand}" Margin="5,5,5,0"/>
@@ -38,20 +47,8 @@
                 <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Source="HomePage.xaml"/>
             </ScrollViewer>
         </DockPanel>
-        
-            <Border x:Name="DialogBox" HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                    Margin="0,0,0,20"
-                Background="White"
-                BorderBrush="Orange"
-                BorderThickness="4" Visibility="Collapsed">
-            <StackPanel Orientation="Vertical">
-                
-                <TextBlock x:Name="DialogBoxMessage" Text="Message" TextWrapping="Wrap" FontFamily="Segoe UI" FontSize="13" Margin="10"/>
-                <ProgressBar x:Name="DialogProgressBar" Minimum="0" Maximum="10" Height="4"/>
-            </StackPanel>
-                
-            </Border>
+
+        <ContentControl Template="{StaticResource NotificationCenterTemplate}" Panel.ZIndex="50"/>
 
     </Grid>
 

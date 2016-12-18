@@ -67,7 +67,7 @@ namespace BKDelivery.CallCenter.ViewModel
                        ?? (_cleanupCommand = new RelayCommand(
                            async () =>
                            {
-                               _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading clients.");
+                               var dialog = _dialogService.Show(Helpers.DialogType.BusyWaiting, "Please wait. Loading clients.");
                                ClientsCollection = new ObservableCollection<Client>();
                                var result = await Task.Run(() => _dataService.SearchClient(Name, NIP, PhoneNumber, EmailAddress));
                                foreach (Client client in result)
@@ -78,7 +78,7 @@ namespace BKDelivery.CallCenter.ViewModel
                                NIP = 0;
                                PhoneNumber = 0;
                                EmailAddress = null;
-                               _dialogService.Hide();
+                               _dialogService.Hide(dialog);
                            }));
             }
         }

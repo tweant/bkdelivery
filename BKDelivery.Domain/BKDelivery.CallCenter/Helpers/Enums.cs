@@ -11,6 +11,7 @@ namespace BKDelivery.CallCenter.Helpers
         Error,
         Warning,
         Success,
-        BusyWaiting
+        BusyWaiting,
+        ProgressManualUpdate
     }
 }
