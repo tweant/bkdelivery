@@ -35,14 +35,6 @@ namespace BKDelivery.Courier.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
-            }
-            else
-            {
-                SimpleIoc.Default.Register<IDataService, DataService>();
-            }
             SimpleIoc.Default.Register<IDialogService, DialogService>();
             SimpleIoc.Default.Register<INavigationService, NavigationService>();
 
@@ -53,8 +45,6 @@ namespace BKDelivery.Courier.ViewModel
 
 
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<FbLoginViewModel>();
-            SimpleIoc.Default.Register<UserSession>();
         }
 
         /// <summary>
@@ -64,8 +54,6 @@ namespace BKDelivery.Courier.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
-        public FbLoginViewModel FbLogin => ServiceLocator.Current.GetInstance<FbLoginViewModel>();
-        public UserSession Session => ServiceLocator.Current.GetInstance<UserSession>();
 
         /// <summary>
         /// Cleans up all the resources.

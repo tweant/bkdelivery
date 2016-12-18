@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Data.Services.Client;
+using System.IO;
 using System.Net;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
 using BKDelivery.Courier.Model;
 using GalaSoft.MvvmLight.CommandWpf;
+using Microsoft.Azure.ActiveDirectory.GraphClient;
+using Microsoft.Azure.ActiveDirectory.GraphClient.Extensions;
 
 namespace BKDelivery.Courier.ViewModel
 {
@@ -135,45 +140,94 @@ namespace BKDelivery.Courier.ViewModel
             => _loginoutCommand ?? (_loginoutCommand = new RelayCommand(ExecuteLogInOutCommand));
 
 
-        private void ExecuteLogInOutCommand()
+        private async void ExecuteLogInOutCommand()
         {
-            if (IsLoggedIn)
+            if (AzureAdService.IsLoggedIn())
             {
+                AzureAdService.Logout();
                 IsLoggedIn = false;
                 UserProfileName = "It's pretty alone down here.";
                 UserProfilePhotoString = "/Images/defaultUser50.png";
                 LogInOutString = "Login";
-                UserSession userSesssion =
-                    (Application.Current.Resources["Locator"] as ViewModelLocator).Session;
-
-                _navigationService.NavigateTo(ViewModelLocator.HomePageKey);
-                userSesssion.AccessToken = null;
-                userSesssion.DeniedScopes = null;
-                userSesssion.GrantedScopes = null;
-                userSesssion.IsSessionActive = true;
-                userSesssion.TokenExpires = DateTime.Now;
-                userSesssion.IsSessionActive = false;
 
                 _navigationService.NavigateTo(ViewModelLocator.StartUpPageKey);
                 _dialogService.Show(Helpers.DialogType.Success, "Succesfully logged out.");
             }
             else
             {
-                //_dialogService.Show(Helpers.DialogType.Success, "Login");
-                FbLoginViewModel _viewModel = (Application.Current.Resources["Locator"] as ViewModelLocator).FbLogin;
-                _viewModel.WebBrowserAddress =
-                   (string.Format(
-                       "http://www.google.pl"));
-                _navigationService.NavigateTo(ViewModelLocator.FacebookLogInPageKey);
-                
-                //string p_scopes = "public_profile,email,user_about_me";
-                string returnURL = WebUtility.UrlEncode("https://www.facebook.com/connect/login_success.html");
-                string scopes = WebUtility.UrlEncode(_viewModel.Scopes);
-                _viewModel.StartLoadingPageCommand.Execute(null);
-                _viewModel.WebBrowserAddress =
-                    (string.Format(
-                        "https://www.facebook.com/v2.8/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=token%2Cgranted_scopes&scope={2}&display=popup",
-                        new object[] {_viewModel.AppID, returnURL, scopes}));
+                await AzureAdService.Login();
+                if (AzureAdService.IsLoggedIn())
+                {
+                    IsLoggedIn = true;
+                    LogInOutString = "Logout";
+
+                    User signedInUser = new User();
+                    try
+                    {
+                        signedInUser = (User) await AzureAdService._client.Me.ExecuteAsync();
+                        UserProfileName = signedInUser.DisplayName;
+                    }
+                    catch (Exception e)
+                    {
+                        _dialogService.Show(Helpers.DialogType.Error,
+                            $"Error getting signed in user {AzureAdService.ExtractErrorMessage(e)}");
+                    }
+
+                    if (signedInUser.ObjectId != null)
+                    {
+                        IUser sUser = (IUser) signedInUser;
+                        try
+                        {
+
+                            //
+                            // Download the thumbnailphoto.
+                            // if no value in the attribute, then you will need to handle the exception.
+                            //
+
+                            using (var dssr = await sUser.ThumbnailPhoto.DownloadAsync())
+                            {
+                                var stream = dssr.Stream;
+                                byte[] buffer = null;
+                                long bCount = 0;
+                                if (stream.CanSeek)
+                                {
+                                    buffer = new byte[stream.Length];
+                                    bCount = stream.Length;
+                                }
+                                else
+                                {
+                                    buffer = new byte[long.Parse(dssr.Headers["Content-Length"])];
+                                    bCount = long.Parse(dssr.Headers["Content-Length"]);
+                                }
+                                await stream.ReadAsync(buffer, 0, (int) bCount);
+
+                                string pickPath = "Images/Users/userphoto.png";
+                                Directory.CreateDirectory(Path.GetDirectoryName(pickPath));
+                                FileStream fs = new FileStream(pickPath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                                await fs.WriteAsync(buffer, 0, (int) bCount);
+                                UserProfilePhotoString = @"pack://siteoforigin:,,,/Images/Users/userphoto.png";
+                                _dialogService.Show(Helpers.DialogType.Success, UserProfilePhotoString);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            if (e.InnerException != null)
+                            {
+                                string sEx = e.InnerException.GetType().ToString();
+                                if (sEx == "Microsoft.Data.OData.ODataErrorException")
+                                {
+                                    //
+                                    // Handle exception.
+                                }
+                            }
+                            else
+                            {
+                                _dialogService.Show(Helpers.DialogType.Error,
+                                    $"Error getting signed in user {AzureAdService.ExtractErrorMessage(e)}");
+                            }
+                        }
+                    }
+                }
             }
         }
 

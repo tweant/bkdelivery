@@ -571,16 +571,16 @@
                                             </EventTrigger>
                                         </Border.Triggers>
                                         <StackPanel Orientation="Horizontal" Margin="10">
-                                            <Image Source="{Binding UserProfilePhotoString}" Stretch="Uniform" Width="50"
-                                                       Height="50" />
+                                        <Image Source="{Binding UserProfilePhotoString,Mode=TwoWay}" Stretch="Uniform" Width="50"
+                                                    Height="50" />
 
 
-                                            <StackPanel Orientation="Vertical" VerticalAlignment="Center"
-                                                        Margin="10,0,0,0">
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center"
+                                                    Margin="10,0,0,0">
 
-                                                <TextBlock x:Name="UserName" Text="{Binding UserProfileName}" TextWrapping="Wrap"
-                                                           FontFamily="Segoe UI" FontSize="13" Foreground="#242424"
-                                                           MaxWidth="120" />
+                                            <TextBlock x:Name="UserName" Text="{Binding UserProfileName}" TextWrapping="Wrap"
+                                                        FontFamily="Segoe UI" FontSize="13" Foreground="#242424"
+                                                        MaxWidth="120" />
                                                 <Button Content="{Binding LogInOutString}" Command="{Binding LogInOutCommand}" x:Name="Logout" 
                                                            Style="{StaticResource LoginOutButtonStyle}"
                                                            MaxWidth="200"/>
