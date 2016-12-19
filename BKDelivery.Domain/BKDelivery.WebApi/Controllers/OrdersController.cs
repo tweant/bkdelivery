@@ -36,6 +36,43 @@ namespace BKDelivery.WebApi.Controllers
             return Ok(order);
         }
 
+        [Route("api/Orders/search")]
+        public IQueryable<Order> GetOrdersByName(int orderId, int clientId, int courierId)
+        {
+            if (orderId != 0 && clientId != 0 && courierId != 0)
+            {
+                return db.Orders.Where(x => x.OrderId == orderId && x.ClientId == clientId && x.CourierId == courierId);
+            }
+            else if (orderId != 0 && clientId != 0)
+            {
+                return db.Orders.Where(x => x.OrderId == orderId && x.ClientId == clientId);
+            }
+            else if (clientId != 0 && courierId != 0)
+            {
+                return db.Orders.Where(x => x.ClientId == clientId && x.CourierId == courierId);
+            }
+            else if (orderId != 0 && courierId != 0)
+            {
+                return db.Orders.Where(x => x.OrderId == orderId && x.CourierId == courierId);
+            }
+            else if (orderId != 0)
+            {
+                return db.Orders.Where(x => x.OrderId == orderId);
+            }
+            else if (clientId != 0)
+            {
+                return db.Orders.Where(x => x.ClientId == clientId);
+            }
+            else if (courierId != 0)
+            {
+                return db.Orders.Where(x => x.CourierId == courierId);
+            }
+            else
+            {
+                return db.Orders;
+            }
+        }
+
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutOrder(int id, Order order)

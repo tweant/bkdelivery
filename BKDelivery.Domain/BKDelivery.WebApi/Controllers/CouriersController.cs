@@ -36,6 +36,12 @@ namespace BKDelivery.WebApi.Controllers
             return Ok(courier);
         }
 
+        [Route("api/Couriers/search")]
+        public IQueryable<Courier> GetCourierByEmail(string email)
+        {
+            return db.Couriers.Where(o => o.Email.Equals(email));
+        }
+
         // PUT: api/Couriers/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutCourier(int id, Courier courier)
