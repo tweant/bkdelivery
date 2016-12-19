@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
 using BKDelivery.Courier.Model;
+using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
 using Microsoft.Azure.ActiveDirectory.GraphClient.Extensions;
@@ -30,6 +31,7 @@ namespace BKDelivery.Courier.ViewModel
         private RelayCommand _loginoutCommand;
         private bool _isLoggedIn;
         private string _loginoutString = "Login";
+        private ObservableCollection<string> _couriersTodayActiveOrderList = new ObservableCollection<string>();
 
         //
         private BitmapImage _defaultUserPhoto;
@@ -57,7 +59,7 @@ namespace BKDelivery.Courier.ViewModel
                                    _dialogService.Show(Helpers.DialogType.Error,
                                        "Please log in first to access that data.");
                                else
-                                   _last.Hide();
+                                   _navigationService.NavigateTo(ViewModelLocator.TimeIntervalsPageKey);
                            }));
             }
         }
@@ -74,8 +76,7 @@ namespace BKDelivery.Courier.ViewModel
                                    _dialogService.Show(Helpers.DialogType.Error,
                                        "Please log in first to access that data.");
                                else
-                                   _last = _dialogService.Show(Helpers.DialogType.Success,
-                                       "Congratulations!");
+                                   _navigationService.NavigateTo(ViewModelLocator.OrdersPageKey);
                            }));
             }
         }
@@ -92,7 +93,7 @@ namespace BKDelivery.Courier.ViewModel
                                    _dialogService.Show(Helpers.DialogType.Error,
                                        "Please log in first to access that data.");
                                else
-                                   _lastbusy.Hide();
+                                   _navigationService.NavigateTo(ViewModelLocator.RoutePageKey);
                            }));
             }
         }
@@ -109,14 +110,10 @@ namespace BKDelivery.Courier.ViewModel
                                    _dialogService.Show(Helpers.DialogType.Error,
                                        "Please log in first to access that data.");
                                else
-                                   _lastbusy = _dialogService.Show(Helpers.DialogType.BusyWaiting,
-                                       "Connecting to \"268770.database.windows.net\" database. Please wait.");
+                                   _navigationService.NavigateTo(ViewModelLocator.TimetablePageKey);
                            }));
             }
         }
-
-        private NotificationElement _lastbusy;
-        private NotificationElement _last;
 
 
         public ObservableCollection<UIElement> NotificationsCollection
@@ -162,13 +159,20 @@ namespace BKDelivery.Courier.ViewModel
             }
             else
             {
+                NotificationElement wait = null;
                 try
                 {
+                    wait = _dialogService.Show(Helpers.DialogType.BusyWaiting,
+                        "Connecting to Azure Active Directory. Please wait.");
                     await AzureAdService.Login();
                 }
                 catch (Exception e)
                 {
                     AzureAdService.HandleException(e);
+                }
+                finally
+                {
+                    wait.Hide();
                 }
 
                 if (AzureAdService.IsLoggedIn())
@@ -190,6 +194,15 @@ namespace BKDelivery.Courier.ViewModel
 
                     if (signedInUser.ObjectId != null)
                     {
+                        CouriersTodayActiveOrderList.Clear();
+                        CouriersTodayActiveOrderList.Add("Display name: " + signedInUser.DisplayName);
+                        CouriersTodayActiveOrderList.Add("Given name: " + signedInUser.GivenName);
+                        CouriersTodayActiveOrderList.Add("Country: " + signedInUser.Country);
+                        CouriersTodayActiveOrderList.Add("Phone: " + signedInUser.TelephoneNumber);
+                        CouriersTodayActiveOrderList.Add("Department: " + signedInUser.Department);
+                        CouriersTodayActiveOrderList.Add("Job title: " + signedInUser.JobTitle);
+                        CouriersTodayActiveOrderList.Add("Usage location: " + signedInUser.UsageLocation);
+
                         IUser sUser = (IUser) signedInUser;
                         try
                         {
@@ -229,6 +242,21 @@ namespace BKDelivery.Courier.ViewModel
         {
             get { return _loginoutString; }
             set { Set(() => LogInOutString, ref _loginoutString, value); }
+        }
+
+
+        
+
+        public ObservableCollection<string> CouriersTodayActiveOrderList
+        {
+            get
+            {
+                return _couriersTodayActiveOrderList;
+            }
+            set
+            {
+                Set(() => CouriersTodayActiveOrderList, ref _couriersTodayActiveOrderList, value);
+            }
         }
 
         ////public override void Cleanup()

@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:helpers="clr-namespace:BKDelivery.Courier.Helpers">
+
+    <helpers:BooleanVisibilityConverter x:Key="BoolToVisConverter" />
+    <helpers:ReverseBooleanVisibilityConverter x:Key="ReverseBoolToVisConverter" />
+    <helpers:NullOrEmptyVisibilityConverter x:Key="NullOrEmptyToVisConverter"/>
+    <helpers:NotNullAndNotEmptyVisibilityConverter x:Key="NotNullAndNotEmptyVisConverter"/>
+
+</ResourceDictionary>

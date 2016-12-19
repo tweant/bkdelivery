@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace BKDelivery.Courier.Pages
 {
     /// <summary>
-    /// Interaction logic for Home.xaml
+    /// Interaction logic for OrderDetails.xaml
     /// </summary>
-    public partial class Home : Page
+    public partial class OrderDetails : Page
     {
-        public Home()
+        public OrderDetails()
         {
             InitializeComponent();
         }

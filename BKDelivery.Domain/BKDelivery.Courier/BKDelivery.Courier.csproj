@@ -137,6 +137,7 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Model\AzureADService.cs" />
     <Compile Include="Model\DialogService.cs" />
@@ -144,13 +145,38 @@
     <Compile Include="Model\INavigationService.cs" />
     <Compile Include="Model\NavigationService.cs" />
     <Compile Include="Model\NotificationElement.cs" />
-    <Compile Include="Pages\Home.xaml.cs">
-      <DependentUpon>Home.xaml</DependentUpon>
+    <Compile Include="Pages\OrderCommentEdit.xaml.cs">
+      <DependentUpon>OrderCommentEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrderDetails.xaml.cs">
+      <DependentUpon>OrderDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Orders.xaml.cs">
+      <DependentUpon>Orders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Route.xaml.cs">
+      <DependentUpon>Route.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\StartUp.xaml.cs">
       <DependentUpon>StartUp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\TimeIntervalEdit.xaml.cs">
+      <DependentUpon>TimeIntervalEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TimeIntervals.xaml.cs">
+      <DependentUpon>TimeIntervals.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Timetable.xaml.cs">
+      <DependentUpon>Timetable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\Pages\OrderCommentEditViewModel.cs" />
+    <Compile Include="ViewModel\Pages\OrderDetailsViewModel.cs" />
+    <Compile Include="ViewModel\Pages\OrdersViewModel.cs" />
+    <Compile Include="ViewModel\Pages\RouteViewModel.cs" />
+    <Compile Include="ViewModel\Pages\TimeIntervalEditViewModel.cs" />
+    <Compile Include="ViewModel\Pages\TimeIntervalsViewModel.cs" />
+    <Compile Include="ViewModel\Pages\TimetableViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -164,11 +190,39 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\Home.xaml">
+    <Page Include="Pages\OrderCommentEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\OrderDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Orders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Route.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\StartUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TimeIntervalEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TimeIntervals.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Timetable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Skins\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -225,7 +279,42 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\warningIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\infoIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BKDelivery.Domain\BKDelivery.Domain.csproj">
+      <Project>{a3950fec-5b79-4112-9d97-4f4fcadef7b2}</Project>
+      <Name>BKDelivery.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\addIcon.png" />
+    <Resource Include="Images\closeIcon.png" />
+    <Resource Include="Images\deleteIcon.png" />
+    <Resource Include="Images\detailsIcon.png" />
+    <Resource Include="Images\editIcon.png" />
+    <Resource Include="Images\filterIcon.png" />
+    <Resource Include="Images\saveIcon.png" />
+    <Resource Include="Images\searchIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\dayIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\backIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rightIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\welcome.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
