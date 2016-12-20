@@ -1,25 +1,22 @@
 ﻿using BKDelivery.Courier.Model;
+using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 
 namespace BKDelivery.Courier.ViewModel.Pages
 {
-    /// <summary>
-    /// This class contains properties that a View can data bind to.
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class OrderDetailsViewModel : ViewModelBase
     {
-        private INavigationService _navigationService;
+        private readonly INavigationService _navigationService;
+        private RelayCommand _goBack;
+        private RelayCommand _cleanupCommand;
+        private Order _editedOrder;
 
         public OrderDetailsViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
         }
 
-        private RelayCommand _goBack;
 
         public RelayCommand GoBack
         {
@@ -31,6 +28,38 @@ namespace BKDelivery.Courier.ViewModel.Pages
                     {
                         _navigationService.NavigateTo(ViewModelLocator.OrdersPageKey);
                     }));
+            }
+        }
+
+        public Order EditedOrder
+        {
+            get
+            {
+                return _editedOrder;
+            }
+            set
+            {
+                Set(() => EditedOrder, ref _editedOrder, value);
+            }
+        }
+
+        public RelayCommand CleanupCommand
+        {
+            get
+            {
+                return _cleanupCommand
+                       ?? (_cleanupCommand = new RelayCommand(
+                           () =>
+                           {
+                               if (_navigationService.Parameter != null && _navigationService.Parameter is Order)
+                               {
+                                   EditedOrder = (Order)_navigationService.Parameter;
+                               }
+                               else
+                               {
+                                   EditedOrder = null;
+                               }
+                           }));
             }
         }
     }

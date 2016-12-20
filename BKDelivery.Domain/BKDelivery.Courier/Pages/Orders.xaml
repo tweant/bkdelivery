@@ -4,24 +4,30 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BKDelivery.Courier.Pages"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:command="http://www.galasoft.ch/mvvmlight"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="600"
       Title="Orders"
       DataContext="{Binding Orders, Source={StaticResource Locator}}">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <command:EventToCommand Command="{Binding CleanupCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <StackPanel>
         <!--Header-->
         <TextBlock Text="Orders" FontSize="26" Margin="0,5,0,0" />
         <Border BorderBrush="#F3734C" BorderThickness="0,1,0,0" Margin="0,0,-65,0" />
         <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
 
-            <Button Style="{StaticResource MenuTransparentTextButtonStyle}" Command="{Binding EditOrder}">
+            <Button Style="{StaticResource MenuTransparentTextButtonStyle}" Command="{Binding EditOrder}" IsEnabled="{Binding SelectedOrder,Converter={StaticResource NotNullEnabledConverter}}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/editIcon.png" Width="16" Height="16"   Margin="0,0,6,0" />
                     <TextBlock Text="Edit" FontSize="16"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource MenuTransparentTextButtonStyle}" Command="{Binding ShowOrderDetails}">
+            <Button Style="{StaticResource MenuTransparentTextButtonStyle}" Command="{Binding ShowOrderDetails}" IsEnabled="{Binding SelectedOrder,Converter={StaticResource NotNullEnabledConverter}}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/detailsIcon.png" Width="16" Height="16" Margin="0,0,6,0" />
                     <TextBlock Text="Details" FontSize="16"/>
@@ -34,7 +40,7 @@
                 </StackPanel>
             </Button>
             <StackPanel Orientation="Horizontal" Visibility="{Binding IsSearchClicked, Converter={StaticResource ReverseBoolToVisConverter}}">
-                <TextBox Width="200" Text="Type query here" Margin="0,0,6,0" Height="23"/>
+                <TextBox Width="200" Text="{Binding SearchQuery}" Margin="0,0,6,0" Height="23"/>
                 <Button Style="{StaticResource MenuTransparentTextButtonStyle}" Command="{Binding ExecuteSearchCommand}">
                     <StackPanel Orientation="Horizontal">
 
@@ -46,6 +52,18 @@
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/searchIcon.png" Width="16" Height="16" Margin="0,0,6,0" />
                     <TextBlock Text="Search" FontSize="16"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource MenuTransparentTextButtonStyle}" Command="{Binding ClearFiltersCommand}">
+                <Button.Visibility>
+                    <MultiBinding Converter="{StaticResource ClearFiltersVisConverter}">
+                        <Binding Path="SearchQuery" />
+                        <Binding Path="SelectedOrderStatus" />
+                    </MultiBinding>
+                </Button.Visibility>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Images/clearIcon.png" Width="16" Height="16" Margin="0,0,6,0" />
+                    <TextBlock Text="Clear filters" FontSize="16"/>
                 </StackPanel>
             </Button>
         </StackPanel>
@@ -143,7 +161,7 @@
                     </Setter>
                 </Style>
             </ScrollViewer.Resources>
-            <ListView ItemsSource="{Binding OrdersCollection}">
+            <ListView ItemsSource="{Binding UsersFilteredCollection}" SelectedItem="{Binding SelectedOrder,Mode=TwoWay}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

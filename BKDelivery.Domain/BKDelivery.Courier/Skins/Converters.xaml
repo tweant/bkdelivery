@@ -6,5 +6,6 @@
     <helpers:ReverseBooleanVisibilityConverter x:Key="ReverseBoolToVisConverter" />
     <helpers:NullOrEmptyVisibilityConverter x:Key="NullOrEmptyToVisConverter"/>
     <helpers:NotNullAndNotEmptyVisibilityConverter x:Key="NotNullAndNotEmptyVisConverter"/>
-
+    <helpers:NotNullEnabledConverter x:Key="NotNullEnabledConverter"/>
+    <helpers:ClearFiltersMultiValueConverter x:Key="ClearFiltersVisConverter"/>
 </ResourceDictionary>

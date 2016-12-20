@@ -4,11 +4,18 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BKDelivery.Courier.Pages"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:command="http://www.galasoft.ch/mvvmlight"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="TimeIntervalEdit"
       DataContext="{Binding TimeIntervalEdit, Source={StaticResource Locator}}">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <command:EventToCommand Command="{Binding CleanupCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <StackPanel>
         <!--Header-->
         <TextBlock Text="Edit time interval" FontSize="26" Margin="0,5,0,0" />
@@ -123,13 +130,27 @@
                 </Style>
             </ScrollViewer.Resources>
 
-            <ItemsControl ItemsSource="{Binding CouriersTodayActiveOrderList}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding OrderId}" Margin="0,0,0,300" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                    <TextBlock Text="Start" Style="{StaticResource Header3}" />
+                    <StackPanel Orientation="Horizontal">
+                        <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, TargetNullValue={x:Static system:DateTime.Now}}"/>
+                        <TextBlock Text="Hour:" VerticalAlignment="Center" FontSize="16" Margin="10,0,5,0"/>
+                        <TextBox Text="{Binding StartDateHour,Mode=TwoWay}" Width="40"/>
+                    </StackPanel>
+                    <TextBlock Text="End" Style="{StaticResource Header3}"  Margin="0,10,0,0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay, TargetNullValue={x:Static system:DateTime.Now}}"/>
+                        <TextBlock Text="Hour:" VerticalAlignment="Center" FontSize="16" Margin="10,0,5,0"/>
+                        <TextBox Text="{Binding EndDateHour,Mode=TwoWay}" Width="40"/>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBlock Text="Estimated time:" Margin="0,0,5,0" FontSize="16" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding EstimatedTime}" FontSize="16"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
         </ScrollViewer>
     </StackPanel>
 </Page>

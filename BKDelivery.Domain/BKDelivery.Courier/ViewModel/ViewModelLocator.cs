@@ -49,7 +49,7 @@ namespace BKDelivery.Courier.ViewModel
             var navigationService = ServiceLocator.Current.GetInstance<INavigationService>();
             navigationService.Configure(StartUpPageKey, new Uri("/Pages/StartUp.xaml", UriKind.Relative));
             navigationService.Configure(OrderCommentEditPageKey, new Uri("/Pages/OrderCommentEdit.xaml", UriKind.Relative));
-            navigationService.Configure(OrderDetailsPageKey, new Uri("OrderDetails/Pages/.xaml", UriKind.Relative));
+            navigationService.Configure(OrderDetailsPageKey, new Uri("/Pages/OrderDetails.xaml", UriKind.Relative));
             navigationService.Configure(OrdersPageKey, new Uri("/Pages/Orders.xaml", UriKind.Relative));
             navigationService.Configure(RoutePageKey, new Uri("/Pages/Route.xaml", UriKind.Relative));
             navigationService.Configure(TimeIntervalEditPageKey, new Uri("/Pages/TimeIntervalEdit.xaml", UriKind.Relative));
