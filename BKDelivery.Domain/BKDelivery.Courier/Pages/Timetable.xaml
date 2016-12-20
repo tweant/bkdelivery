@@ -5,11 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BKDelivery.Courier.Pages"
       xmlns:system="clr-namespace:System;assembly=mscorlib"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:command="http://www.galasoft.ch/mvvmlight"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="300" d:DesignWidth="600"
       Title="Timetable"
       DataContext="{Binding Timetable, Source={StaticResource Locator}}">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <command:EventToCommand Command="{Binding CleanupCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <StackPanel>
         <!--Header-->
         <TextBlock Text="Timetable" FontSize="26" Margin="0,5,0,0" />
@@ -20,11 +26,11 @@
             <Button Style="{StaticResource MenuTransparentTextButtonStyle}" Command="{Binding FilterByDateCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/rightIcon.png" Width="16" Height="16"  Margin="6,0,6,0" />
-
+                    <TextBlock Text="Execute" FontSize="16"/>
                 </StackPanel>
             </Button>
         </StackPanel>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600" HorizontalScrollBarVisibility="Disabled">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600" HorizontalScrollBarVisibility="Disabled" Margin="0,10,0,0">
             <ScrollViewer.Resources>
                 <!--Scrollbar Thumbs-->
                 <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
@@ -119,13 +125,63 @@
                 </Style>
             </ScrollViewer.Resources>
 
-            <ItemsControl ItemsSource="{Binding CouriersTodayActiveOrderList}">
-                <ItemsControl.ItemTemplate>
+            <ListView ItemsSource="{Binding UsersFilteredCollection}" >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding OrderId}" Margin="0,0,0,300" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                <TextBlock Text="{Binding ToAddress.Street }" Margin="0,0,5,0" />
+                                <TextBlock Text="{Binding ToAddress.BuildingNumber }" />
+                                <TextBlock Text="/" />
+                                <TextBlock Text="{Binding ToAddress.FlatNumber }" />
+                                <TextBlock Text="," />
+                                <TextBlock Text="{Binding ToAddress.ZipCode }" Margin="0,0,5,0" />
+                                <TextBlock Text="{Binding ToAddress.City }" />
+                            </StackPanel>
+                            <TextBlock Text="{Binding Timeinterval.Start}" Grid.Column="1" />
+                            <TextBlock Text="{Binding TimeInterval.End}" Grid.Column="2" />
+                        </Grid>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                </ListView.ItemTemplate>
+                <ListView.Template>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontFamily" Value="Segoe UI"/>
+                                        <Setter Property="FontWeight" Value="SemiBold" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </Grid.Resources>
+                                <TextBlock Grid.Column="0" Margin="5,0,0,0">Destination address</TextBlock>
+                                <TextBlock Grid.Column="1">Start</TextBlock>
+                                <TextBlock Grid.Column="2">End</TextBlock>
+                            </Grid>
+                            <ItemsPresenter Grid.Row="1" />
+                        </Grid>
+                    </ControlTemplate>
+                </ListView.Template>
+            </ListView>
         </ScrollViewer>
     </StackPanel>
 </Page>

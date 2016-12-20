@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ignore="http://www.galasoft.ch/ignore"
-             StartupUri="MainWindow.xaml"
+			 xmlns:wpf="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+			 StartupUri="MainWindow.xaml"
              mc:Ignorable="d ignore">
     
     <Application.Resources>
@@ -16,6 +17,10 @@
             <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
             <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Light.xaml"/>
         </ResourceDictionary.MergedDictionaries>
+            <wpf:Map x:Key="MyBingMap" CredentialsProvider="Apt92vXYsHTba9UMYF2aSIED288GerifRDi8U531OqE8frFBeRWrtCy0X_VoYgRB"
+               Center="52.22273, 21.00702" ZoomLevel="15" Mode="Road" Grid.Column="1" Margin="0,5,5,5" Height="600" Width="860">
+                <wpf:Pushpin Location="52.22273, 21.00702"/>
+            </wpf:Map>
         <vm:ViewModelLocator x:Key="Locator"
                              d:IsDataSource="True" />
         </ResourceDictionary>
@@ -23,3 +28,4 @@
     </Application.Resources>
     
 </Application>
+

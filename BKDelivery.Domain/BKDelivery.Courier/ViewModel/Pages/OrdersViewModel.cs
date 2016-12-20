@@ -7,6 +7,7 @@ using BKDelivery.Courier.Model;
 using BKDelivery.Domain.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using Address = BKDelivery.Domain.Model.Address;
 
 namespace BKDelivery.Courier.ViewModel.Pages
 {
